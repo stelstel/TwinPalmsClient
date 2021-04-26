@@ -7,7 +7,7 @@
     padding: 20px;
     height: 900px;
     width: 480px;
-    margin: 20px auto;
+    margin: 8px auto;
 }
 
 @media screen and (max-width: 480px) {

@@ -68,7 +68,7 @@ function CreateUser() {
 
     return (
         <Grid className="createuser-page-container">
-            <Grid style={{paddingTop: '60px'}} >
+            <Grid style={{paddingTop: '30px'}} >
                 <Paper className="createuser-paper" elevation={10} >
                     <Grid align="center">
                         <Avatar style={avatarStyle}><AccountCircleIcon /></Avatar>
