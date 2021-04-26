@@ -6,7 +6,12 @@ video {
     z-index: -1;
 }
 
-
+.home-background-img {
+    position: absolute;
+    height: 93vh;
+    width: 100%;
+    z-index: -2;
+}
 .hero-container {
     /* background-color: #494949; */
     height: 93vh;
