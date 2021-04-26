@@ -1,0 +1,13 @@
+
+.multistepform-paper {
+    padding: 20px;
+    height: 790px;
+    width: 480px;
+    margin: 8px auto
+}
+
+@media screen and (max-width: 480px) {
+    .multistepform-paper {
+        width: 100vw;
+    }
+}

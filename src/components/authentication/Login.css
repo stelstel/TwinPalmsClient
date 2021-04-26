@@ -1,0 +1,19 @@
+
+.login-page-container {
+    background-color: #494949;
+    height: 860px;
+    
+}
+.login-paper {
+    padding: 20px;
+    height: 700px;
+    width: 480px;
+    margin: 20px auto
+}
+
+@media screen and (max-width: 480px) {
+    .login-paper {
+        width: 100vw;
+    }
+}
+

@@ -1,0 +1,17 @@
+
+.createuser-page-container {
+    background-color: #494949;
+    height: 1000px;
+}
+.createuser-paper {
+    padding: 20px;
+    height: 900px;
+    width: 480px;
+    margin: 20px auto;
+}
+
+@media screen and (max-width: 480px) {
+    .createuser-paper {
+        width: 100vw;
+    }
+}
