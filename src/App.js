@@ -3,7 +3,6 @@ import Navbar from './components/navigation/Navbar';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Login from './components/authentication/Login';
 import MultiStepForm from './components/report/MultiStepForm';
-import HomeWithVideo from './components/home/HomeWithVideo';
 import Home from './components/home/Home';
 import Carousel from './components/analytics/Carousel';
 import CreateUser from './components/createuser/CreateUser';
