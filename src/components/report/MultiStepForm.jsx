@@ -195,6 +195,8 @@ function MultiStepForm() {
                     handleChangeBeverageRevenue={handleChangeBeverageRevenue}
                     otherRevenue={otherRevenue}
                     handleChangeOtherRevenue={handleChangeOtherRevenue}
+                    sourceOfBusiness={sourceOfBusiness}
+                    handleChangeSourceOfBusiness={handleChangeSourceOfBusiness}
                 />;
             case 2: 
                 return <StepThree 
@@ -204,8 +206,6 @@ function MultiStepForm() {
                     handleChangeHotelGuests={handleChangeHotelGuests}
                     outsideGuests={outsideGuests}
                     handleChangeOutsideGuests={handleChangeOutsideGuests}
-                    sourceOfBusiness={sourceOfBusiness}
-                    handleChangeSourceOfBusiness={handleChangeSourceOfBusiness}
                 />;
             default:
                 return "Error, remove prev button"

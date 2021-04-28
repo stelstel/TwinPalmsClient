@@ -102,14 +102,6 @@ function CreateUser() {
                                         onChange={handleChangeRestaurant}
                                         color="primary"
                                     />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 2</InputLabel>
-                                </Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                        value={3}
-                                        onChange={handleChangeRestaurant}
-                                        color="primary"
-                                    />
                                     <InputLabel style={{fontSize: '14px'}}>Restaurant 3</InputLabel>
                                 </Grid>
                             </Grid>
@@ -120,29 +112,21 @@ function CreateUser() {
                                         onChange={handleChangeRestaurant}
                                         color="primary"
                                     />
+                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 2</InputLabel>
+                                </Grid>
+                                <Grid style={{display: 'flex', alignItems: 'center'}}>
+                                    <Checkbox
+                                        value={3}
+                                        onChange={handleChangeRestaurant}
+                                        color="primary"
+                                    />
                                     <InputLabel style={{fontSize: '14px'}}>Restaurant 4</InputLabel>
-                                </Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                        value={5}
-                                        onChange={handleChangeRestaurant}
-                                        color="primary"
-                                    />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 5</InputLabel>
-                                </Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                        value={6}
-                                        onChange={handleChangeRestaurant}
-                                        color="primary"
-                                    />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 6</InputLabel>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Link to="./report" style={{textDecoration: 'none'}}>
-                        <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" style={{marginTop: '60px'}} fullWidth>Create User</Button>
+                        <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" style={{marginTop: '40px'}} fullWidth>Create User</Button>
                     </Link>
                 </Paper>
             </Grid>

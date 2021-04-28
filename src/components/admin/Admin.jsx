@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button, TextField} from "@material-ui/core";
 import red from '@material-ui/core/colors/red';
 import indigo from '@material-ui/core/colors/indigo';
@@ -8,6 +8,12 @@ const indigoTheme = createMuiTheme({ palette: { primary: indigo, secondary: red,
 
 function Admin() {
 
+    // const [admin, setAdmin] = useState(false);
+    // const handleChangeUserRole = (e) => {
+    //     setAdmin(!admin)
+    // }
+
+
     //Make a get request on users from api and a delete request 
     const users = ['User1', 'User2', 'User3', 'User4', 'User5', 'User6', 'User7', 'User8', 'User9', 'User10'];
     const handleChangeUsers = e => {
@@ -16,7 +22,14 @@ function Admin() {
     const listUsers = users.map(user => {
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '5px'}}>
-                <div style={{border: '1px solid #797979', borderRadius: '4px', width: '199px', height: '48px'}}><p style={{fontSize: '16px', fontWeight: 400, color: '#212529', fontFamily: 'Roboto, Helvetica, Arial, sans-serif', marginTop: '12px', marginLeft: '5px'}}>{user}</p></div>
+                <div style={{border: '1px solid #797979', borderRadius: '4px', width: '300px', height: '48px'}}>
+                    
+                    {/* {admin ? 
+                    <p style={{fontSize: '16px', fontWeight: 400, color: '#212529', fontFamily: 'Roboto, Helvetica, Arial, sans-serif', marginTop: '12px', marginLeft: '5px'}}>{user}, Access level: Admin</p> : 
+                    <p style={{fontSize: '16px', fontWeight: 400, color: '#212529', fontFamily: 'Roboto, Helvetica, Arial, sans-serif', marginTop: '12px', marginLeft: '5px'}}>{user}, Access level: Basic</p>} */}
+                    <p style={{fontSize: '16px', fontWeight: 400, color: '#212529', fontFamily: 'Roboto, Helvetica, Arial, sans-serif', marginTop: '12px', marginLeft: '5px'}}>{user}</p>
+                </div>
+                {/* <Button onClick={handleChangeUserRole} color="primary" variant="contained" style={{marginTop: '50px', margin: ' 10px 10px 10px 10px'}}>Change access level</Button> */}
                 <MuiThemeProvider theme={indigoTheme}>
                     <Button onClick={handleChangeUsers} color="secondary" variant="contained" style={{marginTop: '50px', margin: ' 10px 10px 10px 10px', width: '95px'}}>Delete</Button>
                 </MuiThemeProvider>

@@ -12,13 +12,13 @@ function Carousel() {
                 </div>
                 <div className="carousel-inner" style={{height: '870px'}}>
                     <div className="carousel-item active">
-                        <img src="../images/dash2.jpg" className="d-block w-100" alt="..."/>
-                    </div>
-                    <div className="carousel-item">
                         <img src="../images/CBC.jpg" className="d-block w-100" alt="..."/>
                     </div>
                     <div className="carousel-item">
                         <img src="../images/PSS.jpg" className="d-block w-100" alt="..."/>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="../images/CBC.jpg" className="d-block w-100" alt="..."/>
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
