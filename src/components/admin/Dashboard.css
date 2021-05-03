@@ -1,0 +1,15 @@
+.dashboard-object-container {
+    background-color: #494949;
+    padding-top: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 960px) {
+    .dashboard-object-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+}

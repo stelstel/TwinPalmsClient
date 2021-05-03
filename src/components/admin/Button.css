@@ -1,0 +1,58 @@
+:root {
+    --primary: #494949;
+}
+html {
+    background-color: #494949;
+}
+.dashboard-btn {
+    width: 20vw;
+    height: 200px;
+    outline: none;
+    border: 1px solid #525252;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.dashboard-btn--primary {
+    background-color: #525252;
+    color: #fff;
+}
+
+.dashboard-btn--outline {
+    background: transparent;
+    color: #494949;
+    font-weight: bold;
+    border: 1px solid var(--primary);
+    transition: all 0.3s ease-out;
+}
+
+
+.dashboard-btn--medium i{
+    font-size: 50px;
+}
+.dashboard-btn--medium p{
+    font-size: 30px;
+}
+.dashboard-btn--medium:hover, .dashboard-btn--large:hover {
+    background: #fff;
+    color: #494949;
+    transition: all 0.3s ease-out;
+}
+.dashboard-btn--medium:hover i{
+    font-size: 55px;
+    transition: all 0.3s ease-out;
+}
+.dashboard-btn--medium:hover p{
+    font-size: 33px;
+    transition: all 0.3s ease-out;
+}
+
+@media screen and (max-width: 960px) {
+    .dashboard-btn {
+        width: 80vw;
+        height: 150px;
+        min-width: 300px;
+    }
+    
+}

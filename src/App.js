@@ -6,7 +6,7 @@ import MultiStepForm from './components/report/MultiStepForm';
 import Home from './components/home/Home';
 import Carousel from './components/analytics/Carousel';
 import CreateUser from './components/createuser/CreateUser';
-import Admin from './components/admin/Admin';
+import Dashboard from './components/admin/Dashboard';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           <Route path='/login' component={Login}/>
           <Route path='/report' component={MultiStepForm}/>
           <Route path='/datareports' component={Carousel}/>
-          <Route path='/admin' component={Admin}/>
+          <Route path='/admin' component={Dashboard}/>
           <Route path='/createuser' component={CreateUser}/>
         </Switch>
       </Router>
