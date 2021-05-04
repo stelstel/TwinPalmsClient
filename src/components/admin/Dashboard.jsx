@@ -12,7 +12,7 @@ function Dashboard() {
                 </Button>
                 <Button>
                     <i className="fas fa-icons"></i>
-                    <p>Manage events</p>
+                    <p>Change events</p>
                 </Button>
                 <Button>
                     <i className="fas fa-images"></i>
@@ -22,7 +22,6 @@ function Dashboard() {
                     <i className="fas fa-cog"></i>
                     <p>Settings</p>
                 </Button>
-
             </main>
             
         </>

@@ -15,7 +15,7 @@ html {
     margin-top: 20px;
 }
 .dashboard-btn--primary {
-    background-color: #525252;
+    background: linear-gradient(#1bbd7e, #2498db);
     color: #fff;
 }
 
@@ -32,7 +32,7 @@ html {
     font-size: 50px;
 }
 .dashboard-btn--medium p{
-    font-size: 30px;
+    font-size: 25px;
 }
 .dashboard-btn--medium:hover, .dashboard-btn--large:hover {
     background: #fff;
@@ -44,7 +44,7 @@ html {
     transition: all 0.3s ease-out;
 }
 .dashboard-btn--medium:hover p{
-    font-size: 33px;
+    font-size: 30px;
     transition: all 0.3s ease-out;
 }
 
