@@ -8,6 +8,14 @@ import Carousel from "./components/analytics/Carousel";
 import CreateUser from "./components/createuser/CreateUser";
 import Dashboard from "./components/admin/Dashboard";
 import ResetPassword from "./components/authentication/ResetPassword";
+import DataReports from "./components/DataReports/DataReports";
+import React from "react";
+import "./App.css";
+
+//import Carousel from './components/analytics/Carousel';
+
+//import Events from './components/admin/Events';
+//import Users from './components/admin/Users';
 
 function App() {
   return (
@@ -23,6 +31,9 @@ function App() {
           <Route path="/admin" component={Dashboard} />
           <Route path="/createuser" component={CreateUser} />
           <Route path="/reset-password" component={ResetPassword} />
+          <Route path="/datareports" component={DataReports} />
+          <Route path="/admin" component={Dashboard} />
+          <Route path="/createuser" component={CreateUser} />
         </Switch>
       </Router>
     </>

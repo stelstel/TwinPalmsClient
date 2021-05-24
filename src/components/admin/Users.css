@@ -1,0 +1,93 @@
+.users-container {
+    display: 'flex';
+    align-items: center;
+    flex-direction: column;
+    padding: 5rem;
+    min-height: 100vh;
+}
+.users-userlist-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.users-user {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    margin-bottom: 10px;
+    width: 700px;
+    border-top: 1px solid #cccccc;
+    padding-top: 10px;
+}
+
+.users-avatar {
+    height: 40px;   
+}
+
+.users-paragraph {
+    margin: 0px;
+    padding: 10px;
+    font-size: 18px;
+    color: #494949;
+}
+
+.users-buttons {
+    position: relative;
+    left: -58px;
+}
+
+.users-input {
+    position: relative;
+    left: -20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 20px;
+    width: 700px;
+    color: #494949;
+}
+.fa-search {
+    position: relative;
+    top: 2px;
+    left: -60px;
+    color: #959595;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.fa-edit {
+    color: #3f51b5;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.fa-trash-alt {
+    color: rgb(255, 35, 35);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+@media screen and (max-width: 1040px) {
+    .users-user {
+        position: relative;
+        left: 40px;
+        width: 90vw;
+    }
+    .users-buttons {
+        position: relative;
+        left: 0px;
+    }
+    .users-input {
+        position: relative;
+        left: 5px;
+        width: 85vw;
+
+    }
+    .fa-search {
+        visibility: hidden;
+
+    }
+}
+

@@ -1,6 +1,5 @@
 import React from 'react';
 import './Button.css'
-import { Link } from 'react-router-dom'
 
 const STYLES = ['dashboard-btn--primary', 'dashboard-btn--outline'];
 
@@ -22,7 +21,6 @@ export const Button = ({
     : SIZES[0]
 
     return (
-        <Link to="/login" className='dashboard-btn-mobile'>
             <button 
             className={`dashboard-btn ${checkButtonStyle} ${checkButtonSize}`}
             onClick={onClick}
@@ -30,6 +28,5 @@ export const Button = ({
             >
             {children}
             </button>
-        </Link>
     )
 }

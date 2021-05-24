@@ -1,0 +1,55 @@
+body {
+  background-color: darkgray;
+}
+
+.title {
+  margin-top: 3rem;
+  text-align: center;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  text-shadow: white 1px 1px;
+}
+.posts {
+  margin-top: 4rem;
+  display: inline-flexbox;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  font-size: 30px;
+  color: white;
+}
+.post {
+  margin-top: 1rem;
+  border: 1px solid;
+  border-color: black;
+  padding: 15px;
+  background-color: rgb(31, 31, 43);
+  border-radius: 7px;
+}
+
+.admin-main {
+  display: flex;
+}
+.admin-rev-container {
+  width: 50vw;
+  height: 50vh;
+  border: 1px solid black;
+}
+.admin-chart-container {
+  width: 50vw;
+  height: 50vh;
+  border: 1px solid black;
+}
+
+.admin-rev {
+  border-bottom: 1px solid black;
+  margin-top: 20px;
+  padding-left: 20px;
+}
+@media screen and (max-width: 1500px) {
+  .admin-main {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
