@@ -10,12 +10,10 @@ import './MultiStepForm.css';
 
 
 function MultiStepForm() {
-
-
     //GET REQUEST
     const sendGetRequest = async () => {
         try {
-            const res = await axios.get('https://localhost:44341/api/FbReports');
+            const res = await axios.get('https://localhost:44306/api/FbReports');
             console.log(res.data);
             console.log('successfull get request')
         } catch (err) {
@@ -27,14 +25,14 @@ function MultiStepForm() {
     //POST REQUEST'
     const sendPostRequest = async (data) => {
         try {
-            const res = await axios.post('https://localhost:44341/api/FbReports', data);
+            const res = await axios.post('https://localhost:44306/api/FbReports', data);
             console.log(data);
             console.log(res.data);
             console.log('successfull post request');
         } catch (err) {
             // Handle Error Here
             console.error(err);
-            console.log(events);
+            console.log('error with post request');
         }
     };
 
@@ -48,7 +46,7 @@ function MultiStepForm() {
 
     //Variable user and date
     const currentDate = new Date();
-    const date = currentDate.toDateString();
+    // const date = currentDate.toDateString();
 
     //Variables for step one form
     const [restaurant, setRestaurant] = useState('');
@@ -63,24 +61,16 @@ function MultiStepForm() {
     const [foodRevenue, setFoodRevenue] = useState('');
     const [beverageRevenue, setBeverageRevenue] = useState('');
     const [otherRevenue, setOtherRevenue] = useState('');
-    // const [totalRevenue, setTotalRevenue] = useState('');
-    // useEffect(() => {
-    //     setTotalRevenue(parseInt(foodRevenue.foodrevenue) + parseInt(beverageRevenue.beveragerevenue) + parseInt(otherRevenue.otherrevenue))
-    // }, [foodRevenue, beverageRevenue, otherRevenue])
     
     //Variables for step three form
     const [isPublicHoliday, setIsPublicHoliday] = useState('');
     const [hotelGuests, setHotelGuests] = useState('');
     const [outsideGuests, setOutsideGuests] = useState('');
     const [totalGuests, setTotalGuests] = useState('');
-    // const [averageSpendPerGuest, setaverageSpendPerGuest] = useState('');
     const [sourceOfBusiness, setSourceOfBusiness] = useState('');
     useEffect(() => {
         setTotalGuests(parseInt(hotelGuests.hotelguests) + parseInt(outsideGuests.outsideguests))
     }, [hotelGuests, outsideGuests])
-    // useEffect(() => {
-    //     setaverageSpendPerGuest(totalRevenue / totalGuests)
-    // }, [totalRevenue, totalGuests])
 
     //Functions for step one form
     const handleChangeRestaurant = e => {
@@ -140,12 +130,18 @@ function MultiStepForm() {
         food: parseInt(foodRevenue.foodrevenue),
         beverage: parseInt(beverageRevenue.beveragerevenue),
         otherIncome: parseInt(otherRevenue.otherrevenue),
-        totNrOfGuests: parseInt(totalGuests),
+        guestsFromHotel: 1,
+        guestsFromOutsideHotel: parseInt(totalGuests),
         isPublicHoliday: isPublicHoliday,
         notes: "Not added in frontend form",
-        date: date,
+        date: "2021-05-06T11:55:37.934Z",
+        // date: date,
         outletId: 1,
-        userId: restaurant,
+        userId: "b0b22e53-3ad2-4a0a-9e58-aa0a70a5a157",
+        localEventsId: 1,
+        weathers: [1],
+        guestSourceOfBusinesses: [1]
+
         }
     
 
@@ -154,6 +150,8 @@ function MultiStepForm() {
         e.preventDefault();
         setActiveStep(prevActiveStep => prevActiveStep + 1)
         if(activeStep >= 2) {
+            console.log(currentDate)
+            console.log(dataToPost)
             sendPostRequest(dataToPost);
             sendGetRequest()
         }

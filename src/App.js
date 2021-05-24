@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Navbar from './components/navigation/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -8,6 +9,8 @@ import Home from './components/home/Home';
 import DataReports from './components/DataReports/DataReports';
 import CreateUser from './components/createuser/CreateUser';
 import Dashboard from './components/admin/Dashboard';
+//import Events from './components/admin/Events';
+//import Users from './components/admin/Users';
 
 function App() {
   return (
