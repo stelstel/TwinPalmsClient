@@ -30,7 +30,6 @@ function Navbar() {
         <>
             <nav className="navbar">
                 <div className="navbar-container">
-                    {/* Link är samma sak som en a tag */}
                     <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
                         <img className="navbar-logo-img" src="../images/TPHR.jpg"  alt="error loading img" />
                     </Link>

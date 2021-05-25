@@ -26,9 +26,17 @@
 
 .users-paragraph {
     margin: 0px;
-    padding: 10px;
-    font-size: 18px;
+    padding-left: 10px;
+    font-size: 16px;
     color: #494949;
+}
+
+.users-name {
+    display: flex;
+}
+.users-email {
+    font-size: 14px;
+    color: blue;
 }
 
 .users-buttons {

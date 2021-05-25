@@ -4,9 +4,50 @@
     width: 480px;
     margin: 8px auto;
 }
-
+.events-title {
+    color: #494949;
+    font-size: 35px;
+    margin-bottom: 40px;
+}
+.event-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px;
+    width: 380px;
+}
+.event-input {
+    width: 80%;
+}
+.add-event-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 10px 10px;
+    width: 380px;
+    margin-top: 40px;
+}
+.event-input {
+    width: 80%;
+}
+.add-event-btn {
+    position: relative;
+    top: -3px;
+    width: 64px;
+    height: 60px;
+}
 @media screen and (max-width: 480px) {
     .events-paper {
         width: 100vw;
+        padding: 60px 20px;
+    }
+    .event-container {
+        width: 280px;
+    }
+    .event-input {
+        width: 70%;
+    }
+    .events-title {
+        font-size: 30px;
     }
 }

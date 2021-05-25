@@ -13,9 +13,7 @@ function Homee() {
                 <p>Login to continue</p>
                 <div className="hero-btns">
                 <Link to="/login" >
-                    
                         <Button className="btns" buttonSize="btn--large">LOGIN</Button>
-                    
                 </Link>
                 </div>
         </div>
