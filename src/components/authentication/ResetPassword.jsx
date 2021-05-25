@@ -5,20 +5,19 @@ import "./Login.css";
 import axios from "axios";
 
 function ResetPassword() {
-  let credentials,
-    setPassword = useState({
-      password: "",
-      confirmPassword: "",
-      email: "",
-      token: "",
-    });
+  let [data, setRequest] = useState({
+    password: "",
+    confirmPassword: "",
+    email: "",
+    token: "", // grab from url
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
         "https://localhost:44306/api/reset-password",
-        credentials
+        data
       );
 
       console.log(res.data);
@@ -30,13 +29,13 @@ function ResetPassword() {
     }
   };
   let handleChange = (e) => {
-    credentials = {
+    data = {
       password: e.target.password.value,
       confirmPassword: e.target.confirmPassword.value,
       email: e.target.email.value,
     };
 
-    setPassword(credentials);
+    setRequest(data);
   };
   // const paperStyle = {padding: 20, height: '700px', width: 480, margin: '20px auto'};
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
