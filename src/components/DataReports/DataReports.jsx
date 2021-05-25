@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import { Revenue3D, GuestPie3D } from './Charts';
 // style
 import './DataReports.css';
 
@@ -35,6 +36,47 @@ export default function DataReports() {
       })
     );
   };
+
+  // Preparing the chart data
+  // Preparing the chart data ______ REVENUE
+  const chartData = [
+    {
+      label: 'Food',
+      value: '88000',
+    },
+    {
+      label: 'Beverage',
+      value: '91000',
+    },
+    {
+      label: 'Other Income',
+      value: '17400',
+    },
+    {
+      label: 'Total',
+      value: '196400',
+    },
+  ];
+
+  // Preparing the chart data ______ GUEST
+  const chartData1 = [
+    {
+      label: 'Hotel',
+      value: '29',
+    },
+    {
+      label: 'Outside',
+      value: '21',
+    },
+    {
+      label: 'Average',
+      value: '50',
+    },
+    {
+      label: 'Total',
+      value: '100',
+    },
+  ];
 
   return (
     <>
@@ -72,6 +114,9 @@ export default function DataReports() {
             ))}
         </tbody>
       </Table>
+
+      <Revenue3D data={chartData} />
+      <GuestPie3D data={chartData1} />
     </>
   );
 }
