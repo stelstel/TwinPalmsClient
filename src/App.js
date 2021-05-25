@@ -9,11 +9,8 @@ import CreateUser from './components/createuser/CreateUser';
 import Dashboard from './components/admin/Dashboard';
 import ResetPassword from './components/authentication/ResetPassword';
 import DataReports from './components/DataReports/DataReports';
-
-//import Carousel from './components/analytics/Carousel';
-
-//import Events from './components/admin/Events';
-//import Users from './components/admin/Users';
+import Events from './components/admin/Events';
+import Users from './components/admin/Users';
 
 function App() {
   return (
@@ -28,8 +25,9 @@ function App() {
           <Route path="/admin" component={Dashboard} />
           <Route path="/createuser" component={CreateUser} />
           <Route path="/reset-password" component={ResetPassword} />
+          <Route path='/events' component={Events}/>
+          <Route path='/manageusers' component={Users} />
           <Route path="/datareports" component={DataReports} />
-          <Route path="/admin" component={Dashboard} />
         </Switch>
       </Router>
     </>
