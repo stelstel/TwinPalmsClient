@@ -113,7 +113,6 @@ export default function DataReports() {
               </tr>
             ))}
         </tbody>
-        <br />
       </Table>
 
       <Revenue3D data={chartData} />
