@@ -12,7 +12,6 @@ import StepFour from './StepFour';
 
 function MultiStepForm() {
 
-    const [error, setError] = useState(false)
 
     const [isPublicHolidayChecked, setIsPublicHolidayChecked] = useState(false)
     const handleClickIsPublicHoliday = () => setIsPublicHolidayChecked(!isPublicHolidayChecked)
@@ -195,7 +194,6 @@ function MultiStepForm() {
                 />;
             case 1:
                 return <StepTwo
-                    error={error}
                     tables={tables}
                     handleChangeTables={handleChangeTables}
                     foodRevenue={foodRevenue}
