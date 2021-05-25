@@ -21,9 +21,10 @@ function Login() {
                     </Grid>
                         <TextField  label='Username' placeholder="Enter Username" style={{marginTop: '40px'}} fullWidth required/>
                         <TextField  label="Password" placeholder="Enter Password" style={{marginTop: '40px'}} type="password" fullWidth required/>
-                        <Link to="./report" style={{textDecoration: 'none'}}>
+                        <Link to="/report" style={{textDecoration: 'none'}}>
                             <Button type="submit" color="primary" variant="contained" style={{marginTop: '60px'}} fullWidth>Login</Button>
                         </Link>
+                        <Link to="/home" className="forgot-password"><div style={{marginTop: '20px'}}>Forgot Password?</div></Link>
                 </Paper>
             </Grid>
         </Grid>

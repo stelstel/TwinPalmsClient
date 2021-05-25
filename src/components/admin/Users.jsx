@@ -1,63 +1,63 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Users.css';
+import axios from 'axios';
 
 function Users() {
-
+   
+    const url = 'https://localhost:44306/api/Users'
+    const [users, setUsers] = useState();
     const [searchTerm, setSearchterm] = useState("");
 
-    const users = [
-        {name: 'Robin Granberg'},
-        {name: 'Claes Lexicon'},
-        {name: 'Stefan Lexicon'},
-        {name: 'Anette Lexicon'},
-        {name: 'Marcelo Lexicon'},
-        {name: 'Sheliann Lexicon'},
-        {name: 'Robin Granberg'},
-        {name: 'Claes Lexicon'},
-        {name: 'Stefan Lexicon'},
-        {name: 'Anette Lexicon'},
-        {name: 'Marcelo Lexicon'},
-        {name: 'Sheliann Lexicon'},
-        {name: 'Robin Granberg'},
-        {name: 'Claes Lexicon'},
-        {name: 'Stefan Lexicon'},
-        {name: 'Anette Lexicon'},
-        {name: 'Marcelo Lexicon'},
-        {name: 'Sheliann Lexicon'},
-        {name: 'Robin Granberg'},
-        {name: 'Claes Lexicon'},
-        {name: 'Stefan Lexicon'},
-        {name: 'Anette Lexicon'},
-        {name: 'Marcelo Lexicon'},
-        {name: 'Sheliann Lexicon'},
-    ]
+
+    const sendGetRequest = async (url) => {
+        try {
+            const res = await axios.get(url);
+            console.log(res.data);
+            console.log('successfull get request')
+            setUsers(res.data)
+
+        } catch (err) {
+            // Handle Error Here
+            console.error(err);
+        }
+    };
+    useEffect(() => {   
+        sendGetRequest(url)
+    }, []) 
 
     return (
         <div style={{display: 'flex'}} className="users-container">
             <div><input onChange={e => {setSearchterm(e.target.value)}} className="users-input" type="text" placeholder="Search"  /><i className="fas fa-search"></i></div>
-            {users.filter((val) => {
+            {users && 
+            users.filter((val) => {
                 if (searchTerm === "") {
                     return val
-                } else if (val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                } else if (
+                    val.result.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                    || val.result.lastName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                    || val.result.email.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return val
                 }
                 return null
             })
             .map((val, key) => {
                 return (
-                    <>
-                        <div className="users-userlist-container">
-                            <div className="users-user" key={key}>
+                        <div key={key} className="users-userlist-container">
+                            <div className="users-user">
                                 <img className="users-avatar" src="/images/user.png" alt="user" />
-                                <p className="users-paragraph">{val.name}</p>
+                                <div>
+                                    <div className="users-name">
+                                        <p className="users-paragraph">{val.result.firstName}</p>
+                                        <p className="users-paragraph">{val.result.lastName}</p>
+                                    </div>
+                                    <p className="users-paragraph users-email">{val.result.email}</p>
+                                </div>
                             </div>
                             <div className="users-buttons">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-alt"></i>
+                                <i className="fas fa-edit"></i>
+                                <i className="fas fa-trash-alt"></i>
                             </div>
                         </div>
-                    </>
-
             )})}
         </div>
     )

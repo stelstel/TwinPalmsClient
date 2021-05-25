@@ -7,21 +7,22 @@ import StepTwo from './StepTwo';
 import StepThree from './StepThree';
 import axios from 'axios';
 import './MultiStepForm.css';
+import StepFour from './StepFour';
 
 
 function MultiStepForm() {
-    //GET REQUEST
-    const sendGetRequest = async () => {
-        try {
-            const res = await axios.get('https://localhost:44306/api/FbReports');
-            console.log(res.data);
-            console.log('successfull get request')
-        } catch (err) {
-            // Handle Error Here
-            console.error(err);
-        }
-    };
-    
+
+    const [error, setError] = useState(false)
+
+    const [isPublicHolidayChecked, setIsPublicHolidayChecked] = useState(false)
+    const handleClickIsPublicHoliday = () => setIsPublicHolidayChecked(!isPublicHolidayChecked)
+
+    const [isStormyChecked, setIsStormyChecked] = useState(false);
+    const isWeatherStormy = () => setIsStormyChecked(!isStormyChecked)
+
+    const [isSunnyChecked, setIsSunnyChecked] = useState(false);
+    const isWeatherSunny = () => setIsSunnyChecked(!isSunnyChecked)
+
     //POST REQUEST'
     const sendPostRequest = async (data) => {
         try {
@@ -40,7 +41,7 @@ function MultiStepForm() {
     const [activeStep, setActiveStep] = useState(0);
 
     function getSteps() {
-        return ["General", "Revenue", "Source"];
+        return ["General", "Revenue", "Source", "Comments"];
     }
     const steps = getSteps();
 
@@ -141,30 +142,31 @@ function MultiStepForm() {
         localEventsId: 1,
         weathers: [1],
         guestSourceOfBusinesses: [1]
-
         }
     
-
     //Functions for prev and next buttons
     const handleNext = (e) => {
         e.preventDefault();
+
         setActiveStep(prevActiveStep => prevActiveStep + 1)
-        if(activeStep >= 2) {
+        if(activeStep === 1) {
+            console.log("step two submit")
+        }
+        if(activeStep >= 3) {
             console.log(currentDate)
             console.log(dataToPost)
-            sendPostRequest(dataToPost);
-            sendGetRequest()
+            sendPostRequest(dataToPost)
         }
     }
     const handlePrev = (e) => {
         e.preventDefault();
-        setActiveStep(prevActiveStep => prevActiveStep - 1)
+        setActiveStep(prevActiveStep => prevActiveStep - 1)   
     }
 
     //Styles
     const useStyles = makeStyles({
         root: {
-            paddingTop: 30,
+            paddingTop: 2,
             "& .MuiStepIcon-root.MuiStepIcon-completed": {
                 color: "#1bbd7e"
             }
@@ -177,7 +179,15 @@ function MultiStepForm() {
                 return <StepOne 
                     restaurant={restaurant}
                     handleChangeRestaurant={handleChangeRestaurant}
+                    isPublicHolidayChecked={isPublicHolidayChecked}
+                    handleClickIsPublicHoliday={handleClickIsPublicHoliday}
+                    isPublicHoliday={isPublicHoliday}
+                    handleChangeIsPublicHoliday={handleChangeIsPublicHoliday}
                     weather={weather}
+                    isSunnyChecked={isSunnyChecked}
+                    isWeatherSunny={isWeatherSunny}
+                    // isStormyChecked={isStormyChecked}
+                    isWeatherStormy={isWeatherStormy}
                     handleChangeWeather={handleChangeWeather}
                     events={events}
                     handleChangeEvents={handleChangeEvents}
@@ -185,6 +195,7 @@ function MultiStepForm() {
                 />;
             case 1:
                 return <StepTwo
+                    error={error}
                     tables={tables}
                     handleChangeTables={handleChangeTables}
                     foodRevenue={foodRevenue}
@@ -198,15 +209,19 @@ function MultiStepForm() {
                 />;
             case 2: 
                 return <StepThree 
-                    isPublicHoliday={isPublicHoliday}
-                    handleChangeIsPublicHoliday={handleChangeIsPublicHoliday}
                     hotelGuests={hotelGuests}
                     handleChangeHotelGuests={handleChangeHotelGuests}
                     outsideGuests={outsideGuests}
                     handleChangeOutsideGuests={handleChangeOutsideGuests}
+                />
+
+                
+            case 3: 
+                return <StepFour 
+
                 />;
             default:
-                return "Error, remove prev button"
+                return "Error, something went wrong"
         }
     }
 
@@ -234,7 +249,7 @@ function MultiStepForm() {
                 :(
                     <>    
                         {getStepsContent(activeStep)}
-                        <Grid style={{display: 'flex', justifyContent: 'center', marginTop: 60}}>
+                        <Grid style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
                             <Link to="/home" style={{textDecoration: 'none'}}>{activeStep <= 0 ?
                                 <Button color="primary" variant="contained" style={{marginTop: '60px', margin: ' 10px', width: '95px'}} >
                                     Cancel
@@ -243,7 +258,7 @@ function MultiStepForm() {
                             <Button color="primary" variant="contained" style={{marginTop: '60px', margin: ' 10px', width: '95px'}} onClick={handlePrev}>
                                 Prev
                             </Button> : ''}
-                            <Button color="primary" variant="contained" style={{marginTop: '50px', margin: ' 10px', width: '95px'}} onClick={handleNext}>
+                            <Button color="primary" variant="contained" style={{margin: ' 10px', width: '95px'}} onClick={handleNext}>
                                 {activeStep === steps.length - 1 ? "Submit" : "Next"}
                             </Button>
                         </Grid>
