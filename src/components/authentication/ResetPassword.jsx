@@ -5,38 +5,53 @@ import "./Login.css";
 import axios from "axios";
 
 function ResetPassword() {
-  let [data, setRequest] = useState({
+  const urlParam = new URLSearchParams(window.location.search).toString();
+  //const reset_token = encodeURIComponent(urlParam.get("token"));
+  /*  const url = new URL(
+    "https://localhost:44306/api/authentication/reset-password?token=" +
+      reset_token
+  ); */
+
+  //const queryString = urlParam.replace(/\+/g, "");
+  var fromQuery = window.location.href.split("=")[1];
+  var reset_token = encodeURIComponent(fromQuery);
+  //console.log("Token: ", reset_token);
+  //console.log("url: ", url);
+  console.log("urlParam: ", encodeURIComponent(urlParam));
+  console.log("reset_token: ", encodeURIComponent(fromQuery));
+  console.log("fromQuery: ", fromQuery);
+  //  console.log("urlParam escaped: ", escape(urlParam.get("token")));
+
+  let [state, setState] = useState({
     password: "",
     confirmPassword: "",
     email: "",
-    token: "", // grab from url
+    //token: reset_token, // grab from url
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://localhost:44306/api/reset-password",
-        data
+        "https://localhost:44306/api/authentication/reset-password?token=" +
+          reset_token,
+        state
       );
-
       console.log(res.data);
       console.log("successfull post request");
     } catch (err) {
       // Handle Error Here
-      console.error(err);
-      console.log("error with post request");
+      console.error("Error: ", err);
     }
   };
-  let handleChange = (e) => {
-    data = {
-      password: e.target.password.value,
-      confirmPassword: e.target.confirmPassword.value,
-      email: e.target.email.value,
-    };
 
-    setRequest(data);
-  };
+  function handleChange(e) {
+    const value = e.target.value;
+    setState({
+      ...state,
+      [e.target.name]: value,
+    });
+  }
   // const paperStyle = {padding: 20, height: '700px', width: 480, margin: '20px auto'};
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
@@ -52,7 +67,7 @@ function ResetPassword() {
           </Grid>
           <form onSubmit={handleSubmit}>
             <TextField
-              id="password"
+              name="password"
               onChange={handleChange}
               label="Password"
               placeholder="New Password"
