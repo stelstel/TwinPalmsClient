@@ -1,16 +1,17 @@
-import React from 'react';
-import './App.css';
-import Navbar from './components/navigation/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/authentication/Login';
-import MultiStepForm from './components/report/MultiStepForm';
-import Home from './components/home/Home';
-import CreateUser from './components/createuser/CreateUser';
-import Dashboard from './components/admin/Dashboard';
-import ResetPassword from './components/authentication/ResetPassword';
-import DataReports from './components/DataReports/DataReports';
-import Events from './components/admin/Events';
-import Users from './components/admin/Users';
+import React from "react";
+import "./App.css";
+import Navbar from "./components/navigation/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "./components/authentication/Login";
+import MultiStepForm from "./components/report/MultiStepForm";
+import Home from "./components/home/Home";
+import UserHome from "./components/home/UserHome";
+import CreateUser from "./components/createuser/CreateUser";
+import Dashboard from "./components/admin/Dashboard";
+import ResetPassword from "./components/authentication/ResetPassword";
+import DataReports from "./components/DataReports/DataReports";
+import Events from "./components/admin/Events";
+import Users from "./components/admin/Users";
 
 function App() {
   return (
@@ -25,9 +26,10 @@ function App() {
           <Route path="/admin" component={Dashboard} />
           <Route path="/createuser" component={CreateUser} />
           <Route path="/reset-password" component={ResetPassword} />
-          <Route path='/events' component={Events}/>
-          <Route path='/manageusers' component={Users} />
+          <Route path="/events" component={Events} />
+          <Route path="/manageusers" component={Users} />
           <Route path="/datareports" component={DataReports} />
+          <Route path="/user" component={UserHome} />
         </Switch>
       </Router>
     </>
