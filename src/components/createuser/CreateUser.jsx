@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 import { 
     Grid, 
     Paper, 
@@ -10,60 +11,53 @@ import {
     FormLabel, 
     RadioGroup, 
     FormControlLabel, 
-    Radio,
-    InputLabel,
-    Checkbox,
-    makeStyles
+    Radio
  } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import './CreateUser.css'
 
-const useStyles = makeStyles(theme => ({
-    formControl: {
-        minWidth: 100,
-        marginTop: 40
-    }
-}));
 
 function CreateUser() {
 
-    const classes = useStyles();
+    //REACT HOOKS
+    const [createUser, setCreateUser] = useState({
+        firstName: "",
+        lastName: "",
+        userName: "",
+        email: "",
+        phoneNumber: "0703825555",
+        role: "",
+        outlets: [
+            1
+        ],
+        hotels: [
+            1
+        ],
+        companies: [
+            1
+        ]
+    })
 
-    const avatarStyle = {backgroundColor: '#1bbd7e', marginTop: '30px'};
+    //POST REQUEST'
+    const sendPostRequest = async (data) => {
+        try {
+            const res = await axios.post('https://localhost:44306/api/Authentication', data);
+            console.log(data);
+            console.log(res.data);
+            console.log('successfull post request');
+        } catch (err) {
+            // Handle Error Here
+            console.error(err);
+            console.log('error with post request');
+        }
+    };
 
-    //Form Variables
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [restaurants, setRestaurants] = useState([]);
-
-    //Form Functions
-    const handleChangeUsername = (e) => {
-        setUsername(e.target.value)
-    }
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value)
-
-    }
-    const handleChangeRole = (e) => {
-        setRole(e.target.value)
-    }
-    const handleChangeRestaurant = e => {
-        let dataRestaurants = restaurants;
-        dataRestaurants.push(parseInt(e.target.value))
-        setRestaurants(dataRestaurants)
-
-    }
-    const createUserDataForApi = {
-        username: username,
-        password: password,
-        role: role,
-        restaurants: restaurants
-    }
-
+    //SUBIT FORM AND SEND IT TO DATABASE
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(createUserDataForApi)
+        console.log(createUser)
+        sendPostRequest(createUser)
+
     }
 
     return (
@@ -71,62 +65,71 @@ function CreateUser() {
             <Grid style={{paddingTop: '30px'}} >
                 <Paper className="createuser-paper" elevation={10} >
                     <Grid align="center">
-                        <Avatar style={avatarStyle}><AccountCircleIcon /></Avatar>
+                        <Avatar style={{backgroundColor: '#1bbd7e', marginTop: '30px'}}><AccountCircleIcon /></Avatar>
                         <h2 style={{ marginTop: 30}}>Create User</h2>
-                    </Grid>
-                    <TextField onChange={handleChangeUsername}  label='Username' placeholder="Enter Username" style={{marginTop: '40px'}} fullWidth required/>
-                    <TextField onChange={handleChangePassword}  label="Password" placeholder="Enter Password" style={{marginTop: '40px'}} type="password" fullWidth required/>
-                    <TextField label="Repeat Password" placeholder="Repeat Password" style={{marginTop: '40px'}} type="password" fullWidth required/>
+                    </Grid> 
+                    <TextField 
+                        onChange={e => setCreateUser({ ...createUser, userName: e.target.value })} 
+                        value={createUser.userName}  
+                        label='Username' 
+                        placeholder="Enter username" 
+                        style={{marginTop: '40px'}} 
+                        type="text" 
+                        fullWidth 
+                        required
+                        />           
+                    <TextField 
+                        onChange={e => setCreateUser({ ...createUser, firstName: e.target.value })} 
+                        value={createUser.firstName}  label="First name" placeholder="Enter first name" 
+                        style={{marginTop: '40px'}} 
+                        type="text" 
+                        fullWidth 
+                        required
+                        />
+                    <TextField 
+                        onChange={e => setCreateUser({ ...createUser, lastName: e.target.value })} 
+                        value={createUser.lastName}  label="Last name" placeholder="Enter last name" 
+                        style={{marginTop: '40px'}} type="text" 
+                        fullWidth 
+                        required
+                        />
+                    <TextField 
+                        onChange={e => setCreateUser({ ...createUser, email: e.target.value })} 
+                        value={createUser.email}  
+                        label='Email' 
+                        placeholder="Enter email" 
+                        style={{marginTop: '40px'}} 
+                        type="email" 
+                        fullWidth 
+                        required
+                        />
                     <FormControl style={{marginTop: 60, marginBottom: -20}} component="fieldset">
                         <FormLabel component="legend">Choose user access level</FormLabel>
-                        <RadioGroup onChange={handleChangeRole} row aria-label="holiday" name="holiday" value={role}>
-                            <FormControlLabel value="basic" control={<Radio color="primary"/>} label="Basic" />
-                            <FormControlLabel value="admin" control={<Radio color="primary"/>} label="Admin" />
+                        <RadioGroup  row aria-label="holiday" name="holiday" >
+                            <FormControlLabel 
+                                onChange={e => setCreateUser({ ...createUser, role: e.target.value })} 
+                                value="basic"
+                                label="Basic" 
+                                control={<Radio color="primary"/>} 
+                                />
+                            <FormControlLabel 
+                                onChange={e => setCreateUser({ ...createUser, role: e.target.value })} 
+                                value="admin" 
+                                label="Admin"
+                                control={<Radio color="primary"/>}
+                                />
                         </RadioGroup>
                     </FormControl>
-                    <Grid className={classes.formControl}>
-                        <InputLabel style={{marginTop: 50, marginBottom: 10}}>Choose users restaurants</InputLabel>
-                        <Grid style={{display: 'flex', justifyContent: 'space-between', width: 250}}>
-                            <Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                            value={1}
-                                            onChange={handleChangeRestaurant}
-                                            color="primary"
-                                        />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 1</InputLabel>
-                                </Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                        value={2}
-                                        onChange={handleChangeRestaurant}
-                                        color="primary"
-                                    />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 3</InputLabel>
-                                </Grid>
-                            </Grid>
-                            <Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                        value={4}
-                                        onChange={handleChangeRestaurant}
-                                        color="primary"
-                                    />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 2</InputLabel>
-                                </Grid>
-                                <Grid style={{display: 'flex', alignItems: 'center'}}>
-                                    <Checkbox
-                                        value={3}
-                                        onChange={handleChangeRestaurant}
-                                        color="primary"
-                                    />
-                                    <InputLabel style={{fontSize: '14px'}}>Restaurant 4</InputLabel>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
                     <Link to="./report" style={{textDecoration: 'none'}}>
-                        <Button onClick={handleSubmit} type="submit" color="primary" variant="contained" style={{marginTop: '40px'}} fullWidth>Create User</Button>
+                        <Button 
+                            onClick={handleSubmit} 
+                            type="submit" 
+                            color="primary" 
+                            variant="contained" 
+                            style={{marginTop: '80px'}} 
+                            fullWidth
+                            >Create User
+                        </Button>
                     </Link>
                 </Paper>
             </Grid>
