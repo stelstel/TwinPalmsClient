@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../../App.css";
 import Login from "../authentication/Login";
+import ChangePassword from "../authentication/ChangePassword";
 import "./Home.css";
 
 function UserHome() {
@@ -10,6 +11,31 @@ function UserHome() {
     hotels: [],
     token: "",
   });
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    let passwords = {
+      currentPassword: e.target["currentPassword"].value,
+      newPassword: e.target["newPassword"].value,
+    };
+    try {
+      const res = await axios.post(
+        "https://localhost:44306/api/authentication/change-password",
+        passwords,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+
+      console.log("successfull post request");
+      alert("Password changed!");
+    } catch (err) {
+      // Handle Error Here
+      console.error("Error: ", err);
+    }
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     let credentials = {
@@ -35,7 +61,12 @@ function UserHome() {
       console.error("Error: ", err);
     }
   };
-  return <Login onSubmitFunction={handleLogin} />;
+  return (
+    <>
+      <Login onSubmitFunction={handleLogin} />
+      <ChangePassword onSubmitFunction={handleChangePassword} />
+    </>
+  );
 }
 
 export default UserHome;
