@@ -18,6 +18,7 @@ function Users() {
 
         } catch (err) {
             // Handle Error Here
+            console.log("error with get request for users")
             console.error(err);
         }
     };
@@ -33,9 +34,9 @@ function Users() {
                 if (searchTerm === "") {
                     return val
                 } else if (
-                    val.result.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
-                    || val.result.lastName.toLowerCase().includes(searchTerm.toLowerCase()) 
-                    || val.result.email.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    val.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                    || val.lastName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                    || val.email.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return val
                 }
                 return null
@@ -47,10 +48,10 @@ function Users() {
                                 <img className="users-avatar" src="/images/user.png" alt="user" />
                                 <div>
                                     <div className="users-name">
-                                        <p className="users-paragraph">{val.result.firstName}</p>
-                                        <p className="users-paragraph">{val.result.lastName}</p>
+                                        <p className="users-paragraph">{val.firstName}</p>
+                                        <p className="users-paragraph">{val.lastName}</p>
                                     </div>
-                                    <p className="users-paragraph users-email">{val.result.email}</p>
+                                    <p className="users-paragraph users-email">{val.email}</p>
                                 </div>
                             </div>
                             <div className="users-buttons">
