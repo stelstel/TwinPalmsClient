@@ -2,7 +2,8 @@
 .multistepform-paper {
     padding: 20px;
     width: 480px;
-    margin: 8px auto
+    margin: 8px auto;
+    min-height: 800px
 }
 
 @media screen and (max-width: 480px) {
