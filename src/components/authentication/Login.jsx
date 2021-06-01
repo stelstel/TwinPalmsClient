@@ -4,15 +4,25 @@ import axios from "axios";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
-export const UserContext = React.createContext();
+
+
 function Login() {
-  // const paperStyle = {padding: 20, height: '700px', width: 480, margin: '20px auto'};
+
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
   let [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
+  //REACT HOOKS FOR ERRORS
+  const [userNameError, setUserNameError] = useState({
+    error: false,
+    errorText: ""
+  })
+  const [passWordError, setPasswordError] = useState({
+    error: false,
+    errorText: ""
+  })
 
   const [user, setUser] = useState({
     outlets: [],
@@ -28,7 +38,21 @@ function Login() {
     });
   }
 
-  const handleLogin = async (e) => {
+
+  
+
+  //SUBMIT AND ERROR HANDLING
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if(state.username === "") {
+      setUserNameError({ ...userNameError, error: true, errorText: "Error Message"})
+    }
+    if(state.password === "") {
+      setPasswordError({ ...passWordError, error: true, errorText: "Error Message"})
+      return
+    }
+    const handleLogin = async (e) => {
     e.preventDefault();
     await axios
       .post("https://localhost:44306/api/authentication/login", credentials)
@@ -47,6 +71,9 @@ function Login() {
       });
   };
 
+  }
+  
+
   return (
     <Grid className="login-page-container">
       <Grid style={{ paddingTop: "60px" }}>
@@ -57,19 +84,26 @@ function Login() {
             </Avatar>
             <h2 style={{ marginTop: 30 }}>Login</h2>
           </Grid>
-          <form onSubmit={handleLogin}>
+          <form>
             <TextField
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setUserNameError({ ...userNameError, error: false, errorText: ""})
+              }}
               id="username"
               name="username"
               label="Username"
               placeholder="Enter Username"
               style={{ marginTop: "40px" }}
               fullWidth
-              required
+              helperText={userNameError.errorText}
+              error={userNameError.error}
             />
             <TextField
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setPasswordError({ ...passWordError, error: false, errorText: ""})
+              }}
               id="password"
               name="password"
               label="Password"
@@ -77,10 +111,12 @@ function Login() {
               style={{ marginTop: "40px" }}
               type="password"
               fullWidth
-              required
+              helperText={passWordError.errorText}
+              error={passWordError.error}
             />
 
             <Button
+              onClick={handleSubmit}
               type="submit"
               color="primary"
               variant="contained"
@@ -90,7 +126,7 @@ function Login() {
               Login
             </Button>
           </form>
-          <Link to="/home" className="forgot-password">
+          <Link to="/reset-password" className="forgot-password">
             <div style={{ marginTop: "20px" }}>Forgot Password?</div>
           </Link>
         </Paper>

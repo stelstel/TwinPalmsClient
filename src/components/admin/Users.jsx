@@ -27,7 +27,7 @@ function Users() {
     }, []) 
 
     return (
-        <div style={{display: 'flex'}} className="users-container">
+        <div style={{display: 'flex', backgroundColor: 'white'}} className="users-container">
             <div><input onChange={e => {setSearchterm(e.target.value)}} className="users-input" type="text" placeholder="Search"  /><i className="fas fa-search"></i></div>
             {users && 
             users.filter((val) => {

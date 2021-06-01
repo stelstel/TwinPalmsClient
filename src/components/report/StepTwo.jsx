@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     Grid,
     TextField,
@@ -7,25 +7,8 @@ import {
 
 function StepTwo(props) {
 
-    const [file, setFile] = useState();
+    
 
-    const onChange = e => {
-        let files = e.target.files;
-        console.log()
-        setFile(e.target.files[0].name)
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onload= (e) => {
-            console.log(e.target.result)
-            
-            
-
-            // const url = "url to api";
-            // const formData={file:e.target.result}
-            // return post(url, formData)
-            // .then(response => console.log(response))
-        }
-    }
 
 
     return (
@@ -39,9 +22,9 @@ function StepTwo(props) {
                         label='Enter todays tables/checks' 
                         type="number"
                         onChange={props.handleChangeTables('tables')}
-                        defaultValue={props.tables.tables}        
+                        defaultValue={props.tables.tables}   
+                        error={props.tablesUndefined}     
                         fullWidth 
-                        required
                     />
                     <TextField  
                         style={{marginTop: '40px'}}
@@ -50,9 +33,8 @@ function StepTwo(props) {
                         label="Enter todays food revenue" 
                         onChange={props.handleChangeFoodRevenue('foodrevenue')}
                         defaultValue={props.foodRevenue.foodrevenue}  
-                        error={props.error}
+                        error={props.foodRevenueUndefined}
                         fullWidth 
-                        required
                     />
                     <TextField  
                         style={{marginTop: '40px'}}
@@ -61,8 +43,8 @@ function StepTwo(props) {
                         type="number"
                         onChange={props.handleChangeBeverageRevenue('beveragerevenue')}
                         defaultValue={props.beverageRevenue.beveragerevenue}  
+                        error={props.beverageRevenueUndefined}
                         fullWidth 
-                        required
                     />
                     <TextField  
                         style={{marginTop: '40px'}}
@@ -71,14 +53,14 @@ function StepTwo(props) {
                         type="number"
                         onChange={props.handleChangeOtherRevenue('otherrevenue')}
                         defaultValue={props.otherRevenue.otherrevenue}  
+                        error={props.otherRevenueUndefined}
                         fullWidth 
-                        required
                     />
                     <Grid>
-                        <InputLabel style={{marginTop: '60px'}}>Add a picture on your cash registry</InputLabel>
-                        <input style={{display: 'none'}} type="file" name="file" id="file" onChange={(e)=>onChange(e)} />
+                        <InputLabel error={props.fileUndefined} style={{marginTop: '60px'}}>Add a picture on your cash registry</InputLabel>
+                        <input style={{display: 'none'}} type="file" name="file" id="file" onChange={(e)=> props.handleChangeFile(e)} />
                         <label style={{marginTop: '20px', padding: '5px 0px', width: '95px', height: '36px', textAlign: 'center', border: '1px solid #494949', borderRadius: '4px', cursor: 'pointer'}} htmlFor="file">Select file</label>
-                        <label style={{marginLeft: '10px', color: '#494949'}}>{file ? file : 'No file chosen'}</label>
+                        <label style={{marginLeft: '10px', color: '#494949'}}>{props.file ? props.file : 'No file chosen'}</label>
                     </Grid>
             </Grid>
             </div>

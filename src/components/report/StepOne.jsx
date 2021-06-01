@@ -21,14 +21,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function StepOne(props) {
-
-    const listEvents = props.eventsHardcoded.map((item, key) => {
-        return (
-            <MenuItem key={key} value="">{item}</MenuItem>
-        )
-    })
+    
 
     const classes = useStyles();
+
+
 
     
 
@@ -38,22 +35,24 @@ function StepOne(props) {
                     <Grid align="center">
                         <h3 style={{marginBottom: '25px'}}>General information</h3>
                     </Grid>
-                    <FormControl className={classes.formControl} fullWidth required>
+                    <FormControl 
+                        error={props.restaurantUndefined} 
+                        className={classes.formControl} 
+                        fullWidth 
+                        >
                         <InputLabel>Choose your restaurant</InputLabel>
                         <Select
                             id='restaurant'
                             labelId='restaurant'
-                            defaultValue={props.restaurant}
-                            onChange={props.handleChangeRestaurant}
-                            
-                            
+                            value={props.restaurant}
+                            onChange={props.handleChangeRestaurant}                           
                         >
                             <MenuItem value={1}>Restaurant 1</MenuItem>
                             <MenuItem value={2}>Restaurant 2</MenuItem>
                             <MenuItem value={3}>Restaurant 3</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl style={{marginTop: 45}} component="fieldset">
+                    <FormControl error={props.isPublicHolidayUndefined} style={{marginTop: 45}} component="fieldset">
                     <FormLabel component="legend">Is it a public holiday?</FormLabel>
                         <RadioGroup 
                             onChange={props.handleChangeIsPublicHoliday} 
@@ -61,13 +60,13 @@ function StepOne(props) {
                             name="holiday"
                         >
                         <FormControlLabel value="yes" control={<Radio onClick={props.handleClickIsPublicHoliday} checked={props.isPublicHolidayChecked} color="primary"/>} label="Yes" />
-                        <FormControlLabel value="no"  control={<Radio onClick={props.handleClickIsPublicHoliday} checked={!props.isPublicHolidayChecked} color="primary"/>} label="No" />
+                        <FormControlLabel value="no"  control={<Radio onClick={props.handleClickIsNotPublicHoliday} checked={props.isNotPublicHolidayChecked} color="primary"/>} label="No" />
                         </RadioGroup>
                     </FormControl>
                     <Grid className={classes.formControl}>
                         
                             
-                        <FormControl   style={{marginTop: 45}}>
+                        <FormControl error={props.weatherUndefined}  style={{marginTop: 45}}>
                             <InputLabel style={{position: 'relative', top: -30}}>How’s the weather?</InputLabel>
                             <Grid style={{display: 'flex', justifyContent: 'space-between', width: 250}}>
                                 <Grid>
@@ -77,6 +76,7 @@ function StepOne(props) {
                                                 onChange={(e)=>props.handleChangeWeather(e)}
                                                 color="primary"
                                                 onClick={props.isWeatherSunny}
+                                                checked={props.isSunnyChecked}
                                                 
                                             />
                                         <label style={{fontSize: '14px'}}>Sunny/Clear</label>
@@ -86,6 +86,8 @@ function StepOne(props) {
                                             value='Partially Cloudy'
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
+                                            onClick={props.isWeatherPartiallyCloudy}
+                                            checked={props.isPartiallyCloudyChecked}
                                         />
                                         <label style={{fontSize: '14px'}}>Partially Cloudy</label>
                                     </Grid>
@@ -94,6 +96,8 @@ function StepOne(props) {
                                             value='Overcast'
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
+                                            onClick={props.isWeatherOvercast}
+                                            checked={props.isOvercastChecked}
                                         />
                                         <label style={{fontSize: '14px'}}>Overcast</label>
                                     </Grid>
@@ -104,6 +108,8 @@ function StepOne(props) {
                                             value='Rain'
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
+                                            onClick={props.isWeatherRain}
+                                            checked={props.isRainChecked}
                                         />
                                         <label style={{fontSize: '14px'}}>Rain</label>
                                     </Grid>
@@ -112,6 +118,8 @@ function StepOne(props) {
                                             value='Showers'
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
+                                            onClick={props.isWeatherShowers}
+                                            checked={props.isShowersChecked}
                                         />
                                         <label style={{fontSize: '14px'}}>Showers</label>
                                     </Grid>
@@ -130,15 +138,30 @@ function StepOne(props) {
                         </FormControl>
                     </Grid>
                     {/* Local Events */}
-                    <FormControl style={{marginTop: 10}} fullWidth required>
+                    <FormControl error={props.eventsUndefined} style={{marginTop: 10}} fullWidth required>
                         <InputLabel>Any local events?</InputLabel>
                         <Select
                             labelId='localevents'
                             id='localevents'
-                            defaultValue={props.events}
+                            value={props.selectedEvent}
+                            defaultValue=''
                             onChange={props.handleChangeEvents}
                         >
-                            {listEvents}
+                            {props.events &&
+                            props.events
+                            .filter((item) => {
+                                if(item.active === true) {
+                                    return item
+                                }
+                                return null
+                            })
+                            .map((item, key) => {
+                                return (
+                                    
+                                    <MenuItem key={key} value={item.event}>{item.event}</MenuItem>
+                                )
+                            })
+                            }
                         </Select>
                     </FormControl>
                     <FormControl style={{marginTop: 45}} fullWidth required>
@@ -148,7 +171,6 @@ function StepOne(props) {
                             aria-label="maximum height"
                             placeholder="Additional information about local events"
                             defaultValue=""
-                            required
                         />
                     </FormControl>
                 </Grid>
