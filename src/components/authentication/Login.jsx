@@ -5,14 +5,23 @@ import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
 
-function Login(props) {
-  // const paperStyle = {padding: 20, height: '700px', width: 480, margin: '20px auto'};
+function Login() {
+
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
   let [state, setState] = useState({
     username: "",
     password: "",
   });
+  //REACT HOOKS FOR ERRORS
+  const [userNameError, setUserNameError] = useState({
+    error: false,
+    errorText: ""
+  })
+  const [passWordError, setPasswordError] = useState({
+    error: false,
+    errorText: ""
+  })
 
   function handleChange(e) {
     const value = e.target.value;
@@ -22,6 +31,19 @@ function Login(props) {
     });
   }
 
+  //SUBMIT AND ERROR HANDLING
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if(state.username === "") {
+      setUserNameError({ ...userNameError, error: true, errorText: "Error Message"})
+    }
+    if(state.password === "") {
+      setPasswordError({ ...passWordError, error: true, errorText: "Error Message"})
+      return
+    }
+  }
+  
   return (
     <Grid className="login-page-container">
       <Grid style={{ paddingTop: "60px" }}>
@@ -32,19 +54,26 @@ function Login(props) {
             </Avatar>
             <h2 style={{ marginTop: 30 }}>Login</h2>
           </Grid>
-          <form onSubmit={props.onSubmitFunction}>
+          <form>
             <TextField
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setUserNameError({ ...userNameError, error: false, errorText: ""})
+              }}
               id="username"
               name="username"
               label="Username"
               placeholder="Enter Username"
               style={{ marginTop: "40px" }}
               fullWidth
-              required
+              helperText={userNameError.errorText}
+              error={userNameError.error}
             />
             <TextField
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setPasswordError({ ...passWordError, error: false, errorText: ""})
+              }}
               id="password"
               name="password"
               label="Password"
@@ -52,10 +81,12 @@ function Login(props) {
               style={{ marginTop: "40px" }}
               type="password"
               fullWidth
-              required
+              helperText={passWordError.errorText}
+              error={passWordError.error}
             />
 
             <Button
+              onClick={handleSubmit}
               type="submit"
               color="primary"
               variant="contained"
