@@ -39,20 +39,28 @@ function CreateUser() {
             1
         ]
     })
-
+    //HOOKS FOR ERRORS
+    const [userNameError, setUserNameError] = useState(false)
+    const [firstNameError, setFirstNameError] = useState(false)
+    const [lastNameError, setLastNameError] = useState(false)
+    const [emailError, setEmailError] = useState(false)
+    const [accessLevelError, setAccessLevelError] = useState(false)
+    //HOOKS FOR ACCESS LEVEL
     const [basicActive, setBasicActive] = useState(false)
     const [adminActive, setAdminActive] = useState(false)
-
+    //HOOKS FOR SCROLL LISTS
     const [outlets, setOutlets] = useState();
     const [companies, setCompanies] = useState();
 
     const handleClickBasic = () => {
         setAdminActive(false)
         setBasicActive(true)
+        setAccessLevelError(false)
     }
     const handleClickAdmin = () => {
         setBasicActive(false)
-        setAdminActive(true)    
+        setAdminActive(true)  
+        setAccessLevelError(false)  
     }
 
     //POST REQUEST'
@@ -68,14 +76,6 @@ function CreateUser() {
             console.log('error with post request');
         }
     };
-
-    //SUBIT FORM AND SEND IT TO DATABASE
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(createUser)
-        sendPostRequest(createUser)
-
-    }
   
     //FETCH LIST OF OUTLETS FROM API
     const url = 'https://localhost:44306/api/Outlets'
@@ -119,6 +119,32 @@ function CreateUser() {
         sendGetRequest(url)
     }, []) 
 
+    //SUBIT FORM AND SEND IT TO DATABASE AND ERROR HANDLING
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if(createUser.userName === "") {
+            setUserNameError(true)
+
+        }
+        if(createUser.firstName === "") {
+            setFirstNameError(true)
+
+        }
+        if(createUser.lastName === "") {
+            setLastNameError(true)
+
+        }
+        if(createUser.email === "") {
+            setEmailError(true)
+        }
+        if(basicActive === false && adminActive === false) {
+            setAccessLevelError(true)
+            return
+        }
+        
+        sendPostRequest(createUser)
+
+    }
 
 
     return (
@@ -130,41 +156,57 @@ function CreateUser() {
                         <h2 style={{ marginTop: 20}}>Create User</h2>
                     </Grid> 
                     <TextField 
-                        onChange={e => setCreateUser({ ...createUser, userName: e.target.value })} 
+                        onChange={e => {
+                            setCreateUser({ ...createUser, userName: e.target.value })
+                            setUserNameError(false)
+                        }} 
                         value={createUser.userName}  
                         label='Username' 
                         placeholder="Enter username" 
                         style={{marginTop: '20px'}} 
                         type="text" 
                         fullWidth 
+                        error={userNameError}
                         required
                         />           
                     <TextField 
-                        onChange={e => setCreateUser({ ...createUser, firstName: e.target.value })} 
+                        onChange={e => {
+                            setCreateUser({ ...createUser, firstName: e.target.value })
+                            setFirstNameError(false)
+                        }} 
                         value={createUser.firstName}  label="First name" placeholder="Enter first name" 
                         style={{marginTop: '30px'}} 
                         type="text" 
                         fullWidth 
+                        error={firstNameError}
                         required
                         />
                     <TextField 
-                        onChange={e => setCreateUser({ ...createUser, lastName: e.target.value })} 
+                        onChange={e => {
+                            setCreateUser({ ...createUser, lastName: e.target.value })
+                            setLastNameError(false)
+                        }} 
                         value={createUser.lastName}  label="Last name" placeholder="Enter last name" 
                         style={{marginTop: '30px'}} type="text" 
                         fullWidth 
+                        error={lastNameError}
                         required
                         />
                     <TextField 
-                        onChange={e => setCreateUser({ ...createUser, email: e.target.value })} 
+                        onChange={e => {
+                            setCreateUser({ ...createUser, email: e.target.value })
+                            setEmailError(false)
+                        }} 
                         value={createUser.email}  
                         label='Email' 
                         placeholder="Enter email" 
                         style={{marginTop: '30px'}} 
                         type="email" 
+                        error={emailError}
                         fullWidth 
                         required
                         />
-                    <FormControl style={{marginTop: 50}} component="fieldset">
+                    <FormControl error={accessLevelError} style={{marginTop: 50}} component="fieldset">
                         <FormLabel component="legend">Choose user access level</FormLabel>
                         <RadioGroup  row aria-label="holiday" name="holiday" >
                             <FormControlLabel 
@@ -185,7 +227,7 @@ function CreateUser() {
                     </FormControl>
                     {
                     basicActive &&
-                    <ListRestaurants outlets={outlets}/>
+                    <ListOutlets outlets={outlets}/>
                     }
                     {
                     adminActive &&
