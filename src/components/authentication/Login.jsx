@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-//import axios from "axios";
+import axios from "axios";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
+
 
 function Login() {
 
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
-  let [state, setState] = useState({
+  let [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
@@ -23,13 +24,22 @@ function Login() {
     errorText: ""
   })
 
+  const [user, setUser] = useState({
+    outlets: [],
+    hotels: [],
+    token: "",
+  });
+
   function handleChange(e) {
     const value = e.target.value;
-    setState({
-      ...state,
+    setCredentials({
+      ...credentials,
       [e.target.name]: value,
     });
   }
+
+
+  
 
   //SUBMIT AND ERROR HANDLING
   const handleSubmit = (e) => {
@@ -42,8 +52,28 @@ function Login() {
       setPasswordError({ ...passWordError, error: true, errorText: "Error Message"})
       return
     }
+    const handleLogin = async (e) => {
+    e.preventDefault();
+    await axios
+      .post("https://localhost:44306/api/authentication/login", credentials)
+      .then(({ data }) => {
+        setUser({
+          ...user,
+          token: data.token,
+          outlets: data.outlets,
+          hotels: data.hotels,
+        });
+        console.log(data);
+        console.log("user: ", user);
+      })
+      .catch((err) => {
+        console.error("Error: ", err);
+      });
+  };
+
   }
   
+
   return (
     <Grid className="login-page-container">
       <Grid style={{ paddingTop: "60px" }}>
