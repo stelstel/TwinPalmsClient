@@ -1,50 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+
+//import axios from "axios";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
-export const UserContext = React.createContext();
-function Login() {
-  // const paperStyle = {padding: 20, height: '700px', width: 480, margin: '20px auto'};
+
+async function loginUser(credentials) {
+  return fetch("https://localhost:44306/api/authentication/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+function Login({ setToken }) {
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
-  let [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
 
-  const [user, setUser] = useState({
-    outlets: [],
-    hotels: [],
-    token: "",
-  });
-
-  function handleChange(e) {
-    const value = e.target.value;
-    setCredentials({
-      ...credentials,
-      [e.target.name]: value,
-    });
-  }
-
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post("https://localhost:44306/api/authentication/login", credentials)
-      .then(({ data }) => {
-        setUser({
-          ...user,
-          token: data.token,
-          outlets: data.outlets,
-          hotels: data.hotels,
-        });
-        console.log(data);
-        console.log("user: ", user);
-      })
-      .catch((err) => {
-        console.error("Error: ", err);
-      });
+    const resp = await loginUser({ username, password });
+    setToken(resp.token);
   };
 
   return (
@@ -57,11 +37,9 @@ function Login() {
             </Avatar>
             <h2 style={{ marginTop: 30 }}>Login</h2>
           </Grid>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmit}>
             <TextField
-              onChange={handleChange}
-              id="username"
-              name="username"
+              onChange={(e) => setUsername(e.target.value)}
               label="Username"
               placeholder="Enter Username"
               style={{ marginTop: "40px" }}
@@ -69,9 +47,7 @@ function Login() {
               required
             />
             <TextField
-              onChange={handleChange}
-              id="password"
-              name="password"
+              onChange={(e) => setPassword(e.target.value)}
               label="Password"
               placeholder="Enter Password"
               style={{ marginTop: "40px" }}
@@ -90,9 +66,8 @@ function Login() {
               Login
             </Button>
           </form>
-          <Link to="/home" className="forgot-password">
-            <div style={{ marginTop: "20px" }}>Forgot Password?</div>
-          </Link>
+
+          <div style={{ marginTop: "20px" }}>Forgot Password?</div>
         </Paper>
       </Grid>
     </Grid>
