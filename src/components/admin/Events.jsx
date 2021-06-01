@@ -39,8 +39,9 @@ function Events() {
     const sendEditRequest = async (id, val) => {
         
         try {
-            const res = await axios.put(`https://localhost:44306/api/LocalEvent/${id}`, {event: val});
+            const res = await axios.put(`https://localhost:44306/api/LocalEvent/${id}`, {event: val, active: true});
             console.log(res.data);
+            console.log("edit name")
             console.log('successfull put request');
         } catch (err) {
             console.error(err);
@@ -54,6 +55,7 @@ function Events() {
         try {
             const res = await axios.put(`https://localhost:44306/api/LocalEvent/${id}`, {active: active, event: val});
             console.log(res.data);
+            console.log("active")
             console.log('successfull put request');
         } catch (err) {
             console.error(err);
@@ -118,8 +120,8 @@ const handleChange = (e) => {
                                     required
                                 />
                                 <Grid className="event-buttons">
-                                    <i onClick={(e) => handleClickEditEvent(item.id)} className="fas fa-edit"></i>
-                                    <i onClick={(e) => handleClickDeleteEvent(item.id, item.event)} value={item.event} className="fas fa-trash-alt"></i>
+                                    <span onClick={(e) => handleClickEditEvent(item.id)}><i  className="fas fa-edit"></i></span>
+                                    <span onClick={(e) => handleClickDeleteEvent(item.id, item.event)}><i value={item.event} className="fas fa-trash-alt"></i></span>
                                 </Grid>
                             </Grid>
                         )})}

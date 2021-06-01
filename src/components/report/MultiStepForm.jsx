@@ -12,21 +12,6 @@ import StepFour from './StepFour';
 
 function MultiStepForm() {
 
-  
-    //POST REQUEST
-    const sendPostRequest = async (data) => {
-        try {
-            const res = await axios.post('https://localhost:44306/api/FbReports', data);
-            console.log(data);
-            console.log(res.data);
-            console.log('successfull post request');
-        } catch (err) {
-            // Handle Error Here
-            console.error(err);
-            console.log('error with post request');
-        }
-    };
-
     //STEPS FOR MULTISTEP FORM
     const [activeStep, setActiveStep] = useState(0);
 
@@ -149,8 +134,6 @@ function MultiStepForm() {
 
 
     //STEP TWO FORM
-
-    //Variables for step two form
 
     //TABLES
     const [tablesUndefined, setTablesUndefined] = useState(false)
@@ -287,10 +270,23 @@ function MultiStepForm() {
         Beverage: parseInt(beverageRevenue.beveragerevenue)
         }
 
-    //Functions for prev and next buttons
+    //POST REQUEST
+    const sendPostRequest = async (data) => {
+        try {
+            const res = await axios.post('https://localhost:44306/api/FbReports', data);
+            console.log(data);
+            console.log(res.data);
+            console.log('successfull post request');
+        } catch (err) {
+            // Handle Error Here
+            console.error(err);
+            console.log('error with post request');
+        }
+    };
+
+    //FUNCTIONS FOR PREV AND NEXT BUTTONS WITH ERROR HANDLING
     const handleNext = (e) => {
         e.preventDefault();
-
         
         if(activeStep === 0) {
             //sets undefined to true for error styling
@@ -333,7 +329,6 @@ function MultiStepForm() {
                 return
             }
         }
-
         if(activeStep === 1) {
             //sets undefined to true for error styling
             if(tables === "") {
@@ -395,8 +390,6 @@ function MultiStepForm() {
             else if(!sourceOfBusiness) {
                 return
             }
-            
-
         }
         setActiveStep(prevActiveStep => prevActiveStep + 1)
         if(activeStep >= 3) {

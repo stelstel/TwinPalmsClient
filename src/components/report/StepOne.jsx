@@ -148,7 +148,14 @@ function StepOne(props) {
                             onChange={props.handleChangeEvents}
                         >
                             {props.events &&
-                            props.events.map((item, key) => {
+                            props.events
+                            .filter((item) => {
+                                if(item.active === true) {
+                                    return item
+                                }
+                                return null
+                            })
+                            .map((item, key) => {
                                 return (
                                     
                                     <MenuItem key={key} value={item.event}>{item.event}</MenuItem>
