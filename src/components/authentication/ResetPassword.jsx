@@ -29,8 +29,35 @@ function ResetPassword() {
     //token: reset_token, // grab from url
   });
 
+  //HOOKS ERRORS
+  const [passwordErrors, setPasswordErrors] = useState({
+    error: false,
+    errorText: ""
+  })
+  const [confirmPasswordErrors, setConfirmPasswordErrors] = useState({
+    error: false,
+    errorText: ""
+  })
+  const [emailErrors, setEmailErrors] = useState({
+    error: false,
+    errorText: ""
+  })
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(state)
+    if(state.password === "") {
+      setPasswordErrors({ ...passwordErrors, error: true, errorText: "Error message"})
+    }
+    if(state.confirmPassword === "") {
+      setConfirmPasswordErrors({ ...confirmPasswordErrors, error: true, errorText: "Error message"})
+    }
+    if(state.email === "") {
+      setEmailErrors({ ...emailErrors, error: true, errorText: "Error message"})
+    }
+
     try {
       const res = await axios.post(
         "https://localhost:44306/api/authentication/reset-password?token=" +
@@ -52,6 +79,8 @@ function ResetPassword() {
       [e.target.name]: value,
     });
   }
+
+  
   // const paperStyle = {padding: 20, height: '700px', width: 480, margin: '20px auto'};
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
@@ -68,32 +97,44 @@ function ResetPassword() {
           <form onSubmit={handleSubmit}>
             <TextField
               name="password"
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setPasswordErrors({ ...passwordErrors, error: false, errorText: ""})
+              }}
               label="Password"
               placeholder="New Password"
               style={{ marginTop: "40px" }}
               fullWidth
-              required
+              helperText={passwordErrors.errorText}
+              error={passwordErrors.error}
             />
             <TextField
               name="confirmPassword"
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setConfirmPasswordErrors({ ...confirmPasswordErrors, error: false, errorText: ""})
+              }}
               label="ConfirmPassword"
               placeholder="Confirm Password"
               style={{ marginTop: "40px" }}
               type="password"
               fullWidth
-              required
+              helperText={confirmPasswordErrors.errorText}
+              error={confirmPasswordErrors.error}
             />
             <TextField
               name="email"
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e)
+                setEmailErrors({ ...emailErrors, error: false, errorText: ""})
+              }}
               label="Email"
               placeholder="Confirm Email"
               style={{ marginTop: "40px" }}
               type="text"
               fullWidth
-              required
+              helperText={emailErrors.errorText}
+              error={emailErrors.error}
             />
             <Button
               type="submit"
