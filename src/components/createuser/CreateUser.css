@@ -5,9 +5,9 @@
 }
 .createuser-paper {
     padding: 20px;
-    height: 800px;
+    height: 820px;
     width: 480px;
-    margin: 8px auto;
+    margin: 1px auto;
 }
 
 @media screen and (max-width: 480px) {

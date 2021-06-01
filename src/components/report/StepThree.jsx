@@ -16,8 +16,8 @@ function StepThree(props) {
                         <h3 style={{marginBottom: '25px'}}>Source of business</h3>
                     </Grid>
                     <TextField  
-                        placeholder="Guests from hotel 1" 
-                        label="Number of guests from hotel 1?" 
+                        placeholder="Guests from Twinpalms Phuket" 
+                        label="Number of guests from Twinpalms Phuket?" 
                         type="number"
                         onChange={props.handleChangeHotelOneGuests('hoteloneguests')}
                         defaultValue={props.hotelOneGuests.hoteloneguests} 
@@ -26,8 +26,8 @@ function StepThree(props) {
                     />
                     <TextField  
                         style={{marginTop: '25px'}}
-                        placeholder="Guests from hotel 2" 
-                        label="Number of guests from hotel 2?" 
+                        placeholder="Guests from Twinpalms Montazure" 
+                        label="Number of guests from Twinpalms Montazure?" 
                         type="number"
                         onChange={props.handleChangeHotelTwoGuests('hoteltwoguests')}
                         defaultValue={props.hotelTwoGuests.hoteltwoguests} 

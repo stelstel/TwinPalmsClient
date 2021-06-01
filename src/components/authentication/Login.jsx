@@ -65,7 +65,7 @@ function Login(props) {
               Login
             </Button>
           </form>
-          <Link to="/home" className="forgot-password">
+          <Link to="/reset-password" className="forgot-password">
             <div style={{ marginTop: "20px" }}>Forgot Password?</div>
           </Link>
         </Paper>
