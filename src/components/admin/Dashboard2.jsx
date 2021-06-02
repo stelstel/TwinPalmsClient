@@ -1,10 +1,13 @@
 import React from "react";
-import MultiStepForm from "../report/MultiStepForm";
+import UserHome from "../home/UserHome";
 import DataReport from "../DataReports/DataReports";
+
 import Dashboard from "./Dashboard";
+
 export default function Dashboard2(user) {
+  console.log("User ", user);
   return (
-    <div>
+    <>
       <h2>Dashboard</h2>
       {user.userName}
       <hr />
@@ -17,8 +20,8 @@ export default function Dashboard2(user) {
       ) : user.roles.includes("Admin") ? (
         <DataReport />
       ) : (
-        <MultiStepForm />
+        <UserHome />
       )}
-    </div>
+    </>
   );
 }
