@@ -12,7 +12,7 @@ export default function Dashboard2(user) {
       {user.userName}
       <hr />
       {Array.isArray(user.roles)
-        ? user.roles.map((role) => <li>{role}</li>)
+        ? user.roles.map((role, i) => <li key={i}>{role}</li>)
         : user.roles}
 
       {user.roles.includes("SuperAdmin") ? (
