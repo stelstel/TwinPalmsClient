@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ForgotPassword from "./ForgotPassword";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
@@ -16,6 +17,7 @@ async function loginUser(credentials) {
 function Login({ setUser }) {
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
+  let [forgotPassword, setForgotPassword] = useState(false);
   let [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -30,8 +32,6 @@ function Login({ setUser }) {
     error: false,
     errorText: "",
   });
-  /* const [username, setUsername] = useState();
-  const [password, setPassword] = useState(); */
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -102,8 +102,15 @@ function Login({ setUser }) {
               Login
             </Button>
           </form>
+          <Button
+            onClick={() => setForgotPassword(!forgotPassword)}
+            color="primary"
+            style={{ marginTop: "20px" }}
+          >
+            Forgot Password?
+          </Button>
 
-          <div style={{ marginTop: "20px" }}>Forgot Password?</div>
+          {forgotPassword ? <ForgotPassword /> : ""}
         </Paper>
       </Grid>
     </Grid>
