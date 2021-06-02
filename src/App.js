@@ -14,6 +14,7 @@ import DataReports from "./components/DataReports/DataReports";
 import Events from "./components/admin/Events";
 import Users from "./components/admin/Users";
 import Login from "./components/authentication/Login2";
+import Overview from "./components/DataReports/Overview";
 
 // Session storage
 /*function setToken(userToken) {
@@ -89,6 +90,8 @@ function App() {
           <Route path="/events" component={Events} />
           <Route path="/manageusers" component={Users} />
           <Route path="/datareports" component={DataReports} />
+          <Route path="/test" component={Overview} />
+
         </Switch>
       </Router>
     </>

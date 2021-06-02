@@ -174,6 +174,7 @@ function MultiStepForm() {
     //FILE TRANSFER, CASH REGISTRY
     const [fileUndefined, setFileUndefined] = useState()
     const [file, setFile] = useState("");
+    const [fileForTransfer, setFileForTransfer] = useState()
 
     const handleChangeFile = e => {
         let files = e.target.files;
@@ -190,6 +191,10 @@ function MultiStepForm() {
             // return post(url, formData)
             // .then(response => console.log(response))
         }
+        console.log("FILE")
+        console.log(reader)
+        setFileForTransfer(reader)
+        console.log(fileForTransfer)
     }
 
     //STEP THREE FORM
@@ -247,27 +252,29 @@ function MultiStepForm() {
         setSourceOfBusiness(e.target.value);
         setSourceOfBusinessUndefined(false)
     }
-
     //Data to be sent to api
     const dataToPost = {
-        Tables: parseInt(tables.tables),
+        // Tables: parseInt(tables.tables),
         IsPublicHoliday: isPublicHoliday,
-        UserId: "b0b22e53-3ad2-4a0a-9e58-aa0a70a5a157",
-        EventNotes: "HARD CODED",
-        OutletId: 1,
-        GSourceOfBusiness: 1,
-        LocalEventsId: 1,
+        UserId: "35947f01-393b-442c-b815-d6d9f7d4b81e", //Set user id from user
+        // EventNotes: "HARD CODED",
+        OutletId: 1, // Get outlet from user after logged in
+        // GSourceOfBusiness: 1,
+        // LocalEventsId: 1,
         Date: "2021-05-06T11:55:37.934Z",
-        GuestsFromHotel: 1,
-        GuestsFromOutsideHotel: 1,
-        GuestSourceOfBusinesses: {
-            guestSourceOfBusinessId: 1,
-            gsobNrOfGuests: 10
-        },
-        OtherIncome: parseInt(otherRevenue.otherrevenue),
-        File: "1",
-        Food: parseInt(foodRevenue.foodrevenue),
-        Beverage: parseInt(beverageRevenue.beveragerevenue)
+        // GuestsFromHotel: 1,
+        // GuestsFromOutsideHotel: 1,
+        GuestSourceOfBusinesses: [
+            {
+                guestSourceOfBusinessId: 1,
+                gsobNrOfGuests: 10
+            }
+        ],
+        // OtherIncome: parseInt(otherRevenue.otherrevenue),
+        // File: "@safetravelsmall.jpeg;type=image/jpeg",
+        // Food: parseInt(foodRevenue.foodrevenue),
+        // Beverage: parseInt(beverageRevenue.beveragerevenue)
+        Weathers: [1]
         }
 
     //POST REQUEST

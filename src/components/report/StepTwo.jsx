@@ -8,9 +8,6 @@ import {
 function StepTwo(props) {
 
     
-
-
-
     return (
             <div className="report-grid-container">
             <Grid >
