@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/navigation/Navbar";
+import Navbar2 from "./components/navigation/Navbar2";
 //import Login from "./components/authentication/Login";
 import MultiStepForm from "./components/report/MultiStepForm";
 import Home from "./components/home/Home";
@@ -69,7 +70,7 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        {!user.token ? <Navbar /> : <Navbar2 {...getUser(user)} />}
         <Switch>
           <Route
             path="/"
