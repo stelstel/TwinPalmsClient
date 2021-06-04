@@ -5,7 +5,8 @@
   font-family: 'Josefin Sans', sans-serif;
 }
 
-ul, li {
+ul,
+li {
   font-family: 'Quicksand', sans-serif;
 }
 
@@ -16,4 +17,3 @@ ul, li {
   justify-content: center;
   font-size: 3rem;
 }
-

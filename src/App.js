@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
-import Navbar from "./components/navigation/Navbar";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import './App.css';
+import Navbar from './components/navigation/Navbar';
 //import Login from "./components/authentication/Login";
-import MultiStepForm from "./components/report/MultiStepForm";
+import MultiStepForm from './components/report/MultiStepForm';
 //import Home from "./components/home/Home";
 //import UserHome from "./components/home/UserHome";
-import CreateUser from "./components/createuser/CreateUser";
+import CreateUser from './components/createuser/CreateUser';
 //import Dashboard from "./components/admin/Dashboard";
-import Dashboard2 from "./components/admin/Dashboard2";
-import ResetPassword from "./components/authentication/ResetPassword";
-import DataReports from "./components/DataReports/DataReports";
-import Events from "./components/admin/Events";
-import Users from "./components/admin/Users";
-import Login from "./components/authentication/Login2";
+import Dashboard2 from './components/admin/Dashboard2';
+import ResetPassword from './components/authentication/ResetPassword';
+import DataReports from './components/DataReports/DataReports';
+import Events from './components/admin/Events';
+import Users from './components/admin/Users';
+import Login from './components/authentication/Login2';
 
 // Session storage
 /*function setToken(userToken) {
@@ -29,32 +29,27 @@ function getToken()
 
 function getUser(token) {
   const user = {};
-  if (token !== null && token !== "undefined") {
+  if (token !== null && token !== 'undefined') {
     const userToken = parseJwt(token);
 
-    user.roles =
-      userToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    user.userName =
-      userToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-    user.id =
-      userToken[
-        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
-      ];
+    user.roles = userToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    user.userName = userToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    user.id = userToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
   }
 
   return user;
 }
 
 function parseJwt(token) {
-  var base64Url = token.split(".")[1];
-  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   var jsonPayload = decodeURIComponent(
     atob(base64)
-      .split("")
+      .split('')
       .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join("")
+      .join(''),
   );
 
   return JSON.parse(jsonPayload);
