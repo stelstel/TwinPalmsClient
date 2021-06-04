@@ -1,0 +1,9 @@
+@import url('https://cdn.syncfusion.com/ej2/material.css');
+
+.date-picker {
+  margin: auto;
+  display: block;
+  width: fit-content;
+}
+
+/******************* MEDIA QUERIES *********************************/

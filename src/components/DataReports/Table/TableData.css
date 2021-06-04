@@ -1,0 +1,17 @@
+/********************* TABLE *********************************/
+table.jambo_table {
+  border: 1px solid rgba(32, 32, 32, 0.78);
+}
+
+table.jambo_table thead {
+  background: rgba(52, 73, 94, 0.94);
+  color: #ecf0f1;
+}
+
+table.jambo_table tbody tr:hover td {
+  background: rgba(38, 185, 154, 0.07);
+  border-top: 1px solid rgba(38, 185, 154, 0.11);
+  border-bottom: 1px solid rgba(38, 185, 154, 0.11);
+}
+
+/******************* MEDIA QUERIES *********************************/

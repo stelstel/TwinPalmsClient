@@ -15,6 +15,7 @@ import Events from "./components/admin/Events";
 import Users from "./components/admin/Users";
 import Login from "./components/authentication/Login2";
 export const UserContext = React.createContext();
+
 // Session storage
 /*function setToken(userToken) {
   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -26,6 +27,7 @@ function getToken()
   const userToken = JSON.parse(tokenString);
   return userToken?.token
 }*/
+
 
 function getUser(user) {
   //const user = {};
@@ -41,6 +43,7 @@ function getUser(user) {
         "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
       ];
     //user.token = token;
+
   }
 
   return user;
@@ -48,15 +51,15 @@ function getUser(user) {
 
 //
 function parseJwt(token) {
-  var base64Url = token.split(".")[1];
-  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   var jsonPayload = decodeURIComponent(
     atob(base64)
-      .split("")
+      .split('')
       .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join("")
+      .join(''),
   );
 
   return JSON.parse(jsonPayload);
