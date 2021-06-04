@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import "../../App.css";
-import Login from "../authentication/Login2";
 import ChangePassword from "../authentication/ChangePassword";
+import MultiReport from "../report/MultiStepForm";
 import "./Home.css";
 
-function UserHome() {
-  // This should be useContext ?
-  const [user, setUser] = useState({
-    outlets: [],
-    hotels: [],
-    token: "",
-  });
+import { UserContext } from "../../App";
 
+function UserHome() {
+  const user = useContext(UserContext);
+  console.log("User ", user);
   const handleChangePassword = async (e) => {
     e.preventDefault();
     let passwords = {
@@ -34,36 +31,11 @@ function UserHome() {
         alert("Password changed!").catch((err) => console.error("Error: ", err))
       );
   };
-  // HANDLE LOGIN
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    let credentials = {
-      username: e.target["username"].value,
-      password: e.target["password"].value,
-    };
-
-    const res = await axios
-      .post("https://localhost:44306/api/authentication/login", credentials)
-      .then(({ data }) => {
-        setUser({
-          ...user,
-          token: data.token,
-          outlets: data.outlets,
-          hotels: data.hotels,
-        });
-        console.log(res.data);
-        console.log("user: ", user);
-      })
-      .catch((err) => {
-        console.error("Error: ", err);
-      });
-  };
 
   return (
     <>
-      <Login onSubmitFunction={handleLogin} />
       <ChangePassword onSubmitFunction={handleChangePassword} />
+      <MultiReport />
     </>
   );
 }

@@ -46,7 +46,7 @@ function ChangePassword(props) {
               label="New Password"
               placeholder="Enter password"
               style={{ marginTop: "40px" }}
-              type="password"
+              type="text"
               fullWidth
               required
             />

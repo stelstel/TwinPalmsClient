@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-//import axios from "axios";
+import ForgotPassword from "./ForgotPassword";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
@@ -15,16 +14,37 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-function Login({ setToken }) {
+function Login({ setUser }) {
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  let [forgotPassword, setForgotPassword] = useState(false);
+  let [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  //REACT HOOKS FOR ERRORS
+  const [userNameError, setUserNameError] = useState({
+    error: false,
+    errorText: "",
+  });
+  const [passWordError, setPasswordError] = useState({
+    error: false,
+    errorText: "",
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setCredentials({
+      ...credentials,
+      [e.target.name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await loginUser({ username, password });
-    setToken(resp.token);
+    const resp = await loginUser({ ...credentials });
+    setUser(resp);
   };
 
   return (
@@ -39,7 +59,15 @@ function Login({ setToken }) {
           </Grid>
           <form onSubmit={handleSubmit}>
             <TextField
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              onChange={(e) => {
+                handleChange(e);
+                setUserNameError({
+                  ...userNameError,
+                  error: false,
+                  errorText: "",
+                });
+              }}
               label="Username"
               placeholder="Enter Username"
               style={{ marginTop: "40px" }}
@@ -47,11 +75,19 @@ function Login({ setToken }) {
               required
             />
             <TextField
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              onChange={(e) => {
+                handleChange(e);
+                setPasswordError({
+                  ...passWordError,
+                  error: false,
+                  errorText: "",
+                });
+              }}
               label="Password"
               placeholder="Enter Password"
               style={{ marginTop: "40px" }}
-              type="password"
+              type="text"
               fullWidth
               required
             />
@@ -66,8 +102,15 @@ function Login({ setToken }) {
               Login
             </Button>
           </form>
+          <Button
+            onClick={() => setForgotPassword(!forgotPassword)}
+            color="primary"
+            style={{ marginTop: "20px" }}
+          >
+            Forgot Password?
+          </Button>
 
-          <div style={{ marginTop: "20px" }}>Forgot Password?</div>
+          {forgotPassword ? <ForgotPassword /> : ""}
         </Paper>
       </Grid>
     </Grid>
