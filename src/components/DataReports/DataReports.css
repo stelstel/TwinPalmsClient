@@ -1,33 +1,36 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap');
 
 .table-section {
-  background-color: rgb(156, 119, 119);
+  background-color: rgb(238, 201, 201);
   line-height: 1.5;
   font-size: 0.875rem;
   font-family: 'Open Sans', sans-serif;
+  height: 90vh;
 }
 
 .title {
   margin-top: 3rem;
   text-align: center;
-  color: white;
+  color: rgb(22, 20, 20);
   font-size: 50px;
   font-weight: bold;
   text-shadow: white 1px 1px;
 }
-
-/********************* TABLE *********************************/
-table.jambo_table {
-  border: 1px solid rgba(221, 221, 221, 0.78);
+.statistic-date {
+  margin-top: 3rem;
+  text-align: center;
+  color: rgb(22, 20, 20);
+  font-size: 40px;
+  font-weight: bold;
+  text-shadow: white 1px 1px;
+}
+.revenue {
+  margin-top: 3rem;
+  text-align: center;
+  color: rgb(22, 20, 20);
+  font-size: 30px;
+  font-weight: bold;
+  text-shadow: white 1px 1px;
 }
 
-table.jambo_table thead {
-  background: rgba(52, 73, 94, 0.94);
-  color: #ecf0f1;
-}
-
-table.jambo_table tbody tr:hover td {
-  background: rgba(38, 185, 154, 0.07);
-  border-top: 1px solid rgba(38, 185, 154, 0.11);
-  border-bottom: 1px solid rgba(38, 185, 154, 0.11);
-}
+/******************* MEDIA QUERIES *********************************/
