@@ -14,15 +14,15 @@ export default function DataReports() {
   return (
     <>
       <section className="table-section">
-        <br />
+        <br/>
         <h1 className="title">Data Reports Summary</h1>
-        <br />
+        <hr />
         <h4 className="statistic-date">Todays Statistics: {date}</h4>
-        <br />
+       
         <h5 className="revenue">Choose Dates</h5>
 
         <DatePicker />
-        <br />
+        
         <div>
           <br />
           <Table />

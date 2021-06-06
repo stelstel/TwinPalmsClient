@@ -12,7 +12,7 @@
   margin-top: 3rem;
   text-align: center;
   color: rgb(22, 20, 20);
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
   text-shadow: white 1px 1px;
 }
@@ -20,7 +20,7 @@
   margin-top: 3rem;
   text-align: center;
   color: rgb(22, 20, 20);
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   text-shadow: white 1px 1px;
 }
@@ -34,3 +34,46 @@
 }
 
 /******************* MEDIA QUERIES *********************************/
+@media screen and (max-width: 1300px) {
+  .title{
+    font-size: 70px;
+    text-align: center;
+  }
+  .statistic-date {
+    font-size: 60px;
+  }
+  
+}
+
+@media screen and (max-width: 1023px){
+  .title{
+    font-size: 60px;
+    text-align: center;
+  }
+  .statistic-date {
+    font-size: 40px;
+  }
+  
+  
+  
+}
+@media screen and (max-width: 768px) {
+  .title{
+    font-size: 60px;
+    text-align: center;
+  }
+  .statistic-date {
+    font-size: 40px;
+  }
+  
+}
+@media screen and (max-width: 640px) {
+.title{
+    font-size: 50px;
+    text-align: center;
+  }
+  .statistic-date {
+    font-size: 40px;
+  }
+  
+}

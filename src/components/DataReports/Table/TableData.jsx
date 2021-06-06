@@ -40,8 +40,8 @@ export default function TableData() {
 
   return (
     <>
-      <Col md={12} sm={12}>
-        <div className="table-responsive">
+      <Col md={11} sm={11}>
+        <div >
           <Table
             striped
             bordered
