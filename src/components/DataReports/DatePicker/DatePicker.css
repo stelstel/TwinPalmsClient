@@ -3,7 +3,34 @@
 .date-picker {
   margin: auto;
   display: block;
-  width: fit-content;
+  width: 500px;
 }
 
 /******************* MEDIA QUERIES *********************************/
+@media screen and (max-width: 1300px) {
+ .date-picker  {
+     width: 500px;
+  
+  }
+  
+}
+@media screen and (max-width: 1000px) {
+ .date-picker  {
+     width: 500px;
+    
+    
+  }
+  
+}
+@media screen and (max-width: 768px) {
+  .date-picker {
+    width: 300px;
+    
+  }
+}
+@media screen and (max-width: 480px) {
+.date-picker {
+    width: 200px;
+    
+  }
+}
