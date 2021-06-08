@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-//import ListOutlets from "./ListOutlets";
-//import ListCompanies from "./ListCompanies";
+import ListOutlets from "./ListOutlets";
+import ListCompanies from "./ListCompanies";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {
@@ -14,12 +14,10 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Select,
+  //Select,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import "./CreateUser.css";
-//import ListOutlets from "./ListOutlets";
-//import ListCompanies from "./ListCompanies";
 
 function CreateUser() {
   //REACT HOOKS
@@ -59,16 +57,20 @@ function CreateUser() {
     setAccessLevelError(false);
   };
 
-  const showSelected = async () => {
-    let selected = [];
-    [{ ...createUser.companies }].map((c, idx) => {
-      let company = companies.find((com) => com.id === c);
-      if (company !== "undefined") {
-        selected.push(company);
-      }
-      return selected;
+  /* const setSelectedOutlets = async (data) => {
+    console.log("data ", data);
+    setCreateUser({
+      ...createUser,
+      outlets: data,
     });
   };
+ */
+  /* const setSelectedCompanies = async (data) => {
+    setCreateUser({
+      ...createUser,
+      companies: data,
+    });
+  }; */
 
   //POST REQUEST'
   const sendPostRequest = async (data) => {
@@ -255,90 +257,21 @@ function CreateUser() {
               />
             </RadioGroup>
           </FormControl>
-          {/* {basicActive && (
-            <ListOutlets setOutlets={setOutlets} outlets={outlets} />
-          )}
-          {adminActive && (
-            <ListCompanies setCompanies={setCompanies} companies={companies} />
-          )} */}
           {basicActive && (
-            <FormControl>
-              <Select
-                native
-                multiple
-                onChange={(e) => {
-                  //console.log("createUser ", createUser.outlets);
-                  console.log("target ", e.target);
-                  if (
-                    [...createUser.outlets].includes(parseInt(e.target.value))
-                  ) {
-                    setCreateUser({
-                      ...createUser,
-                      outlets:
-                        createUser.outlets.length > 0
-                          ? createUser.outlets.filter(
-                              (outlet) => outlet !== parseInt(e.target.value)
-                            )
-                          : [],
-                    });
-                  } else {
-                    setCreateUser({
-                      ...createUser,
-                      outlets: [
-                        ...createUser.outlets,
-                        parseInt(e.target.value),
-                      ],
-                    });
-                  }
-                  e.target.value = [];
-                }}
-              >
-                {outlets.map((outlet) => (
-                  <option key={outlet.id} value={outlet.id}>
-                    {outlet.name}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
+            <ListOutlets
+              setOutlets={(outlets) =>
+                setCreateUser({ ...createUser, outlets: outlets })
+              }
+              outlets={outlets}
+            />
           )}
           {adminActive && (
-            <FormControl>
-              <Select
-                native
-                multiple
-                onChange={(e) => {
-                  if (
-                    [...createUser.companies].includes(parseInt(e.target.value))
-                  ) {
-                    setCreateUser({
-                      ...createUser,
-                      companies:
-                        createUser.companies.length > 0
-                          ? createUser.companies.filter(
-                              (company) => company !== parseInt(e.target.value)
-                            )
-                          : [],
-                    });
-                  } else {
-                    setCreateUser({
-                      ...createUser,
-                      companies: [
-                        ...createUser.companies,
-                        parseInt(e.target.value),
-                      ],
-                    });
-                  }
-                  e.target.value = [];
-                  [showSelected()].map((s, idx) => <li key={idx}>{s.name}</li>);
-                }}
-              >
-                {companies.map((company) => (
-                  <option key={company.id} value={company.id}>
-                    {company.name}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
+            <ListCompanies
+              setCompanies={(companies) =>
+                setCreateUser({ ...createUser, companies: companies })
+              }
+              companies={companies}
+            />
           )}
 
           <Link to="./report" style={{ textDecoration: "none" }}>
