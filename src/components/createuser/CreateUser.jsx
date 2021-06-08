@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+//import ListOutlets from "./ListOutlets";
+//import ListCompanies from "./ListCompanies";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {
@@ -12,11 +14,12 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Select,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import "./CreateUser.css";
-import ListOutlets from "./ListOutlets";
-import ListCompanies from "./ListCompanies";
+//import ListOutlets from "./ListOutlets";
+//import ListCompanies from "./ListCompanies";
 
 function CreateUser() {
   //REACT HOOKS
@@ -26,11 +29,11 @@ function CreateUser() {
     userName: "",
     email: "",
     notificationEmail: "",
-    phoneNumber: "0703825555",
+    phoneNumber: "",
     role: "",
-    outlets: [1],
-    hotels: [1],
-    companies: [1],
+    outlets: [],
+    hotels: [],
+    companies: [],
   });
   //HOOKS FOR ERRORS
   const [userNameError, setUserNameError] = useState(false);
@@ -56,61 +59,70 @@ function CreateUser() {
     setAccessLevelError(false);
   };
 
+  const showSelected = async () => {
+    let selected = [];
+    [{ ...createUser.companies }].map((c, idx) => {
+      let company = companies.find((com) => com.id === c);
+      if (company !== "undefined") {
+        selected.push(company);
+      }
+      return selected;
+    });
+  };
+
   //POST REQUEST'
   const sendPostRequest = async (data) => {
-    try {
-      const res = await axios.post(
-        "https://localhost:44306/api/Authentication",
-        data
-      );
-      console.log(data);
-      console.log(res.data);
-      console.log("successfull post request");
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-      console.log("error with post request");
-    }
+    await axios
+      .post("https://localhost:44306/api/Authentication", data)
+      .then(({ data }) => {
+        console.log(data);
+        console.log("successfull post request");
+      })
+      .catch((err) => console.error(err));
   };
 
   //FETCH LIST OF OUTLETS FROM API
   const url = "https://localhost:44306/api/Outlets";
 
-  const sendGetRequest = async (url) => {
-    try {
-      const res = await axios.get(url);
-      console.log(res.data);
-      console.log("successfull get request");
-      setOutlets(res.data);
-    } catch (err) {
-      // Handle Error Here
-      console.log("error with get request for users");
-      console.error(err);
-    }
+  const getOutlets = async (url) => {
+    await axios
+      .get(url)
+      .then((res) => {
+        console.log("Outlets ", res.data);
+        console.log("successfull get request");
+        setOutlets(res.data);
+      })
+      .catch((err) => {
+        // Handle Error Here
+        console.log("error with get request for users");
+        console.error(err);
+      });
   };
 
   //FETCH LIST OF COMPANIES FROM API
   const urlCompanies = "https://localhost:44306/api/Companies";
 
-  const sendGetRequestCompanies = async (url) => {
-    try {
-      const res = await axios.get(url);
-      console.log(res.data);
-      console.log("successfull get request");
-      setCompanies(res.data);
-    } catch (err) {
-      // Handle Error Here
-      console.log("error with get request for users");
-      console.error(err);
-    }
+  const getCompanies = async (url) => {
+    await axios
+      .get(url)
+      .then((res) => {
+        console.log("Companies ", res.data);
+        console.log("successfull get request");
+        setCompanies(res.data);
+      })
+      .catch((err) => {
+        // Handle Error Here
+        console.log("error with get request for users");
+        console.log(err);
+      });
   };
 
   //RUN GET REQUESTS ON LOAD
   useEffect(() => {
-    sendGetRequestCompanies(urlCompanies);
+    getCompanies(urlCompanies);
   }, []);
   useEffect(() => {
-    sendGetRequest(url);
+    getOutlets(url);
   }, []);
 
   //SUBIT FORM AND SEND IT TO DATABASE AND ERROR HANDLING
@@ -228,7 +240,7 @@ function CreateUser() {
                 onChange={(e) =>
                   setCreateUser({ ...createUser, role: e.target.value })
                 }
-                value="basic"
+                value="Basic"
                 label="Basic"
                 control={<Radio color="primary" />}
               />
@@ -237,14 +249,97 @@ function CreateUser() {
                 onChange={(e) =>
                   setCreateUser({ ...createUser, role: e.target.value })
                 }
-                value="admin"
+                value="Admin"
                 label="Admin"
                 control={<Radio color="primary" />}
               />
             </RadioGroup>
           </FormControl>
-          {basicActive && <ListOutlets outlets={outlets} />}
-          {adminActive && <ListCompanies companies={companies} />}
+          {/* {basicActive && (
+            <ListOutlets setOutlets={setOutlets} outlets={outlets} />
+          )}
+          {adminActive && (
+            <ListCompanies setCompanies={setCompanies} companies={companies} />
+          )} */}
+          {basicActive && (
+            <FormControl>
+              <Select
+                native
+                multiple
+                onChange={(e) => {
+                  //console.log("createUser ", createUser.outlets);
+                  console.log("target ", e.target);
+                  if (
+                    [...createUser.outlets].includes(parseInt(e.target.value))
+                  ) {
+                    setCreateUser({
+                      ...createUser,
+                      outlets:
+                        createUser.outlets.length > 0
+                          ? createUser.outlets.filter(
+                              (outlet) => outlet !== parseInt(e.target.value)
+                            )
+                          : [],
+                    });
+                  } else {
+                    setCreateUser({
+                      ...createUser,
+                      outlets: [
+                        ...createUser.outlets,
+                        parseInt(e.target.value),
+                      ],
+                    });
+                  }
+                  e.target.value = [];
+                }}
+              >
+                {outlets.map((outlet) => (
+                  <option key={outlet.id} value={outlet.id}>
+                    {outlet.name}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+          {adminActive && (
+            <FormControl>
+              <Select
+                native
+                multiple
+                onChange={(e) => {
+                  if (
+                    [...createUser.companies].includes(parseInt(e.target.value))
+                  ) {
+                    setCreateUser({
+                      ...createUser,
+                      companies:
+                        createUser.companies.length > 0
+                          ? createUser.companies.filter(
+                              (company) => company !== parseInt(e.target.value)
+                            )
+                          : [],
+                    });
+                  } else {
+                    setCreateUser({
+                      ...createUser,
+                      companies: [
+                        ...createUser.companies,
+                        parseInt(e.target.value),
+                      ],
+                    });
+                  }
+                  e.target.value = [];
+                  [showSelected()].map((s, idx) => <li key={idx}>{s.name}</li>);
+                }}
+              >
+                {companies.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.name}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          )}
 
           <Link to="./report" style={{ textDecoration: "none" }}>
             <Button
