@@ -1,19 +1,25 @@
-import React from 'react'
-import './Lists.css'
+import React from "react";
+import "./Lists.css";
 
-
-function ListOutlets(props) {
-
-    return (
-        <>
-            <div className="vertical-menu">
-                {props.outlets.map((item, key) => {
-                    console.log(item)
-                    return <div key={key} className="active">{item.name}</div>
-                })}
+function ListOutlets(/* { setOutlets, outlets } */ props) {
+  const setOutlets = (e) => {
+    --props.setOutlets;
+  };
+  console.log("Propssadf ", props);
+  return (
+    <>
+      <div className="vertical-menu">
+        {props.outlets.map((item) => {
+          console.log(item);
+          return (
+            <div onClick={(e) => setOutlets} key={item.id} className="active">
+              {item.name}
             </div>
-        </>
-    )
+          );
+        })}
+      </div>
+    </>
+  );
 }
 
-export default ListOutlets
+export default ListOutlets;
