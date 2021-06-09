@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Lists.css";
 
 function ListCompanies(/* { setCompanies, outlets } */ props) {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState(props.userCompanies || []);
 
   const handleChange = (id) => {
     //props.setOutlets(id);

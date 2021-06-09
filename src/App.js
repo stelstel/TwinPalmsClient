@@ -9,6 +9,7 @@ import Home from "./components/home/Home";
 import CreateUser from "./components/createuser/CreateUser";
 import Dashboard from "./components/admin/Dashboard";
 import Dashboard2 from "./components/admin/Dashboard2";
+import EditUser from "./components/admin/EditUser";
 import ResetPassword from "./components/authentication/ResetPassword";
 import DataReports from "./components/DataReports/DataReports";
 import Events from "./components/admin/Events";
@@ -29,7 +30,6 @@ function getToken()
   return userToken?.token
 }*/
 
-
 function getUser(user) {
   //const user = {};
   if (user.token !== null && user.token !== "undefined") {
@@ -44,7 +44,6 @@ function getUser(user) {
         "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
       ];
     //user.token = token;
-
   }
 
   return user;
@@ -52,15 +51,15 @@ function getUser(user) {
 
 //
 function parseJwt(token) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   var jsonPayload = decodeURIComponent(
     atob(base64)
-      .split('')
+      .split("")
       .map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join(''),
+      .join("")
   );
 
   return JSON.parse(jsonPayload);
@@ -92,6 +91,7 @@ function App() {
           {<Route path="/home" component={Home} />}
           <Route path="/login" component={Login} />
           <Route path="/report" component={MultiStepForm} />
+          <Route path="/edit/:id" component={EditUser} />
           {<Route path="/admin" component={Dashboard} />}
           <Route path="/createuser" component={CreateUser} />
           <Route path="/reset-password" component={ResetPassword} />

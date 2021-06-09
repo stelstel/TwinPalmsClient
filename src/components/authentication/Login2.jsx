@@ -11,7 +11,9 @@ async function loginUser(credentials) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then((data) => data.json());
+  })
+    .then((data) => data.json())
+    .catch((err) => console.log(err));
 }
 
 function Login({ setUser }) {
