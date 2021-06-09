@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ListOutlets from "./ListOutlets";
-import ListCompanies from "./ListCompanies";
-import { Link } from "react-router-dom";
+import ListOutlets from "../createuser/ListOutlets";
+import ListCompanies from "../createuser/ListCompanies";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import {
   Grid,
@@ -17,11 +17,13 @@ import {
   //Select,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import "./CreateUser.css";
+import "../createuser/CreateUser.css";
 
-function CreateUser() {
+function EditUser() {
+  const { id } = useParams();
+
   //REACT HOOKS
-  const [createUser, setCreateUser] = useState({
+  const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     userName: "",
@@ -39,46 +41,29 @@ function CreateUser() {
   const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [accessLevelError, setAccessLevelError] = useState(false);
-  //HOOKS FOR ACCESS LEVEL
-  const [basicActive, setBasicActive] = useState(false);
-  const [adminActive, setAdminActive] = useState(false);
+
   //HOOKS FOR SCROLL LISTS
   const [outlets, setOutlets] = useState();
   const [companies, setCompanies] = useState();
 
   const handleClickBasic = () => {
-    setAdminActive(false);
-    setBasicActive(true);
+    setUser({ ...user, role: "Basic" });
+
     setAccessLevelError(false);
   };
   const handleClickAdmin = () => {
-    setBasicActive(false);
-    setAdminActive(true);
+    setUser({ ...user, role: "Admin" });
+
     setAccessLevelError(false);
   };
 
-  /* const setSelectedOutlets = async (data) => {
-    console.log("data ", data);
-    setCreateUser({
-      ...createUser,
-      outlets: data,
-    });
-  };
- */
-  /* const setSelectedCompanies = async (data) => {
-    setCreateUser({
-      ...createUser,
-      companies: data,
-    });
-  }; */
-
   //POST REQUEST'
-  const sendPostRequest = async (data) => {
+  const sendPutRequest = async (data) => {
     await axios
-      .post("https://localhost:44306/api/Authentication", data)
+      .put(`https://localhost:44306/api/users/${id}`, data)
       .then(({ data }) => {
         console.log(data);
-        console.log("successfull post request");
+        console.log("successfull put request");
       })
       .catch((err) => console.error(err));
   };
@@ -119,35 +104,58 @@ function CreateUser() {
       });
   };
 
+  const getUser = async () => {
+    await axios
+      .get(`https://localhost:44306/api/users/${id}`)
+      .then(({ data }) => {
+        console.log("User ", data);
+        console.log("successfull get request");
+        data.role = !data.roles.includes("Admin") ? "Basic" : "Admin";
+        data.role === "Admin"
+          ? (data.companies = data.companies.map((c) => c.id))
+          : (data.outlets = data.outlets.map((c) => c.id));
+
+        setUser(data);
+      })
+      .catch((err) => {
+        // Handle Error Here
+        console.log("error with get request for user");
+        console.log(err);
+      });
+  };
+
   //RUN GET REQUESTS ON LOAD
+
   useEffect(() => {
     getCompanies(urlCompanies);
   }, []);
+
   useEffect(() => {
     getOutlets(url);
+  }, []);
+
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line
   }, []);
 
   //SUBIT FORM AND SEND IT TO DATABASE AND ERROR HANDLING
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (createUser.userName === "") {
+    if (user.userName === "") {
       setUserNameError(true);
     }
-    if (createUser.firstName === "") {
+    if (user.firstName === "") {
       setFirstNameError(true);
     }
-    if (createUser.lastName === "") {
+    if (user.lastName === "") {
       setLastNameError(true);
     }
-    if (createUser.email === "") {
+    if (user.email === "") {
       setEmailError(true);
     }
-    if (basicActive === false && adminActive === false) {
-      setAccessLevelError(true);
-      return;
-    }
 
-    sendPostRequest(createUser);
+    sendPutRequest(user);
   };
 
   return (
@@ -158,14 +166,14 @@ function CreateUser() {
             <Avatar style={{ backgroundColor: "#1bbd7e", marginTop: "30px" }}>
               <AccountCircleIcon />
             </Avatar>
-            <h2 style={{ marginTop: 20 }}>Create User</h2>
+            <h2 style={{ marginTop: 20 }}>Update User</h2>
           </Grid>
           <TextField
             onChange={(e) => {
-              setCreateUser({ ...createUser, userName: e.target.value });
+              setUser({ ...user, userName: e.target.value });
               setUserNameError(false);
             }}
-            value={createUser.userName}
+            value={user.userName}
             label="Username"
             placeholder="Enter username"
             style={{ marginTop: "20px" }}
@@ -176,10 +184,10 @@ function CreateUser() {
           />
           <TextField
             onChange={(e) => {
-              setCreateUser({ ...createUser, firstName: e.target.value });
+              setUser({ ...user, firstName: e.target.value });
               setFirstNameError(false);
             }}
-            value={createUser.firstName}
+            value={user.firstName}
             label="First name"
             placeholder="Enter first name"
             style={{ marginTop: "30px" }}
@@ -190,10 +198,10 @@ function CreateUser() {
           />
           <TextField
             onChange={(e) => {
-              setCreateUser({ ...createUser, lastName: e.target.value });
+              setUser({ ...user, lastName: e.target.value });
               setLastNameError(false);
             }}
-            value={createUser.lastName}
+            value={user.lastName}
             label="Last name"
             placeholder="Enter last name"
             style={{ marginTop: "30px" }}
@@ -204,10 +212,10 @@ function CreateUser() {
           />
           <TextField
             onChange={(e) => {
-              setCreateUser({ ...createUser, email: e.target.value });
+              setUser({ ...user, email: e.target.value });
               setEmailError(false);
             }}
-            value={createUser.email}
+            value={user.email}
             label="Email"
             placeholder="Enter email"
             style={{ marginTop: "30px" }}
@@ -218,12 +226,12 @@ function CreateUser() {
           />
           <TextField
             onChange={(e) => {
-              setCreateUser({
-                ...createUser,
+              setUser({
+                ...user,
                 notificationEmail: e.target.value,
               });
             }}
-            value={createUser.notificationEmail}
+            value={user.notificationEmail}
             label="Notification email"
             placeholder="Enter email for notification"
             style={{ marginTop: "30px" }}
@@ -239,40 +247,36 @@ function CreateUser() {
             <RadioGroup row aria-label="holiday" name="holiday">
               <FormControlLabel
                 onClick={handleClickBasic}
-                onChange={(e) =>
-                  setCreateUser({ ...createUser, role: e.target.value })
-                }
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
                 value="Basic"
                 label="Basic"
+                checked={user.role === "Basic" && true}
                 control={<Radio color="primary" />}
               />
               <FormControlLabel
                 onClick={handleClickAdmin}
-                onChange={(e) =>
-                  setCreateUser({ ...createUser, role: e.target.value })
-                }
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
                 value="Admin"
                 label="Admin"
+                checked={user.role === "Admin" && true}
                 control={<Radio color="primary" />}
               />
             </RadioGroup>
           </FormControl>
-          {basicActive && (
+          {user.role === "Basic" && (
             <ListOutlets
-              setOutlets={(outlets) =>
-                setCreateUser({ ...createUser, outlets: outlets })
-              }
+              setOutlets={(outlets) => setUser({ ...user, outlets: outlets })}
               outlets={outlets}
-              userOutlets={[]}
+              userOutlets={user.outlets}
             />
           )}
-          {adminActive && (
+          {user.role === "Admin" && (
             <ListCompanies
               setCompanies={(companies) =>
-                setCreateUser({ ...createUser, companies: companies })
+                setUser({ ...user, companies: companies })
               }
               companies={companies}
-              userCompanies={[]}
+              userCompanies={user.companies}
             />
           )}
 
@@ -285,7 +289,7 @@ function CreateUser() {
               style={{ marginTop: "30px" }}
               fullWidth
             >
-              Create User
+              Update User
             </Button>
           </Link>
         </Paper>
@@ -294,4 +298,4 @@ function CreateUser() {
   );
 }
 
-export default CreateUser;
+export default EditUser;

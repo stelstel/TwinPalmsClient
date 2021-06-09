@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./Lists.css";
 
 function ListOutlets(/* { setOutlets, outlets } */ props) {
-  const [outlets, setOutlets] = useState([]);
+  // props.userOUtlets can be undefined
+  const [outlets, setOutlets] = useState(props.userOutlets || []);
+
   const handleChange = (id) => {
     //props.setOutlets(id);
     console.log(id);
@@ -25,7 +27,10 @@ function ListOutlets(/* { setOutlets, outlets } */ props) {
               onClick={() => handleChange(item.id)}
               key={item.id}
               className="active"
-              style={{ color: outlets.includes(item.id) ? "blue" : "" }}
+              style={{
+                color:
+                  outlets.length > 0 && outlets.includes(item.id) ? "blue" : "",
+              }}
             >
               {item.name}
             </div>
