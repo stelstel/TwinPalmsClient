@@ -4,6 +4,8 @@
   margin: auto;
   display: block;
   width: 500px;
+  float:right;
+ 
 }
 
 /******************* MEDIA QUERIES *********************************/

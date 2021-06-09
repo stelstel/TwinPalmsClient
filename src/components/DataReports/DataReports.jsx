@@ -3,8 +3,10 @@ import React from 'react';
 import Table from '../DataReports/Table/TableData';
 import DatePicker from '../DataReports/DatePicker/DatePicker';
 
+
 // style
 import './DataReports.css';
+
 
 export default function DataReports() {
   // Date time
@@ -16,18 +18,17 @@ export default function DataReports() {
       <section className="table-section">
         <br/>
         <h1 className="title">Data Reports Summary</h1>
-        <hr />
-        <h4 className="statistic-date">Todays Statistics: {date}</h4>
-       
-        <h5 className="revenue">Choose Dates</h5>
-
-        <DatePicker />
-        
-        <div>
+        <br/>
+        <div id="Maindiv">
+        <h4 className="statistic-date">Todays Statistics: {date}        
+        <DatePicker /></h4>
+       <div>
           <br />
           <Table />
+         </div>
         </div>
+       
       </section>
     </>
-  );
+  )
 }

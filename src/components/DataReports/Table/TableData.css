@@ -1,31 +1,38 @@
 /********************* TABLE *********************************/
 table.jambo_table {
-  border: 1px solid rgba(32, 32, 32, 0.78);
+  border: 1px solid rgba(240, 237, 237, 0.78);
    background-color: rgb(241, 243, 239);
-   margin-left:55px;
   display: inline-block;
-   overflow: scroll;
+   overflow: auto;
   
 }
 
 table.jambo_table thead {
-  background: rgba(52, 73, 94, 0.94);
-  color: #ecf0f1;
+  background: rgba(61, 63, 63, 0.94);
+  color: #f5f0f0;
+  
+
 }
 
 table.jambo_table tbody tr:hover td {
-  background: rgba(38, 185, 154, 0.07);
-  border-top: 1px solid rgba(38, 185, 154, 0.11);
-  border-bottom: 1px solid rgba(215, 221, 220, 0.11);
+  background-color: rgb(241, 243, 239);
+  border-top: 1px solid rgba(10, 10, 10, 0.11);
+  border-bottom: 1px solid rgba(30, 32, 32, 0.11);
+ 
 }
-
+#footer th{
+  color: #251e06;
+  font-weight: bolder;
+  font-size: 20px;
+  
+}
 /******************* MEDIA QUERIES *********************************/
 @media screen and (max-width: 1366px) {
   table.jambo_table {
-    font-size: 40px;
+    font-size: 30px;
     background-color: rgb(241, 243, 239);
     text-align: center;
-     margin:29px;
+    
   display: inline-block;
    overflow: scroll;
   }
