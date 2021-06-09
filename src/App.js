@@ -14,6 +14,7 @@ import DataReports from "./components/DataReports/DataReports";
 import Events from "./components/admin/Events";
 import Users from "./components/admin/Users";
 import Login from "./components/authentication/Login2";
+
 export const UserContext = React.createContext();
 
 // Session storage
@@ -98,6 +99,7 @@ function App() {
           <Route path="/manageusers" component={Users} />
           <Route path="/datareports" component={DataReports} />
         </Switch>
+        
       </Router>
     </>
   );

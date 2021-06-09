@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Col } from 'react-bootstrap';
 import { API_URL } from '../../DataReports/utils/misc';
+
+
 import axios from 'axios';
 // style
 import './TableData.css';
@@ -40,14 +42,15 @@ export default function TableData() {
 
   return (
     <>
-      <Col md={11} sm={11}>
+      <Col md={12} sm={12}>
         <div >
           <Table
             striped
             bordered
             hover
-            responsive="sm"
-            className=" table-striped jambo_table bulk_action"
+            responsive="lg"
+            className=" table-striped jambo_table "
+            
           >
             <thead>
               <tr className="headings">{tableHeader()}</tr>
@@ -73,8 +76,34 @@ export default function TableData() {
                       })}
                     </tr>
                   );
+                  
                 })}
             </tbody>
+            <tfoot id="footer">
+              <tr>
+                <th>Total Revenue </th>
+                <td>
+                  20000
+                </td>
+                 
+              </tr>
+              <tr>
+                <th>Total Income </th>
+                <td></td> <td> </td>
+                
+                 <td>
+                  10000
+                </td>
+              </tr>
+    
+              <tr>
+                <th>Total Guests </th>
+                <td></td><td></td><td></td><td></td>
+                <td>500</td>
+                
+                 
+              </tr>
+            </tfoot> 
           </Table>
         </div>
       </Col>
