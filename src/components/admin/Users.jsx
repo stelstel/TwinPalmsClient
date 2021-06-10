@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Users.css";
-import "../createuser/Lists.css";
 import axios from "axios";
 import { FormatAlignRight } from "@material-ui/icons";
 
@@ -127,8 +126,8 @@ function Users() {
                     </div>
                     <p className="users-paragraph users-email">{val.email}</p>
                   </div>
-                  <div>
-                    <p>{val.outlets.map((o) => o.name).join(", ")}</p>
+                  <div style={{ marginLeft: "50px" }}>
+                    {val.outlets.map((o) => o.name).join(", ")}
                   </div>
                 </div>
                 <div className="users-buttons">

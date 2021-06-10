@@ -9,12 +9,7 @@ import {
   Avatar,
   TextField,
   Button,
-  FormControl,
   FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  //Select,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import "../createuser/CreateUser.css";
@@ -40,22 +35,22 @@ function EditUser() {
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const [accessLevelError, setAccessLevelError] = useState(false);
+  //const [accessLevelError, setAccessLevelError] = useState(false);
 
   //HOOKS FOR SCROLL LISTS
   const [outlets, setOutlets] = useState();
   const [companies, setCompanies] = useState();
 
-  const handleClickBasic = () => {
+  /* const handleClickBasic = () => {
     setUser({ ...user, role: "Basic" });
 
     setAccessLevelError(false);
   };
   const handleClickAdmin = () => {
     setUser({ ...user, role: "Admin" });
-
     setAccessLevelError(false);
   };
+  */
 
   //POST REQUEST'
   const sendPutRequest = async (data) => {
@@ -99,8 +94,7 @@ function EditUser() {
       })
       .catch((err) => {
         // Handle Error Here
-        console.log("error with get request for users");
-        console.log(err);
+        console.log("error with get request for users ", err);
       });
   };
 
@@ -224,60 +218,28 @@ function EditUser() {
             fullWidth
             required
           />
-          <TextField
-            onChange={(e) => {
-              setUser({
-                ...user,
-                notificationEmail: e.target.value,
-              });
-            }}
-            value={user.notificationEmail}
-            label="Notification email"
-            placeholder="Enter email for notification"
-            style={{ marginTop: "30px" }}
-            type="email"
-            fullWidth
-          />
-          <FormControl
-            error={accessLevelError}
-            style={{ marginTop: 50 }}
-            component="fieldset"
-          >
-            <FormLabel component="legend">Choose user access level</FormLabel>
-            <RadioGroup row aria-label="holiday" name="holiday">
-              <FormControlLabel
-                onClick={handleClickBasic}
-                onChange={(e) => setUser({ ...user, role: e.target.value })}
-                value="Basic"
-                label="Basic"
-                checked={user.role === "Basic" && true}
-                control={<Radio color="primary" />}
-              />
-              <FormControlLabel
-                onClick={handleClickAdmin}
-                onChange={(e) => setUser({ ...user, role: e.target.value })}
-                value="Admin"
-                label="Admin"
-                checked={user.role === "Admin" && true}
-                control={<Radio color="primary" />}
-              />
-            </RadioGroup>
-          </FormControl>
+
           {user.role === "Basic" && (
-            <ListOutlets
-              setOutlets={(outlets) => setUser({ ...user, outlets: outlets })}
-              outlets={outlets}
-              userOutlets={user.outlets}
-            />
+            <>
+              <FormLabel style={{ marginTop: "30px" }}> Outlets</FormLabel>
+              <ListOutlets
+                setOutlets={(outlets) => setUser({ ...user, outlets: outlets })}
+                outlets={outlets}
+                userOutlets={user.outlets}
+              />
+            </>
           )}
           {user.role === "Admin" && (
-            <ListCompanies
-              setCompanies={(companies) =>
-                setUser({ ...user, companies: companies })
-              }
-              companies={companies}
-              userCompanies={user.companies}
-            />
+            <>
+              <FormLabel style={{ marginTop: "30px" }}>Companies</FormLabel>
+              <ListCompanies
+                setCompanies={(companies) =>
+                  setUser({ ...user, companies: companies })
+                }
+                companies={companies}
+                userCompanies={user.companies}
+              />
+            </>
           )}
 
           <Link to="./report" style={{ textDecoration: "none" }}>
