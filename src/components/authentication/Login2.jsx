@@ -16,7 +16,7 @@ async function loginUser(credentials) {
     .catch((err) => console.log(err));
 }
 
-function Login({ setUser }) {
+function Login(props) {
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
   let [forgotPassword, setForgotPassword] = useState(false);
@@ -46,7 +46,7 @@ function Login({ setUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const resp = await loginUser({ ...credentials });
-    setUser(resp);
+    props.setUser(resp);
   };
 
   return (
