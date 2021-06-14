@@ -9,30 +9,9 @@
 }
 
 /******************* MEDIA QUERIES *********************************/
-@media screen and (max-width: 1300px) {
+@media (min-width: 360px)  and (max-width: 1300px) {
  .date-picker  {
-     width: 500px;
-  
-  }
-  
-}
-@media screen and (max-width: 1000px) {
- .date-picker  {
-     width: 500px;
-    
-    
-  }
-  
-}
-@media screen and (max-width: 768px) {
-  .date-picker {
-    width: 300px;
-    
+     width: 230px;
   }
 }
-@media screen and (max-width: 480px) {
-.date-picker {
-    width: 200px;
-    
-  }
-}
+

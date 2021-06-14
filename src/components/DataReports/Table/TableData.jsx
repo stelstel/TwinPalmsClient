@@ -16,6 +16,7 @@ export default function TableData() {
     const { data } = await axios(API_URL);
     console.log(data);
     setFbReport(data);
+    
   };
 
   useEffect(() => {
@@ -48,12 +49,15 @@ export default function TableData() {
             striped
             bordered
             hover
-            responsive="lg"
+            responsive="sm"
             className=" table-striped jambo_table "
-            
-          >
+             >
             <thead>
-              <tr className="headings">{tableHeader()}</tr>
+              <tr className="headings" >{tableHeader(
+                )
+                 
+               }
+                </tr>
             </thead>
 
             <tbody>
@@ -89,8 +93,10 @@ export default function TableData() {
               </tr>
               <tr>
                 <th>Total Income </th>
-                <td></td> <td> </td>
-                
+                <td>
+</td>
+                 <td>  
+                </td>
                  <td>
                   10000
                 </td>

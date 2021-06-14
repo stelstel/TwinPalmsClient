@@ -16,19 +16,20 @@ export default function DataReports() {
   return (
     <>
       <section className="table-section">
-        <br/>
-        <h1 className="title">Data Reports Summary</h1>
-        <br/>
+        <br />
+        <h1 className="Table-title">Data Reports Summary</h1>
+        <br />
         <div id="Maindiv">
-        <h4 className="statistic-date">Todays Statistics: {date}        
-        <DatePicker /></h4>
-       <div>
-          <br />
-          <Table />
-         </div>
+          <h4 className="statistic-date">
+            Todays Statistics: {date}
+            <DatePicker />
+          </h4>
+          <div>
+            <br />
+            <Table />
+          </div>
         </div>
-       
       </section>
     </>
-  )
+  );
 }

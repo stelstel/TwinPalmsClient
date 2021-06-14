@@ -3,69 +3,28 @@ table.jambo_table {
   border: 1px solid rgba(240, 237, 237, 0.78);
    background-color: rgb(241, 243, 239);
   display: inline-block;
-   overflow: auto;
-  
-}
+   overflow: scroll;
+  }
 
 table.jambo_table thead {
   background: rgba(61, 63, 63, 0.94);
   color: #f5f0f0;
-  
-
 }
 
 table.jambo_table tbody tr:hover td {
   background-color: rgb(241, 243, 239);
   border-top: 1px solid rgba(10, 10, 10, 0.11);
   border-bottom: 1px solid rgba(30, 32, 32, 0.11);
- 
-}
+ }
 #footer th{
   color: #251e06;
   font-weight: bolder;
   font-size: 20px;
-  
-}
+  }
 /******************* MEDIA QUERIES *********************************/
-@media screen and (max-width: 1366px) {
+@media (min-width: 480px) and (max-width: 1366px) {
   table.jambo_table {
     font-size: 30px;
     background-color: rgb(241, 243, 239);
-    text-align: center;
-    
-  display: inline-block;
-   overflow: scroll;
   }
-  
-}
-@media screen and (max-width: 1023px) {
- table.jambo_table  {
-    font-size: 50px;
-    background-color: rgb(241, 243, 239);
-    text-align: center;
-     margin:auto;
-  display: inline-block;
-    overflow: scroll;
   }
-  
-}
-@media screen and (max-width: 768px) {
-  table.jambo_table {
-    font-size: 20px;
-    background-color: rgb(224, 235, 228);
-    text-align: center;
-     margin:auto;
-  display: inline-block;
-    overflow: scroll;
-  }
-}
-@media screen and (max-width: 480px) {
-table.jambo_table {
-     font-size: 20px;
-    background-color: rgb(232, 236, 232);
-    text-align: left;
-    margin:auto;
-  display: inline-block;
-   overflow: auto;
-  }
-}
