@@ -48,7 +48,7 @@ export default function TableData() {
             striped
             bordered
             hover
-            responsive="lg"
+            responsive="sm"
             className=" table-striped jambo_table "
             
           >
