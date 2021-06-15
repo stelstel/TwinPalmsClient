@@ -99,7 +99,6 @@ function App() {
           <Route path="/manageusers" component={Users} />
           <Route path="/datareports" component={DataReports} />
         </Switch>
-        
       </Router>
     </>
   );
