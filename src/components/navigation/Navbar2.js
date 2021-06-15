@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import "./Navbar.css";
 
 function Navbar(user) {
+  console.log("HERE", user)
   console.log("User ", user);
   const [click, setClick] = useState(false);
 

@@ -88,8 +88,20 @@ function App() {
               )
             }
           ></Route>
+          <Route
+            path="/login"
+            exact
+            render={() =>
+              !user.token ? (
+                <Login setUser={setUser} />
+              ) : (
+                <UserContext.Provider value={getUser(user)}>
+                  <Dashboard2 {...getUser(user)} isAuthed={true} />
+                </UserContext.Provider>
+              )
+            }
+          ></Route>
           {<Route path="/home" component={Home} />}
-          <Route path="/login" component={Login} />
           <Route path="/report" component={MultiStepForm} />
           <Route path="/edit/:id" component={EditUser} />
           {<Route path="/admin" component={Dashboard} />}
