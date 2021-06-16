@@ -20,12 +20,12 @@ function UserHome() {
     roomReport: false,
   });
 
-  const handleChangePassword = async (e) => {
+  const handleChangePassword = async (e, passwords) => {
     e.preventDefault();
-    let passwords = {
+    /* let passwords = {
       currentPassword: e.target["currentPassword"].value,
       newPassword: e.target["newPassword"].value,
-    };
+    }; */
 
     await axios
       .post(
@@ -37,9 +37,8 @@ function UserHome() {
           },
         }
       )
-      .then(() =>
-        alert("Password changed!").catch((err) => console.error("Error: ", err))
-      );
+      .then(() => alert("Password changed!"))
+      .catch((err) => console.error("Error: ", err));
   };
 
   return (

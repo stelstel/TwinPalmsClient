@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ListOutlets from "../createuser/ListOutlets";
+import ListHotels from "../createuser/ListHotels";
 import ListCompanies from "../createuser/ListCompanies";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
@@ -39,6 +40,7 @@ function EditUser() {
 
   //HOOKS FOR SCROLL LISTS
   const [outlets, setOutlets] = useState();
+  const [hotels, setHotels] = useState();
   const [companies, setCompanies] = useState();
 
   /* const handleClickBasic = () => {
@@ -73,6 +75,21 @@ function EditUser() {
         console.log("Outlets ", res.data);
         console.log("successfull get request");
         setOutlets(res.data);
+      })
+      .catch((err) => {
+        // Handle Error Here
+        console.log("error with get request for users");
+        console.error(err);
+      });
+  };
+
+  const getHotels = async () => {
+    await axios
+      .get("https://localhost:44306/api/Hotels")
+      .then((res) => {
+        console.log("Outlets ", res.data);
+        console.log("successfull get request");
+        setHotels(res.data);
       })
       .catch((err) => {
         // Handle Error Here
@@ -126,6 +143,10 @@ function EditUser() {
 
   useEffect(() => {
     getOutlets(url);
+  }, []);
+
+  useEffect(() => {
+    getHotels();
   }, []);
 
   useEffect(() => {
@@ -226,6 +247,12 @@ function EditUser() {
                 setOutlets={(outlets) => setUser({ ...user, outlets: outlets })}
                 outlets={outlets}
                 userOutlets={user.outlets}
+              />
+              <FormLabel style={{ marginTop: "30px" }}>Hotels</FormLabel>
+              <ListHotels
+                setHotels={(hotels) => setUser({ ...user, hotels: hotels })}
+                hotels={hotels}
+                userHotels={user.hotels}
               />
             </>
           )}

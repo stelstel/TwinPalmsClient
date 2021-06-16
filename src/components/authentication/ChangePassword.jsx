@@ -29,36 +29,39 @@ function ChangePassword(props) {
             </Avatar>
             <h2 style={{ marginTop: 30 }}>Change password</h2>
           </Grid>
-          <form onSubmit={props.onSubmitFunction}></form>
-          <TextField
-            onChange={handleChange}
-            id="currentPassword"
-            label="Current Password"
-            placeholder="Enter password"
-            style={{ marginTop: "40px" }}
-            fullWidth
-            required
-          />
-          <TextField
-            onChange={handleChange}
-            id="newPassword"
-            label="New Password"
-            placeholder="Enter password"
-            style={{ marginTop: "40px" }}
-            type="text"
-            fullWidth
-            required
-          />
+          <form onSubmit={(e) => props.onSubmitFunction(e, state)}>
+            <TextField
+              onChange={handleChange}
+              id="currentPassword"
+              name="currentPassword"
+              label="Current Password"
+              placeholder="Enter password"
+              style={{ marginTop: "40px" }}
+              fullWidth
+              required
+            />
+            <TextField
+              onChange={handleChange}
+              id="newPassword"
+              name="newPassword"
+              label="New Password"
+              placeholder="Enter password"
+              style={{ marginTop: "40px" }}
+              type="text"
+              fullWidth
+              required
+            />
 
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            style={{ marginTop: "60px" }}
-            fullWidth
-          >
-            Change password
-          </Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              style={{ marginTop: "60px" }}
+              fullWidth
+            >
+              Change password
+            </Button>
+          </form>
         </Paper>
       </Grid>
     </Grid>
