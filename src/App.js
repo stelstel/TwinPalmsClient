@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/navigation/Navbar";
 import Navbar2 from "./components/navigation/Navbar2";
 //import Login from "./components/authentication/Login";
 import MultiStepForm from "./components/report/MultiStepForm";
-import Home from "./components/home/Home";
+//import Home from "./components/home/Home";
 import CreateUser from "./components/createuser/CreateUser";
 import Dashboard from "./components/admin/Dashboard";
 import Dashboard2 from "./components/admin/Dashboard2";
@@ -73,33 +78,37 @@ function App() {
   return (
     <>
       <Router>
-        {!user.token ? <Navbar /> : <Navbar2 {...getUser(user)} />}
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={() =>
-              !user.token ? (
-                <Login setUser={setUser} />
-              ) : (
-                <UserContext.Provider value={getUser(user)}>
-                  <Dashboard2 {...getUser(user)} isAuthed={true} />
-                </UserContext.Provider>
-              )
-            }
-          ></Route>
-          {<Route path="/home" component={Home} />}
-          <Route path="/login" component={Login} />
-          <Route path="/report" component={MultiStepForm} />
-          <Route path="/edit/:id" component={EditUser} />
-          {<Route path="/admin" component={Dashboard} />}
-          <Route path="/createuser" component={CreateUser} />
-          <Route path="/reset-password" component={ResetPassword} />
-          <Route path="/events" component={Events} />
-          <Route path="/manageusers" component={Users} />
-          <Route path="/datareports" component={DataReports} />
-        </Switch>
-        
+        {!user.token ? (
+          <>
+            <Navbar />
+            <Login setUser={setUser} />
+          </>
+        ) : (
+          <>
+            <Navbar2 {...getUser(user)} />
+            <Redirect to="/home" />
+            <Switch>
+              <UserContext.Provider value={!user.token ? {} : getUser(user)}>
+                <Route
+                  path="/home"
+                  render={() => (
+                    <Dashboard2 {...getUser(user)} isAuthed={true} />
+                  )}
+                ></Route>
+                {/* {<Route path="/" component={Home} />} */}
+                <Route path="/login" component={Login} />
+                <Route path="/report" component={MultiStepForm} />
+                <Route path="/edit/:id" component={EditUser} />
+                {<Route path="/admin" component={Dashboard} />}
+                <Route path="/createuser" component={CreateUser} />
+                <Route path="/reset-password" component={ResetPassword} />
+                <Route path="/events" component={Events} />
+                <Route path="/manageusers" component={Users} />
+                <Route path="/datareports" component={DataReports} />
+              </UserContext.Provider>
+            </Switch>
+          </>
+        )}
       </Router>
     </>
   );
