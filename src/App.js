@@ -88,7 +88,15 @@ function App() {
         ) : (
           <>
             <Navbar2 {...getUser(user)} />
-            <Redirect to="/home" />
+            <Redirect
+              to={
+                user.roles.includes("SuperAdmin")
+                  ? "admin"
+                  : user.roles.includes("Admin")
+                  ? "datareports"
+                  : "report"
+              }
+            />
             <Switch>
               <UserContext.Provider value={getUser(user)}>
                 <Route
