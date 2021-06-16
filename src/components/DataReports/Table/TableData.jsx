@@ -1,13 +1,12 @@
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import { Col } from 'react-bootstrap';
-import { API_URL } from '../../DataReports/utils/misc';
+import React, { useState, useEffect } from "react";
+import Table from "react-bootstrap/Table";
+import { Col } from "react-bootstrap";
+import { API_URL } from "../../DataReports/utils/misc";
 
-
-import axios from 'axios';
+import axios from "axios";
 // style
-import './TableData.css';
+import "./TableData.css";
 
 export default function TableData() {
   const [fbReport, setFbReport] = useState();
@@ -23,7 +22,7 @@ export default function TableData() {
   }, []);
 
   // Table header method
-  const tableHeader = () => {
+  /* const tableHeader = () => {
     let header = fbReport && Object.keys(fbReport[0]);
     return (
       header &&
@@ -38,19 +37,19 @@ export default function TableData() {
         }
       })
     );
-  };
+  }; */
 
   return (
     <>
       <Col md={12} sm={12}>
-        <div >
+        <div>
           <Table
             striped
             bordered
             hover
             responsive="sm"
-            className=" table-striped jambo_table " >
-
+            className=" table-striped jambo_table "
+          >
             <thead>
               <th className="headings">TABELS</th>
               <th className="headings">FOOD</th>
@@ -65,7 +64,6 @@ export default function TableData() {
               <th className="headings">OUTLET ID</th>
               <th className="headings">USER ID</th>
               <th className="headings">GUESTSSOURCE OF BUSINESS EVENTS</th>
-
             </thead>
 
             <tbody>
@@ -76,9 +74,9 @@ export default function TableData() {
                     <tr key={key}>
                       {Object.entries(obj).map(([key, value]) => {
                         if (
-                          key === 'gsobNrOfGuest' ||
-                          key === 'guestSourceOfBusinesses' ||
-                          key === 'weathers'
+                          key === "gsobNrOfGuest" ||
+                          key === "guestSourceOfBusinesses" ||
+                          key === "weathers"
                         ) {
                           //Theese are nested arrays with object, we have to map throught theese again or something
                           console.log(value);
@@ -88,34 +86,28 @@ export default function TableData() {
                       })}
                     </tr>
                   );
-                  
                 })}
             </tbody>
             <tfoot id="footer">
               <tr>
                 <th>Total Revenue </th>
-                <td>
-                  20000
-                </td>
-                 
+                <td>20000</td>
               </tr>
               <tr>
                 <th>Total Income </th>
                 <td></td> <td> </td>
-                
-                 <td>
-                  10000
-                </td>
+                <td>10000</td>
               </tr>
-    
+
               <tr>
                 <th>Total Guests </th>
-                <td></td><td></td><td></td><td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>500</td>
-                
-                 
               </tr>
-            </tfoot> 
+            </tfoot>
           </Table>
         </div>
       </Col>

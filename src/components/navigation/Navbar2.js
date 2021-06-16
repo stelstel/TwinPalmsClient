@@ -4,7 +4,7 @@ import { Button } from "./Button";
 import "./Navbar.css";
 
 function Navbar(user) {
-  console.log("HERE", user)
+  console.log("HERE", user);
   console.log("User ", user);
   const [click, setClick] = useState(false);
 
@@ -74,14 +74,13 @@ function Navbar(user) {
               </li>
             )}
           </ul>
-          <Link to="/login">
-            <Button
-              onClick={() => (window.location.href = "/")}
-              buttonStyle="btn--outline"
-            >
-              LOGOUT
-            </Button>
-          </Link>
+
+          <Button
+            onClick={() => (window.location.href = "/")}
+            buttonStyle="btn--outline"
+          >
+            LOGOUT
+          </Button>
         </div>
       </nav>
     </>
