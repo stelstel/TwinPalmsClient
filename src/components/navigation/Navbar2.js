@@ -4,7 +4,6 @@ import { Button } from "./Button";
 import "./Navbar.css";
 
 function Navbar(user) {
-  console.log("HERE", user);
   console.log("User ", user);
   const [click, setClick] = useState(false);
 
@@ -76,15 +75,7 @@ function Navbar(user) {
                     Daily report
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    to="/change-password"
-                    className="nav-links"
-                    onClick={closeMobileMenu}
-                  >
-                    Change Password
-                  </Link>
-                </li>
+
                 <li>
                   <Link
                     to="/room-report"
@@ -96,6 +87,15 @@ function Navbar(user) {
                 </li>
               </>
             )}
+            <li className="nav-item">
+              <Link
+                to="/change-password"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Settings
+              </Link>
+            </li>
           </ul>
 
           <Button onClick={() => handleLogout()} buttonStyle="btn--outline">
