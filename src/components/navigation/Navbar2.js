@@ -10,6 +10,9 @@ function Navbar(user) {
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const handleLogout = async () => {
+    await (window.location.href = "/");
+  };
 
   return (
     <>
@@ -63,22 +66,39 @@ function Navbar(user) {
                 </Link>
               </li>
             ) : (
-              <li className="nav-item">
-                <Link
-                  to="/report"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  Daily report
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link
+                    to="/report"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    Daily report
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/change-password"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    Change Password
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/room-report"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    Room Report
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
 
-          <Button
-            onClick={() => (window.location.href = "/")}
-            buttonStyle="btn--outline"
-          >
+          <Button onClick={() => handleLogout()} buttonStyle="btn--outline">
             LOGOUT
           </Button>
         </div>
