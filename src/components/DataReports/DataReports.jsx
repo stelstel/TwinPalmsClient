@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from "react";
 // Component
-import Table from '../DataReports/Table/TableData';
-import DatePicker from '../DataReports/DatePicker/DatePicker';
-import Chart from '../DataReports/Chart/Chart';
-
+import Table from "../DataReports/Table/TableData";
+import DatePicker from "../DataReports/DatePicker/DatePicker";
+import Chart from "../DataReports/Chart/Chart";
+import { UserContext } from "../../App";
 
 // style
-import './DataReports.css';
+import "./DataReports.css";
 
 export default function DataReports() {
+  const user = useContext(UserContext);
+  console.log("user from DataReports ", user);
   // Date time
   const currentDate = new Date();
   const date = currentDate.toDateString();
@@ -16,13 +18,11 @@ export default function DataReports() {
   return (
     <>
       <section className="table-section">
-
         <br />
         <h1 className="table-title">Data Reports Summary</h1>
         <br />
 
         <div id="Maindiv">
-
           <h4 className="statistic-date">
             Todays Statistics: {date}
             <DatePicker />
@@ -34,9 +34,7 @@ export default function DataReports() {
           <hr />
           <Chart />
         </div>
-
       </section>
-
     </>
   );
 }

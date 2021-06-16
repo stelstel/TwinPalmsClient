@@ -10,12 +10,14 @@ import Navbar from "./components/navigation/Navbar";
 import Navbar2 from "./components/navigation/Navbar2";
 //import Login from "./components/authentication/Login";
 import MultiStepForm from "./components/report/MultiStepForm";
+import RoomReport from "./components/report/RoomReportForm";
 //import Home from "./components/home/Home";
 import CreateUser from "./components/createuser/CreateUser";
 import Dashboard from "./components/admin/Dashboard";
 import Dashboard2 from "./components/admin/Dashboard2";
 import EditUser from "./components/admin/EditUser";
 import ResetPassword from "./components/authentication/ResetPassword";
+import ChangePassword from "./components/authentication/ChangePassword";
 import DataReports from "./components/DataReports/DataReports";
 import Events from "./components/admin/Events";
 import Users from "./components/admin/Users";
@@ -88,7 +90,7 @@ function App() {
             <Navbar2 {...getUser(user)} />
             <Redirect to="/home" />
             <Switch>
-              <UserContext.Provider value={!user.token ? {} : getUser(user)}>
+              <UserContext.Provider value={getUser(user)}>
                 <Route
                   path="/home"
                   render={() => (
@@ -98,10 +100,12 @@ function App() {
                 {/* {<Route path="/" component={Home} />} */}
                 <Route path="/login" component={Login} />
                 <Route path="/report" component={MultiStepForm} />
+                <Route path="/room-report" component={RoomReport} />
                 <Route path="/edit/:id" component={EditUser} />
                 {<Route path="/admin" component={Dashboard} />}
                 <Route path="/createuser" component={CreateUser} />
                 <Route path="/reset-password" component={ResetPassword} />
+                <Route path="/change-password" component={ChangePassword} />
                 <Route path="/events" component={Events} />
                 <Route path="/manageusers" component={Users} />
                 <Route path="/datareports" component={DataReports} />
@@ -109,7 +113,6 @@ function App() {
             </Switch>
           </>
         )}
-
       </Router>
     </>
   );

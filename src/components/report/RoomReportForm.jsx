@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core";
 import {
@@ -15,14 +15,17 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 
+import { UserContext } from "../../App";
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 100,
   },
 }));
 
-function RoomReportForm({ onSubmitFunction, user }) {
-  console.log("User ");
+function RoomReportForm(props) {
+  const user = useContext(UserContext);
+  console.log("User from rRoomReport ", props.user);
   const classes = useStyles();
   const [localEvents, setLocalEvents] = useState([]);
   //const [file, setFile] = useState({});
