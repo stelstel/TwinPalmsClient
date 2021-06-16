@@ -1,15 +1,25 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import "../../App.css";
 import ChangePassword from "../authentication/ChangePassword";
 import MultiReport from "../report/MultiStepForm";
+import RoomReport from "../report/RoomReportForm";
 import "./Home.css";
+import "../admin/Dashboard.css";
+import { Button } from "./Button";
 
 import { UserContext } from "../../App";
 
 function UserHome() {
   const user = useContext(UserContext);
   console.log("User ", user);
+
+  const [activeChild, setActiveChild] = useState({
+    changePassword: false,
+    multiReport: false,
+    roomReport: false,
+  });
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
     let passwords = {
@@ -34,8 +44,52 @@ function UserHome() {
 
   return (
     <>
-      <ChangePassword onSubmitFunction={handleChangePassword} />
-      <MultiReport />
+      <main className="dashboard-object-container">
+        <Button
+          onClick={() =>
+            setActiveChild({
+              ...activeChild,
+              multiReport: true,
+              roomReport: false,
+              changePassword: false,
+            })
+          }
+        >
+          <i className="fas fa-users-cog"></i>
+          <p>Create Daily Report</p>
+        </Button>
+        <Button
+          onClick={() =>
+            setActiveChild({
+              ...activeChild,
+              changePassword: true,
+              roomReport: false,
+              multiReport: false,
+            })
+          }
+        >
+          <i className="fas fa-icons"></i>
+          <p>Change password</p>
+        </Button>
+        <Button
+          onClick={() =>
+            setActiveChild({
+              ...activeChild,
+              roomReport: true,
+              multiReport: false,
+              changePassword: false,
+            })
+          }
+        >
+          <i className="fas fa-cog"></i>
+          <p>Create RoomReport</p>
+        </Button>
+      </main>
+      {activeChild.changePassword === true && (
+        <ChangePassword onSubmitFunction={handleChangePassword} />
+      )}
+      {activeChild.multiReport === true && <MultiReport />}
+      {activeChild.roomReport === true && <RoomReport user={user} />}
     </>
   );
 }
