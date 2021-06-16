@@ -1,9 +1,18 @@
-import React from "react";
+
+import React, { useContext } from "react";
+
+
+
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
 import { Button } from "./Button";
 
+import { UserContext } from "../../App";
 function Dashboard() {
+  const user = useContext(UserContext);
+  console.log("User from dashboard", user);
+
+
   return (
     <>
       <main className="dashboard-object-container">
