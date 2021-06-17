@@ -13,6 +13,7 @@ import {
   FormLabel,
   FormControlLabel,
   TextareaAutosize,
+  TextField,
 } from "@material-ui/core";
 
 import { UserContext } from "../../App";
@@ -42,16 +43,13 @@ function RoomReportForm(props) {
   });
   const submitRoomReport = async (e) => {
     e.preventDefault();
-    // console.log("File ", form.files[0]);
 
-    const formData = new FormData(document.getElementById("roomReportForm"));
+    const formData = new FormData(e.target);
 
     Object.entries(roomReport).map((rr) => {
       return formData.append(rr[0], rr[1]);
     });
-    /* const file = form.files[0];
-    formData.append("file", file); */
-    console.log("formData ", formData);
+
     await axios
       .post("https://localhost:44306/api/roomreports", formData)
       .then(({ data }) => {
@@ -78,9 +76,48 @@ function RoomReportForm(props) {
     <Grid className="report-grid-container">
       <Grid>
         <Grid align="center">
-          <h3 style={{ marginBottom: "25px" }}>General information</h3>
+          <h3 style={{ marginBottom: "25px" }}>New Room Report</h3>
         </Grid>
         <form onSubmit={(e) => submitRoomReport(e)} id="roomReportForm">
+          <TextField
+            style={{ marginTop: "40px" }}
+            placeholder="Enter number of new room nigths"
+            label="New Room Nights"
+            type="number"
+            onChange={(e) =>
+              setRoomReport({ ...roomReport, newRoomNights: e.target.value })
+            }
+            defaultValue
+            error
+            fullWidth
+          />
+          <TextField
+            style={{ marginTop: "40px" }}
+            placeholder="Enter todays revenue pickup"
+            label="Todays Revenue Pickup"
+            type="number"
+            onChange={(e) =>
+              setRoomReport({
+                ...roomReport,
+                todaysRevenuePickup: e.target.value,
+              })
+            }
+            defaultValue
+            error
+            fullWidth
+          />
+          <TextField
+            style={{ marginTop: "40px" }}
+            placeholder="Enter other revenue total"
+            label="Other Revenue"
+            type="number"
+            onChange={(e) =>
+              setRoomReport({ ...roomReport, otherRevenue: e.target.value })
+            }
+            defaultValue
+            error
+            fullWidth
+          />
           <FormControl className={classes.formControl} fullWidth>
             <InputLabel>Choose Room type</InputLabel>
             <Select
