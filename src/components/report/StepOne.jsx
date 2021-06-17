@@ -25,18 +25,10 @@ function StepOne(props) {
 
     const classes = useStyles();
 
-    //Variable for users outlets
-    let loggedInUserOutlets;
-    //Loop through logged in user data
-    for(const property in props.user) {
-        //Asign logged in users outlets to const loggedInUserOutlets
-        if(property === "outlets") {
-            loggedInUserOutlets = props.user[property]
-        }
-    }
-    //Return all outlets inside a <MenuItem>
-    const listLoggedInUsersOutlets = loggedInUserOutlets.map(( { name, id } ) => {
-        
+
+    //Return all outlets from logged in user inside a <MenuItem>
+    const listLoggedInUsersOutlets = props.loggedInUserOutlets.map(( { name, id } ) => {   
+
         return <MenuItem key={id} value={id}>{name}</MenuItem>
     })
 
