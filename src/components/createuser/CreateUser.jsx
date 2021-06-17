@@ -39,6 +39,7 @@ function CreateUser() {
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [emailNotificationError, setEmailNotificationError] = useState(false);
   const [accessLevelError, setAccessLevelError] = useState(false);
   //HOOKS FOR ACCESS LEVEL
   const [basicActive, setBasicActive] = useState(false);
@@ -58,21 +59,6 @@ function CreateUser() {
     setAdminActive(true);
     setAccessLevelError(false);
   };
-
-  /* const setSelectedOutlets = async (data) => {
-    console.log("data ", data);
-    setCreateUser({
-      ...createUser,
-      outlets: data,
-    });
-  };
- */
-  /* const setSelectedCompanies = async (data) => {
-    setCreateUser({
-      ...createUser,
-      companies: data,
-    });
-  }; */
 
   //POST REQUEST'
   const sendPostRequest = async (data) => {
@@ -117,7 +103,7 @@ function CreateUser() {
         console.error(err);
       });
   };
-
+ 
   //FETCH LIST OF COMPANIES FROM API
   const urlCompanies = "https://localhost:44306/api/Companies";
 
@@ -163,6 +149,9 @@ function CreateUser() {
     if (createUser.email === "") {
       setEmailError(true);
     }
+    if (createUser.notificationEmail === "") {
+      setEmailNotificationError(true);
+    }
     if (basicActive === false && adminActive === false) {
       setAccessLevelError(true);
       return;
@@ -173,10 +162,10 @@ function CreateUser() {
 
   return (
     <Grid className="createuser-page-container">
-      <Grid style={{ paddingTop: "30px" }}>
+      <Grid style={{ paddingTop: "30px", paddingBottom: "30px" }}>
         <Paper className="createuser-paper" elevation={10}>
           <Grid align="center">
-            <Avatar style={{ backgroundColor: "#1bbd7e", marginTop: "30px" }}>
+            <Avatar style={{ backgroundColor: "#1bbd7e"}}>
               <AccountCircleIcon />
             </Avatar>
             <h2 style={{ marginTop: 20 }}>Create User</h2>
@@ -193,7 +182,6 @@ function CreateUser() {
             type="text"
             fullWidth
             error={userNameError}
-            required
           />
           <TextField
             onChange={(e) => {
@@ -207,7 +195,6 @@ function CreateUser() {
             type="text"
             fullWidth
             error={firstNameError}
-            required
           />
           <TextField
             onChange={(e) => {
@@ -221,7 +208,6 @@ function CreateUser() {
             type="text"
             fullWidth
             error={lastNameError}
-            required
           />
           <TextField
             onChange={(e) => {
@@ -235,7 +221,6 @@ function CreateUser() {
             type="email"
             error={emailError}
             fullWidth
-            required
           />
           <TextField
             onChange={(e) => {
@@ -243,18 +228,21 @@ function CreateUser() {
                 ...createUser,
                 notificationEmail: e.target.value,
               });
+              setEmailNotificationError(false)
             }}
             value={createUser.notificationEmail}
             label="Notification email"
             placeholder="Enter email for notification"
             style={{ marginTop: "30px" }}
             type="email"
+            error={emailNotificationError}
             fullWidth
           />
           <FormControl
             error={accessLevelError}
             style={{ marginTop: 50 }}
             component="fieldset"
+            fullWidth
           >
             <FormLabel component="legend">Choose user access level</FormLabel>
             <RadioGroup row aria-label="holiday" name="holiday">
@@ -280,7 +268,7 @@ function CreateUser() {
           </FormControl>
           {basicActive && (
             <>
-              <FormLabel style={{ marginTop: "30px" }}>Outlets</FormLabel>
+              <FormLabel style={{ marginTop: "30px", textAlign: "start" }}>Outlets</FormLabel>
               <ListOutlets
                 setOutlets={(outlets) =>
                   setCreateUser({ ...createUser, outlets: outlets })
@@ -317,7 +305,7 @@ function CreateUser() {
               type="submit"
               color="primary"
               variant="contained"
-              style={{ marginTop: "30px" }}
+              style={{ marginTop: "50px" }}
               fullWidth
             >
               Create User
