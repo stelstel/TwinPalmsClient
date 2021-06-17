@@ -4,6 +4,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
 
 function ChangePassword(props) {
+  console.log("TESTING")
+  console.log(props)
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
   let [state, setState] = useState({

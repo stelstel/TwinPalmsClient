@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {Stepper, Step, StepLabel, Grid, Button, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
@@ -8,9 +8,13 @@ import StepThree from './StepThree';
 import axios from 'axios';
 import './MultiStepForm.css';
 import StepFour from './StepFour';
+import { UserContext } from '../../App';
 
 
 function MultiStepForm() {
+
+    //GETS LOGGED IN USER
+    const user = useContext(UserContext);
 
     //STEPS FOR MULTISTEP FORM
     const [activeStep, setActiveStep] = useState(0);
@@ -417,6 +421,7 @@ function MultiStepForm() {
             case 0:
                 return <StepOne 
                     //restaurants
+                    user={user}
                     restaurantUndefined={restaurantUndefined}
                     restaurant={restaurant}
                     handleChangeRestaurant={handleChangeRestaurant}
