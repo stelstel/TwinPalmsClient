@@ -40,16 +40,17 @@ function RoomReportForm(props) {
     roomTypeId: 0,
     localEventId: 0,
   });
-  const submitRoomReport = async (e, form) => {
+  const submitRoomReport = async (e) => {
     e.preventDefault();
-    console.log(form.files[0]);
+    // console.log("File ", form.files[0]);
 
-    const formData = new FormData();
-    Object.entries(roomReport).map((o) => {
-      return formData.append(o[0], o[1]);
+    const formData = new FormData(document.getElementById("roomReportForm"));
+
+    Object.entries(roomReport).map((rr) => {
+      return formData.append(rr[0], rr[1]);
     });
-    const file = form.files[0];
-    formData.append("file", file);
+    /* const file = form.files[0];
+    formData.append("file", file); */
     console.log("formData ", formData);
     await axios
       .post("https://localhost:44306/api/roomreports", formData)
@@ -79,7 +80,7 @@ function RoomReportForm(props) {
         <Grid align="center">
           <h3 style={{ marginBottom: "25px" }}>General information</h3>
         </Grid>
-        <form onSubmit={(e) => submitRoomReport(e, this)} id="roomReportForm">
+        <form onSubmit={(e) => submitRoomReport(e)} id="roomReportForm">
           <FormControl className={classes.formControl} fullWidth>
             <InputLabel>Choose Room type</InputLabel>
             <Select
