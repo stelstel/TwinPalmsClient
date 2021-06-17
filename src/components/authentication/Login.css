@@ -1,4 +1,3 @@
-
 .login-page-container {
     background-color: #494949;
     height: 860px;
@@ -10,7 +9,6 @@
     width: 480px;
     margin: 20px auto
 }
-
 .forgot-password-btn {
     width: 100%;
     color: #3f51b5;
@@ -18,7 +16,6 @@
 .forgot-password.btn:hover {
     color: #132bb3;
 }
-
 @media screen and (max-width: 480px) {
     .login-paper {
         width: 100vw;
