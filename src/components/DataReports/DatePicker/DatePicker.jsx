@@ -4,7 +4,31 @@ import axios from 'axios';
 import './DatePicker.css';
 
  
-export default function DatePicker() {
+export default function DatePicker( {user} ) {
+
+  let userOutlets = []
+
+  //Loops over the companies the logged in users has access to and pushes to userOutlets to be used in api endpoint
+  user.companies.forEach((obj) => {
+    //Destructuring all key/value pairs in all objects in the array
+    Object.entries(obj).map(([key, value]) => {
+      //Accesses only the outlets and pushes all outlet ids to userOutlets
+      if(key === "outlets") {
+        //Checks if this company outlets has values
+        if(value.length > 0) { 
+              value.forEach((outlets) => {
+              userOutlets.push(`outletIds=${outlets.id}&`)
+            })
+        }
+        //Checks if this company outlets has 0 values
+        else if(value.length <= 0) {
+          return null
+        }
+      }
+      return null
+    })
+  })
+  userOutlets = userOutlets.toString().replace(/,/g, "")
  
   //Gets yesterdays date since owners will be checking yesterdays data reports by default
   const today = new Date()
@@ -24,9 +48,9 @@ export default function DatePicker() {
   const sendGetRequest = async () => {
  
     console.log("Try get request to endpoint:")
-    console.log(`https://localhost:44306/outlets/fbReports?outletIds=1&fromDate=${fromDate}&toDate=${toDate}`)
+    console.log(`https://localhost:44306/outlets/fbReports?${userOutlets}fromDate=${fromDate}&toDate=${toDate}`)
  
-    const { data } = await axios(`https://localhost:44306/outlets/fbReports?outletIds=1&fromDate=${fromDate}&toDate=${toDate}`);
+    const { data } = await axios(`https://localhost:44306/outlets/fbReports?${userOutlets}fromDate=${fromDate}&toDate=${toDate}`);
     
     console.log("sucessfull get request")
     console.log(data);

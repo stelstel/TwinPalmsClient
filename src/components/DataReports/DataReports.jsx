@@ -8,9 +8,9 @@ import { UserContext } from "../../App";
 // style
 import "./DataReports.css";
 
-export default function DataReports() {
+export default function DataReports( ) {
   const user = useContext(UserContext);
-  console.log("user from DataReports ", user);
+
   // Date time
   const currentDate = new Date();
   const date = currentDate.toDateString();
@@ -25,7 +25,7 @@ export default function DataReports() {
         <div id="Maindiv">
           <h4 className="statistic-date">
             Todays Statistics: {date}
-            <DatePicker />
+            <DatePicker user={user} />
             <br />
             <br />
           </h4>
