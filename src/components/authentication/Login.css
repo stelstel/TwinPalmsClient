@@ -10,13 +10,12 @@
     width: 480px;
     margin: 20px auto
 }
-.forgot-password {
-    display: flex;
-    justify-content: center;
-    text-decoration: none;
+
+.forgot-password-btn {
+    width: 100%;
     color: #3f51b5;
 }
-.forgot-password:hover {
+.forgot-password.btn:hover {
     color: #132bb3;
 }
 
