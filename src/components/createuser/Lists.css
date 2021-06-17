@@ -5,6 +5,10 @@
     border-radius: 2px;
     overflow-y: auto;
 }
+.vertical-menu.hotels {
+    height: 100px;  
+
+}
 .vertical-menu div {
     background-color: white;
     color: black;
