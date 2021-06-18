@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ListOutlets from "./ListOutlets";
 import ListHotels from "./ListHotels";
 import ListCompanies from "./ListCompanies";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Grid,
@@ -44,9 +44,6 @@ function CreateUser() {
   const [basicActive, setBasicActive] = useState(false);
   const [adminActive, setAdminActive] = useState(false);
   //HOOKS FOR SCROLL LISTS
-  const [outlets, setOutlets] = useState();
-  const [hotels, setHotels] = useState();
-  const [companies, setCompanies] = useState();
 
   const handleClickBasic = () => {
     setAdminActive(false);
@@ -86,67 +83,8 @@ function CreateUser() {
   };
 
   //FETCH LIST OF OUTLETS FROM API
-  const url = "https://localhost:44306/api/Outlets";
-
-  const getOutlets = async (url) => {
-    await axios
-      .get(url)
-      .then((res) => {
-        console.log("Outlets ", res.data);
-        console.log("successfull get request");
-        setOutlets(res.data);
-      })
-      .catch((err) => {
-        // Handle Error Here
-        console.log("error with get request for users");
-        console.error(err);
-      });
-  };
-
-  const getHotels = async (url) => {
-    await axios
-      .get(url)
-      .then((res) => {
-        console.log("Hotels ", res.data);
-        console.log("successfull get request");
-        setHotels(res.data);
-      })
-      .catch((err) => {
-        // Handle Error Here
-        console.log("error with get request for users");
-        console.error(err);
-      });
-  };
 
   //FETCH LIST OF COMPANIES FROM API
-  const urlCompanies = "https://localhost:44306/api/Companies";
-
-  const getCompanies = async (url) => {
-    await axios
-      .get(url)
-      .then((res) => {
-        console.log("Companies ", res.data);
-        console.log("successfull get request");
-        setCompanies(res.data);
-      })
-      .catch((err) => {
-        // Handle Error Here
-        console.log("error with get request for users");
-        console.log(err);
-      });
-  };
-
-  //RUN GET REQUESTS ON LOAD
-  useEffect(() => {
-    getCompanies(urlCompanies);
-  }, []);
-  useEffect(() => {
-    getOutlets(url);
-  }, []);
-
-  useEffect(() => {
-    getHotels("https://localhost:44306/api/hotels");
-  }, []);
 
   //SUBIT FORM AND SEND IT TO DATABASE AND ERROR HANDLING
   const handleSubmit = (e) => {
@@ -278,51 +216,47 @@ function CreateUser() {
               />
             </RadioGroup>
           </FormControl>
-          {basicActive && (
-            <>
-              <FormLabel style={{ marginTop: "30px" }}>Outlets</FormLabel>
-              <ListOutlets
-                setOutlets={(outlets) =>
-                  setCreateUser({ ...createUser, outlets: outlets })
-                }
-                outlets={outlets}
-                userOutlets={[]}
-              />
-              <FormLabel style={{ marginTop: "30px" }}>Hotels</FormLabel>
-              <ListHotels
-                setHotels={(hotels) =>
-                  setCreateUser({ ...createUser, hotels: hotels })
-                }
-                hotels={hotels}
-                userHotels={[]}
-              />
-            </>
-          )}
-          {adminActive && (
-            <>
-              <FormLabel style={{ marginTop: "30px" }}>Companies</FormLabel>
-              <ListCompanies
-                setCompanies={(companies) =>
-                  setCreateUser({ ...createUser, companies: companies })
-                }
-                companies={companies}
-                userCompanies={[]}
-              />
-            </>
-          )}
-
-          <Link to="./report" style={{ textDecoration: "none" }}>
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              color="primary"
-              variant="contained"
-              style={{ marginTop: "30px" }}
-              fullWidth
-            >
-              Create User
-            </Button>
-          </Link>
+          <div>
+            {basicActive && (
+              <>
+                <FormLabel style={{ marginTop: "30px" }}>Outlets</FormLabel>
+                <ListOutlets
+                  setOutlets={(outlets) =>
+                    setCreateUser({ ...createUser, outlets: outlets })
+                  }
+                  userOutlets={[]}
+                />
+                <FormLabel style={{ marginTop: "30px" }}>Hotels</FormLabel>
+                <ListHotels
+                  setHotels={(hotels) =>
+                    setCreateUser({ ...createUser, hotels: hotels })
+                  }
+                  userHotels={[]}
+                />
+              </>
+            )}
+            {adminActive && (
+              <>
+                <FormLabel style={{ marginTop: "30px" }}>Companies</FormLabel>
+                <ListCompanies
+                  setCompanies={(companies) =>
+                    setCreateUser({ ...createUser, companies: companies })
+                  }
+                  userCompanies={[]}
+                />
+              </>
+            )}
+          </div>
+          <Button
+            onClick={handleSubmit}
+            type="submit"
+            color="primary"
+            variant="contained"
+            style={{ marginTop: "30px" }}
+            fullWidth
+          >
+            Create User
+          </Button>
         </Paper>
       </Grid>
     </Grid>
