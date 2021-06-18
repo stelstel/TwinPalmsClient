@@ -55,7 +55,7 @@ function Login() {
     const handleLogin = async (e) => {
     e.preventDefault();
     await axios
-      .post("https://localhost:44306/api/authentication/login", credentials)
+      .post("http://localhost/api/authentication/login", credentials)
       .then(({ data }) => {
         setUser({
           ...user,
