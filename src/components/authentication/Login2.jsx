@@ -41,10 +41,20 @@ function Login(props) {
       ...credentials,
       [e.target.name]: value,
     });
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(credentials.username === "") {
+      setUserNameError({...userNameError, error: true, errorText: ""})
+    }
+    if(credentials.password === "") {
+      setPasswordError({...passWordError, error: true, errorText: ""})
+    }
+
+
     const resp = await loginUser({ ...credentials });
     props.setUser(resp);
   };
@@ -74,7 +84,8 @@ function Login(props) {
               placeholder="Enter Username"
               style={{ marginTop: "40px" }}
               fullWidth
-              required
+              error={userNameError.error}
+              helperText={userNameError.errorText}
             />
             <TextField
               name="password"
@@ -89,9 +100,10 @@ function Login(props) {
               label="Password"
               placeholder="Enter Password"
               style={{ marginTop: "40px" }}
-              type="text"
+              type="password"
               fullWidth
-              required
+              error={passWordError.error}
+              helperText={passWordError.errorText}
             />
 
             <Button
@@ -105,6 +117,7 @@ function Login(props) {
             </Button>
           </form>
           <Button
+            className="forgot-password-btn"
             onClick={() => setForgotPassword(!forgotPassword)}
             color="primary"
             style={{ marginTop: "20px" }}

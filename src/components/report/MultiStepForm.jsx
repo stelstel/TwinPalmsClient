@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {Stepper, Step, StepLabel, Grid, Button, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
@@ -8,9 +8,31 @@ import StepThree from './StepThree';
 import axios from 'axios';
 import './MultiStepForm.css';
 import StepFour from './StepFour';
+import { UserContext } from '../../App';
 
 
 function MultiStepForm() {
+
+    //GETS LOGGED IN USER
+    const user = useContext(UserContext);
+        //Variable for users outlets
+        let loggedInUserId;
+        //Loop through logged in user data
+        for(const property in user) {
+            //Asign logged in users outlets to const loggedInUserOutlets
+            if(property === "id") {
+                loggedInUserId = user[property]
+            }
+        }
+            //Variable for users outlets
+        let loggedInUserOutlets;
+        //Loop through logged in user data
+        for(const property in user) {
+            //Asign logged in users outlets to const loggedInUserOutlets
+            if(property === "outlets") {
+                loggedInUserOutlets = user[property]
+            }
+        }
 
     //STEPS FOR MULTISTEP FORM
     const [activeStep, setActiveStep] = useState(0);
@@ -28,6 +50,7 @@ function MultiStepForm() {
 
     const handleChangeRestaurant = e => {
         setRestaurant(e.target.value)
+        console.log(restaurant)
         setRestaurantUndefined(false)
     }
 
@@ -221,6 +244,14 @@ function MultiStepForm() {
         setOutsideGuestsUndefined(false)
     }
 
+
+
+
+//-----------------------------------------------------------------------------------------------
+
+
+
+
     //SOURCE OF OUTSIDE GUESTS
     const [sourceOfBusinessUndefined, setSourceOfBusinessUndefined] = useState(false)
     const [sourceOfBusiness, setSourceOfBusiness] = useState('');
@@ -245,16 +276,27 @@ function MultiStepForm() {
 
     const handleChangeSourceOfBusiness = (e) => {
         setSourceOfBusiness(e.target.value);
+        console.log(e.target.value)
         setSourceOfBusinessUndefined(false)
     }
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------------
+
+
+
 
     //Data to be sent to api
     const dataToPost = {
         Tables: parseInt(tables.tables),
         IsPublicHoliday: isPublicHoliday,
-        UserId: "b0b22e53-3ad2-4a0a-9e58-aa0a70a5a157",
+        UserId: loggedInUserId,
         EventNotes: "HARD CODED",
-        OutletId: 1,
+        OutletId: restaurant,
         GSourceOfBusiness: 1,
         LocalEventsId: 1,
         Date: "2021-05-06T11:55:37.934Z",
@@ -416,7 +458,8 @@ function MultiStepForm() {
         switch(stepIndex) {
             case 0:
                 return <StepOne 
-                    //restaurants
+                    
+                    loggedInUserOutlets={loggedInUserOutlets}
                     restaurantUndefined={restaurantUndefined}
                     restaurant={restaurant}
                     handleChangeRestaurant={handleChangeRestaurant}

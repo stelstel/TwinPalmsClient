@@ -26,6 +26,11 @@ function StepOne(props) {
     const classes = useStyles();
 
 
+    //Return all outlets from logged in user inside a <MenuItem>
+    const listLoggedInUsersOutlets = props.loggedInUserOutlets.map(( { name, id } ) => {   
+
+        return <MenuItem key={id} value={id}>{name}</MenuItem>
+    })
 
     
 
@@ -47,9 +52,7 @@ function StepOne(props) {
                             value={props.restaurant}
                             onChange={props.handleChangeRestaurant}                           
                         >
-                            <MenuItem value={1}>Restaurant 1</MenuItem>
-                            <MenuItem value={2}>Restaurant 2</MenuItem>
-                            <MenuItem value={3}>Restaurant 3</MenuItem>
+                            {listLoggedInUsersOutlets}
                         </Select>
                     </FormControl>
                     <FormControl error={props.isPublicHolidayUndefined} style={{marginTop: 45}} component="fieldset">
