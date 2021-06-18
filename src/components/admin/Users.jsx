@@ -2,12 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Users.css";
 import axios from "axios";
-import { FormatAlignRight } from "@material-ui/icons";
 
 function Users() {
   const url = "https://localhost:44306/api/Users";
   const [users, setUsers] = useState();
   const [searchTerm, setSearchterm] = useState("");
+  const [filterOnRoles, setFilterOnRoles] = useState({
+    basic: {
+      showUsers: true,
+      radioBtnChecked: true
+    },
+    admin: {
+      showUsers: true,
+      radioBtnChecked: true
+    }
+  })
+ 
 
   const sendGetRequest = async (url) => {
     try {
@@ -27,9 +37,34 @@ function Users() {
 
   return (
     <div
-      style={{ display: "flex", backgroundColor: "white" }}
+      style={{ display: "flex", backgroundColor: "white"  }}
       className="users-container"
     >
+      <div className="role-filters">
+        <div className="user-role">
+          <span>Basic</span>
+          <button
+            className={`${filterOnRoles.basic.showUsers ? "toggle-users-active" : "toggle-users"}`}
+            onClick={() => {
+              setFilterOnRoles(prevState => {
+                console.log(filterOnRoles)
+                return { ...filterOnRoles, basic: { showUsers: !prevState.basic.showUsers, checked: !prevState.basic.radioBtnChecked }}
+              })
+            }} 
+            ></button>
+        </div>
+        <div className="user-role">
+          <span>Admin</span>
+          <button 
+            className={`${filterOnRoles.admin.showUsers ? "toggle-users-active" : "toggle-users"}`}
+            onClick={() => {
+              setFilterOnRoles(prevState => {
+                return { ...filterOnRoles, admin: { showUsers: !prevState.admin.showUsers, checked: !prevState.admin.radioBtnChecked }}
+              })
+            }} 
+          ></button>
+        </div>
+      </div>
       <div>
         <input
           onChange={(e) => {
@@ -41,25 +76,35 @@ function Users() {
         />
         <i className="fas fa-search"></i>
       </div>
-      <h1>Admin</h1>
+
       {users &&
         users
-          .filter(
-            (u) => !u.roles.includes("SuperAdmin") && u.roles.includes("Admin")
-          )
+          .filter((val) => {
+            if(filterOnRoles.admin.showUsers && filterOnRoles.basic.showUsers) {
+              return val
+            }
+            else if(filterOnRoles.admin.showUsers && !filterOnRoles.basic.showUsers) {
+              return val.roles.includes("Admin")
+            }
+            else if(!filterOnRoles.admin.showUsers && filterOnRoles.basic.showUsers) {
+              return !val.roles.includes("Admin")
+            }
+            return null
+          })
           .filter((val) => {
             if (searchTerm === "") {
               return val;
-            } else if (
+            }    
+            else if (
               val.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
               val.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
               val.email.toLowerCase().includes(searchTerm.toLowerCase())
             ) {
-              return val;
+              return val
             }
+
             return null;
           })
-
           .map((val, key) => {
             return (
               <div key={key} className="users-userlist-container">
@@ -69,66 +114,26 @@ function Users() {
                     src="/images/user.png"
                     alt="user"
                   />
-                  <div>
+                  <div style={{padding: "20px 0px", width: "200px"}}>
                     <div className="users-name">
                       <p className="users-paragraph">{val.firstName}</p>
                       <p className="users-paragraph">{val.lastName}</p>
                     </div>
                     <p className="users-paragraph users-email">{val.email}</p>
                   </div>
-                  <div style={{ FormatAlignRight }}>
-                    {val.companies.map((c) => c.name).join(", ")}
-                  </div>
-                </div>
-                <div className="users-buttons">
-                  <Link to={`/edit/${val.id}`}>
-                    <i className="fas fa-edit"></i>
-                  </Link>
-                  <i className="fas fa-trash-alt"></i>
-                </div>
-              </div>
-            );
-          })}
-      <h1>Basic users</h1>
-      {users &&
-        users
-          .filter((u) => !u.roles.includes("Admin"))
-          .filter((val) => {
-            if (searchTerm === "") {
-              return val;
-            } else if (
-              val.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              val.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              val.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              val.outlets
-                .map((outlet) => outlet.name.toLowerCase())
-                .includes(searchTerm.toLowerCase())
-            ) {
-              return val;
-            }
-
-            return null;
-          })
-
-          .map((val, key) => {
-            return (
-              <div key={key} className="users-userlist-container">
-                <div className="users-user">
-                  <img
-                    className="users-avatar"
-                    src="/images/user.png"
-                    alt="user"
-                  />
-                  <div>
-                    <div className="users-name">
-                      <p className="users-paragraph">{val.firstName}</p>
-                      <p className="users-paragraph">{val.lastName}</p>
-                    </div>
-                    <p className="users-paragraph users-email">{val.email}</p>
-                  </div>
-                  <div style={{ marginLeft: "50px" }}>
-                    {val.outlets.map((o) => o.name).join(", ")}
-                  </div>
+                  {val.roles.includes("SuperAdmin") && 
+                                        <p className="users-paragraph role">Super admin</p>
+                  }
+                  {!val.roles.includes("SuperAdmin") && val.roles.includes("Admin") &&
+                      <p className="users-paragraph role">Admin</p>
+                  }
+                  {!val.roles.includes("SuperAdmin") && !val.roles.includes("Admin") && val.roles.includes("Basic") &&
+                      <p className="users-paragraph role">Basic</p>
+                  }
+                  
+          
+                  
+ 
                 </div>
                 <div className="users-buttons">
                   <Link to={`/edit/${val.id}`}>
