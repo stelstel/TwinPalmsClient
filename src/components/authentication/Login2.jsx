@@ -41,7 +41,6 @@ function Login(props) {
       ...credentials,
       [e.target.name]: value,
     });
-
   };
 
   const handleSubmit = async (e) => {
@@ -61,7 +60,7 @@ function Login(props) {
 
   return (
     <Grid className="login-page-container">
-      <Grid style={{ paddingTop: "60px" }}>
+      <Grid style={{ paddingTop: "30px" }}>
         <Paper className="login-paper" elevation={10}>
           <Grid align="center">
             <Avatar style={avatarStyle}>
@@ -100,7 +99,7 @@ function Login(props) {
               label="Password"
               placeholder="Enter Password"
               style={{ marginTop: "40px" }}
-              type="password"
+              type="text"
               fullWidth
               error={passWordError.error}
               helperText={passWordError.errorText}

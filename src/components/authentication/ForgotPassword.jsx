@@ -15,9 +15,16 @@ async function sendEmail(email) {
 
 function ForgotPassword() {
   let [email, setEmail] = useState({ email: "" });
+  const [emailError, setEmailError] = useState({
+    error: false,
+    errorText: ""
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(email.value === undefined || "") {
+      setEmailError({ error: true, errorText: "Please enter your email"})
+    }
     await sendEmail({ email });
   };
 
@@ -25,12 +32,20 @@ function ForgotPassword() {
     <form onSubmit={handleSubmit}>
       <TextField
         name="email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setEmail(e.target.value)
+          setEmailError({
+            ...emailError,
+            error: false,
+            errorText: "",
+          });
+        }}
         label="Send email to "
         placeholder="Email address"
         style={{ marginTop: "40px" }}
         fullWidth
-        required
+        error={emailError.error}
+        helperText={emailError.errorText}
       />
 
       <Button
