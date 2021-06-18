@@ -39,9 +39,6 @@ function EditUser() {
   //const [accessLevelError, setAccessLevelError] = useState(false);
 
   //HOOKS FOR SCROLL LISTS
-  const [outlets, setOutlets] = useState();
-  const [hotels, setHotels] = useState();
-  const [companies, setCompanies] = useState();
 
   /* const handleClickBasic = () => {
     setUser({ ...user, role: "Basic" });
@@ -66,54 +63,6 @@ function EditUser() {
   };
 
   //FETCH LIST OF OUTLETS FROM API
-  const url = "https://localhost:44306/api/Outlets";
-
-  const getOutlets = async (url) => {
-    await axios
-      .get(url)
-      .then((res) => {
-        console.log("Outlets ", res.data);
-        console.log("successfull get request");
-        setOutlets(res.data);
-      })
-      .catch((err) => {
-        // Handle Error Here
-        console.log("error with get request for users");
-        console.error(err);
-      });
-  };
-
-  const getHotels = async () => {
-    await axios
-      .get("https://localhost:44306/api/Hotels")
-      .then((res) => {
-        console.log("Outlets ", res.data);
-        console.log("successfull get request");
-        setHotels(res.data);
-      })
-      .catch((err) => {
-        // Handle Error Here
-        console.log("error with get request for users");
-        console.error(err);
-      });
-  };
-
-  //FETCH LIST OF COMPANIES FROM API
-  const urlCompanies = "https://localhost:44306/api/Companies";
-
-  const getCompanies = async (url) => {
-    await axios
-      .get(url)
-      .then((res) => {
-        console.log("Companies ", res.data);
-        console.log("successfull get request");
-        setCompanies(res.data);
-      })
-      .catch((err) => {
-        // Handle Error Here
-        console.log("error with get request for users ", err);
-      });
-  };
 
   const getUser = async () => {
     await axios
@@ -122,9 +71,12 @@ function EditUser() {
         console.log("User ", data);
         console.log("successfull get request");
         data.role = !data.roles.includes("Admin") ? "Basic" : "Admin";
-        data.role === "Admin"
-          ? (data.companies = data.companies.map((c) => c.id))
-          : (data.outlets = data.outlets.map((c) => c.id));
+        if (data.role === "Admin") {
+          data.companies = data.companies.map((c) => c.id);
+        } else {
+          data.outlets = data.outlets.map((c) => c.id);
+          data.hotels = data.hotels.map((c) => c.id);
+        }
 
         setUser(data);
       })
@@ -136,18 +88,6 @@ function EditUser() {
   };
 
   //RUN GET REQUESTS ON LOAD
-
-  useEffect(() => {
-    getCompanies(urlCompanies);
-  }, []);
-
-  useEffect(() => {
-    getOutlets(url);
-  }, []);
-
-  useEffect(() => {
-    getHotels();
-  }, []);
 
   useEffect(() => {
     getUser();
@@ -245,13 +185,11 @@ function EditUser() {
               <FormLabel style={{ marginTop: "30px" }}> Outlets</FormLabel>
               <ListOutlets
                 setOutlets={(outlets) => setUser({ ...user, outlets: outlets })}
-                outlets={outlets}
                 userOutlets={user.outlets}
               />
               <FormLabel style={{ marginTop: "30px" }}>Hotels</FormLabel>
               <ListHotels
                 setHotels={(hotels) => setUser({ ...user, hotels: hotels })}
-                hotels={hotels}
                 userHotels={user.hotels}
               />
             </>
@@ -263,7 +201,6 @@ function EditUser() {
                 setCompanies={(companies) =>
                   setUser({ ...user, companies: companies })
                 }
-                companies={companies}
                 userCompanies={user.companies}
               />
             </>
