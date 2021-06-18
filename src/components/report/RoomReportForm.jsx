@@ -49,10 +49,11 @@ function RoomReportForm(props) {
     Object.entries(roomReport).map((rr) => {
       return formData.append(rr[0], rr[1]);
     });
-
+    console.log(formData)
     await axios
       .post("https://localhost:44306/api/roomreports", formData)
       .then(({ data }) => {
+        console.log(formData)
         console.log(data);
         console.log("roomReport ", roomReport);
       })

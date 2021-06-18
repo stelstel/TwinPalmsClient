@@ -39,7 +39,7 @@ function ListHotels(/* { setHotels, outlets } */ props) {
   }, []);
   return (
     <>
-      <div className="vertical-menu">
+      <div className="vertical-menu hotels">
         {hotels.map((item) => {
 
           console.log(item);
