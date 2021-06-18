@@ -1,14 +1,18 @@
+/* eslint-disable no-undef */
 import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
+import validation from "./validateInfo";
+
 
 async function loginUser(credentials) {
-  return fetch("https://localhost:44306/api/authentication/login", {
+  return fetch("http://localhost/api/authentication/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+
     },
     body: JSON.stringify(credentials),
   })
@@ -29,11 +33,15 @@ function Login(props) {
   const [userNameError, setUserNameError] = useState({
     error: false,
     errorText: "",
+
+
   });
   const [passWordError, setPasswordError] = useState({
     error: false,
     errorText: "",
+
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -57,6 +65,8 @@ function Login(props) {
 
     const resp = await loginUser({ ...credentials });
     props.setUser(resp);
+    let values = ""
+    setErrors(validation(values));
   };
 
   return (
@@ -78,6 +88,8 @@ function Login(props) {
                   ...userNameError,
                   error: false,
                   errorText: "",
+
+
                 });
               }}
               label="Username"
@@ -85,8 +97,9 @@ function Login(props) {
               style={{ marginTop: "40px" }}
               fullWidth
               error={userNameError.error}
-              helperText={userNameError.errorText}
+              helperText={passWordError.errorText}
             />
+            {errors.UserName && <p className="error">{errors.UserName}</p>}
             <TextField
               name="password"
               onChange={(e) => {
@@ -104,8 +117,9 @@ function Login(props) {
               fullWidth
               error={passWordError.error}
               helperText={passWordError.errorText}
-            />
 
+            />
+            {errors.Password && <p className="error">{errors.Password}</p>}
             <Button
               type="submit"
               color="primary"

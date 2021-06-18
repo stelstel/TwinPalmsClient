@@ -101,6 +101,7 @@ export default function DatePicker( {user} ) {
       toMonth = monthNameToNum(toMonth) 
  
       setToDate(`${toYear}-${toMonth}-${toDay}`)
+
   }
  
   return (
