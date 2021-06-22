@@ -9,12 +9,15 @@ table.jambo_table {
 
 table.jambo_table thead {
   background: rgba(61, 63, 63, 0.94);
-  color: #fafaf8;
+color: #fafaf6;
+ text-align: center;
   font-size: 14px;
-  font-weight: bolder;
-  text-align: center;
-
-}
+  }
+  
+ #head{
+   padding-bottom: 15px;
+   padding-top: 10px;
+  }
 
 table.jambo_table tbody tr:hover td {
   background-color: rgb(241, 243, 239);

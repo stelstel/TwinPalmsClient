@@ -1,11 +1,14 @@
+/* eslint-disable no-undef */
 import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
+import validation from "./validateInfo";
+const BASE_URL = "http://localhost:5000/api";
 
 async function loginUser(credentials) {
-  return fetch("https://localhost:44306/api/authentication/login", {
+  return fetch(`${BASE_URL}/authentication/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,6 +37,7 @@ function Login(props) {
     error: false,
     errorText: "",
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -46,16 +50,17 @@ function Login(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(credentials.username === "") {
-      setUserNameError({...userNameError, error: true, errorText: ""})
+    if (credentials.username === "") {
+      setUserNameError({ ...userNameError, error: true, errorText: "" });
     }
-    if(credentials.password === "") {
-      setPasswordError({...passWordError, error: true, errorText: ""})
+    if (credentials.password === "") {
+      setPasswordError({ ...passWordError, error: true, errorText: "" });
     }
-
 
     const resp = await loginUser({ ...credentials });
     props.setUser(resp);
+    let values = "";
+    setErrors(validation(values));
   };
 
   return (
@@ -84,8 +89,9 @@ function Login(props) {
               style={{ marginTop: "40px" }}
               fullWidth
               error={userNameError.error}
-              helperText={userNameError.errorText}
+              helperText={passWordError.errorText}
             />
+            {errors.UserName && <p className="error">{errors.UserName}</p>}
             <TextField
               name="password"
               onChange={(e) => {
@@ -104,7 +110,7 @@ function Login(props) {
               error={passWordError.error}
               helperText={passWordError.errorText}
             />
-
+            {errors.Password && <p className="error">{errors.Password}</p>}
             <Button
               type="submit"
               color="primary"

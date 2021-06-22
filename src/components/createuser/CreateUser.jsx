@@ -20,6 +20,8 @@ import {
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import "./CreateUser.css";
 
+const BASE_URL = "http://localhost:5000/api";
+
 function CreateUser() {
   //REACT HOOKS
   const [createUser, setCreateUser] = useState({
@@ -60,15 +62,13 @@ function CreateUser() {
   //POST REQUEST'
   const sendPostRequest = async (data) => {
     await axios
-      .post("https://localhost:44306/api/Authentication", data)
+      .post(`${BASE_URL}/Authentication`, data)
       .then(({ data }) => {
         console.log(data);
         console.log("successfull post request");
       })
       .catch((err) => console.error(err));
   };
-
- 
 
   //SUBIT FORM AND SEND IT TO DATABASE AND ERROR HANDLING
   const handleSubmit = (e) => {
@@ -101,7 +101,7 @@ function CreateUser() {
       <Grid style={{ paddingTop: "30px", paddingBottom: "30px" }}>
         <Paper className="createuser-paper" elevation={10}>
           <Grid align="center">
-            <Avatar style={{ backgroundColor: "#1bbd7e"}}>
+            <Avatar style={{ backgroundColor: "#1bbd7e" }}>
               <AccountCircleIcon />
             </Avatar>
             <h2 style={{ marginTop: 20 }}>Create User</h2>
@@ -164,7 +164,7 @@ function CreateUser() {
                 ...createUser,
                 notificationEmail: e.target.value,
               });
-              setEmailNotificationError(false)
+              setEmailNotificationError(false);
             }}
             value={createUser.notificationEmail}
             label="Notification email"
@@ -243,7 +243,6 @@ function CreateUser() {
           >
             Create User
           </Button>
-
         </Paper>
       </Grid>
     </Grid>

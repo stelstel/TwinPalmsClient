@@ -51,19 +51,19 @@ export default function TableData() {
             className=" table-striped jambo_table "
           >
             <thead>
-              <th className="headings">TABELS</th>
-              <th className="headings">FOOD</th>
-              <th className="headings">BEVERAGE </th>
-              <th className="headings"> OTHER INCOME</th>
-              <th className="headings">DATE </th>
+              <th id="head" className="headings">TABELS</th>
+              <th id="head" className="headings">FOOD</th>
+              <th id="head" className="headings">BEVERAGE </th>
+              <th id="head" className="headings"> OTHER INCOME</th>
+              <th id="head" className="headings">DATE </th>
               <th className="headings">GUESTS FROM HOTEL</th>
               <th className="headings">GUESTS FROM OUTSIDE HOTEL</th>
               <th className="headings"></th>
-              <th className="headings">EVENT NOTES</th>
-              <th className="headings">BUSINESS NOTES</th>
-              <th className="headings">OUTLET ID</th>
-              <th className="headings">USER ID</th>
-              <th className="headings">GUESTSSOURCE OF BUSINESS EVENTS</th>
+              <th id="head" className="headings">EVENT NOTES</th>
+              <th id="head" className="headings">BUSINESS NOTES</th>
+              <th id="head" className="headings">OUTLET ID</th>
+              <th id="head" className="headings">USER ID</th>
+              <th id="head" className="headings">GUESTSSOURCE OF BUSINESS EVENTS</th>
             </thead>
 
             <tbody>

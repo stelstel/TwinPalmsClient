@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { Button, TextField, Paper, Grid } from "@material-ui/core";
 import axios from "axios";
 import "./Events.css";
+const BASE_URL = "http://localhost:5000/api";
+const notify = (message) => toast(message);
 
 function Events() {
   //REACT HOOKS
@@ -12,7 +15,7 @@ function Events() {
   //GET REQUEST
   const getEvents = async () => {
     try {
-      const res = await axios.get("https://localhost:44306/api/LocalEvent");
+      const res = await axios.get(`${BASE_URL}/LocalEvent`);
       console.log("successfull get request");
       console.log(res.data);
       setEvents(res.data);
@@ -21,16 +24,14 @@ function Events() {
     }
   };
   //POST REQUEST, NEW EVENT
-  const sendPostRequest = async (data) => {
+  const sendPostRequest = async (data, event) => {
     try {
       //console.log(e.target);
 
-      const res = await axios.post(
-        "https://localhost:44306/api/LocalEvent",
-        data
-      );
-      console.log(data);
+      const res = await axios.post(`${BASE_URL}/LocalEvent`, data);
       console.log(res.data);
+      event = "";
+      setEvents([...events, res.data]);
       console.log("successfull post request");
     } catch (err) {
       console.error(err);
@@ -40,13 +41,8 @@ function Events() {
   //PUT REQUEST, EDIT EVENT
   const sendPutRequest = async (id, data) => {
     try {
-      const res = await axios.put(
-        `https://localhost:44306/api/LocalEvent/${id}`,
-        data
-      );
-      console.log(res.data);
-      console.log("edit name");
-      console.log("successfull put request");
+      await axios.put(`${BASE_URL}/LocalEvent/${id}`, data);
+      notify("Successfully updated");
     } catch (err) {
       console.error(err);
       console.log("error with put request");
@@ -55,12 +51,8 @@ function Events() {
   //PUT REQUEST, EDIT ACTIVE
   const sendDeleteRequest = async (id) => {
     try {
-      const res = await axios.delete(
-        `https://localhost:44306/api/LocalEvent/${id}`
-      );
-      console.log(res.data);
-      console.log("active");
-      console.log("successfull put request");
+      await axios.delete(`${BASE_URL}/LocalEvent/${id}`);
+      notify("Successfully deleted");
     } catch (err) {
       console.error(err);
       console.log("error with put request");
@@ -86,22 +78,27 @@ function Events() {
 
   const handlePost = (e) => {
     console.log(e.target);
+    let event =
+      e.target.parentElement.parentElement.firstChild.lastChild.firstChild
+        .value;
     const data = {
-      event:
-        e.target.parentElement.parentElement.firstChild.lastChild.firstChild
-          .value,
+      event: event,
       active: true,
     };
     console.log({ data });
-    sendPostRequest(data);
+    sendPostRequest(data)
+      .then((document.getElementById("event-input").value = ""))
+      .catch();
   };
   //DELETE EVENT
   const handleDelete = (id) => {
+    setEvents(events.filter((e) => e.id !== id));
     sendDeleteRequest(id);
   };
 
   return (
     <>
+      <Toaster />
       <Grid
         style={{
           backgroundColor: "#494949",
@@ -160,6 +157,7 @@ function Events() {
             </Grid>
             <Grid className="add-event-container">
               <TextField
+                id="event-input"
                 className="event-input"
                 label="Add Event"
                 variant="outlined"
