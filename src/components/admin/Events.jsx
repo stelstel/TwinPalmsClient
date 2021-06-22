@@ -3,8 +3,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { Button, TextField, Paper, Grid } from "@material-ui/core";
 import axios from "axios";
 import "./Events.css";
-
+const BASE_URL = "http://localhost:5000/api";
 const notify = (message) => toast(message);
+
 function Events() {
   //REACT HOOKS
 
@@ -14,7 +15,7 @@ function Events() {
   //GET REQUEST
   const getEvents = async () => {
     try {
-      const res = await axios.get("https://localhost:44306/api/LocalEvent");
+      const res = await axios.get(`${BASE_URL}/LocalEvent`);
       console.log("successfull get request");
       console.log(res.data);
       setEvents(res.data);
@@ -27,10 +28,7 @@ function Events() {
     try {
       //console.log(e.target);
 
-      const res = await axios.post(
-        "https://localhost:44306/api/LocalEvent",
-        data
-      );
+      const res = await axios.post(`${BASE_URL}/LocalEvent`, data);
       console.log(res.data);
       event = "";
       setEvents([...events, res.data]);
@@ -43,7 +41,7 @@ function Events() {
   //PUT REQUEST, EDIT EVENT
   const sendPutRequest = async (id, data) => {
     try {
-      await axios.put(`https://localhost:44306/api/LocalEvent/${id}`, data);
+      await axios.put(`${BASE_URL}/LocalEvent/${id}`, data);
       notify("Successfully updated");
     } catch (err) {
       console.error(err);
@@ -53,7 +51,7 @@ function Events() {
   //PUT REQUEST, EDIT ACTIVE
   const sendDeleteRequest = async (id) => {
     try {
-      await axios.delete(`https://localhost:44306/api/LocalEvent/${id}`);
+      await axios.delete(`${BASE_URL}/LocalEvent/${id}`);
       notify("Successfully deleted");
     } catch (err) {
       console.error(err);

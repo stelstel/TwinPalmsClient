@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Lists.css";
 
+const BASE_URL = "http://localhost:5000/api";
+
 function ListCompanies(/* { setCompanies, outlets } */ props) {
   const [userCompanies, setUserCompanies] = useState(props.userCompanies || []);
   const [companies, setCompanies] = useState([]);
@@ -36,7 +38,7 @@ function ListCompanies(/* { setCompanies, outlets } */ props) {
 
   //RUN GET REQUESTS ON LOAD
   useEffect(() => {
-    getCompanies("https://localhost:44306/api/Companies");
+    getCompanies(`${BASE_URL}/Companies`);
   }, []);
 
   return (
