@@ -19,6 +19,8 @@ import {
 
 import { UserContext } from "../../App";
 
+const BASE_URL = "http://localhost:5000/api";
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 100,
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 function RoomReportForm(props) {
   const user = useContext(UserContext);
-  console.log("User from rRoomReport ", props.user);
+  console.log("User from RoomReport ", props.user);
   const classes = useStyles();
   const [localEvents, setLocalEvents] = useState([]);
   //const [file, setFile] = useState({});
@@ -50,11 +52,11 @@ function RoomReportForm(props) {
     Object.entries(roomReport).map((rr) => {
       return formData.append(rr[0], rr[1]);
     });
-    console.log(formData)
+    console.log(formData);
     await axios
-      .post("https://localhost:44306/api/roomreports", formData)
+      .post(`${BASE_URL}/roomreports`, formData)
       .then(({ data }) => {
-        console.log(formData)
+        console.log(formData);
         console.log(data);
         console.log("roomReport ", roomReport);
       })
@@ -70,7 +72,7 @@ function RoomReportForm(props) {
   };
 
   useEffect(() => {
-    let url = "https://localhost:44306/api/LocalEvent";
+    let url = `${BASE_URL}/LocalEvent`;
     getEvents(url);
   }, []);
 

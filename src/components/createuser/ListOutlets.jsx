@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Lists.css";
 
+const BASE_URL = "http://localhost:5000/api";
+
 function ListOutlets(/* { setOutlets, outlets } */ props) {
   // props.userOUtlets can be undefined
   const [userOutlets, setUserOutlets] = useState(props.userOutlets || []);
@@ -32,7 +34,7 @@ function ListOutlets(/* { setOutlets, outlets } */ props) {
       });
   };
   useEffect(() => {
-    getOutlets("https://localhost:44306/api/Outlets");
+    getOutlets(`${BASE_URL}/Outlets`);
   }, []);
   return (
     <>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Lists.css";
 
+const BASE_URL = "http://localhost:5000/api";
+
 function ListHotels(/* { setHotels, outlets } */ props) {
   // props.userOUtlets can be undefined
   const [userHotels, setUserHotels] = useState(props.userHotels || []);
@@ -35,13 +37,12 @@ function ListHotels(/* { setHotels, outlets } */ props) {
   };
 
   useEffect(() => {
-    getHotels("https://localhost:44306/api/hotels");
+    getHotels(`${BASE_URL}/hotels`);
   }, []);
   return (
     <>
       <div className="vertical-menu hotels">
         {hotels.map((item) => {
-
           console.log(item);
           return (
             <div

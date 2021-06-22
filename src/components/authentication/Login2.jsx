@@ -5,14 +5,13 @@ import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
 import validation from "./validateInfo";
-
+const BASE_URL = "http://localhost:5000/api";
 
 async function loginUser(credentials) {
-  return fetch("http://localhost/api/authentication/login", {
+  return fetch(`${BASE_URL}/authentication/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-
     },
     body: JSON.stringify(credentials),
   })
@@ -33,13 +32,10 @@ function Login(props) {
   const [userNameError, setUserNameError] = useState({
     error: false,
     errorText: "",
-
-
   });
   const [passWordError, setPasswordError] = useState({
     error: false,
     errorText: "",
-
   });
   const [errors, setErrors] = useState({});
 
@@ -54,17 +50,16 @@ function Login(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(credentials.username === "") {
-      setUserNameError({...userNameError, error: true, errorText: ""})
+    if (credentials.username === "") {
+      setUserNameError({ ...userNameError, error: true, errorText: "" });
     }
-    if(credentials.password === "") {
-      setPasswordError({...passWordError, error: true, errorText: ""})
+    if (credentials.password === "") {
+      setPasswordError({ ...passWordError, error: true, errorText: "" });
     }
-
 
     const resp = await loginUser({ ...credentials });
     props.setUser(resp);
-    let values = ""
+    let values = "";
     setErrors(validation(values));
   };
 
@@ -87,8 +82,6 @@ function Login(props) {
                   ...userNameError,
                   error: false,
                   errorText: "",
-
-
                 });
               }}
               label="Username"
@@ -116,7 +109,6 @@ function Login(props) {
               fullWidth
               error={passWordError.error}
               helperText={passWordError.errorText}
-
             />
             {errors.Password && <p className="error">{errors.Password}</p>}
             <Button

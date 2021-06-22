@@ -17,6 +17,7 @@ import "../createuser/CreateUser.css";
 
 function EditUser() {
   const { id } = useParams();
+  const BASE_URL = "http://localhost:5000";
 
   //REACT HOOKS
   const [user, setUser] = useState({
@@ -54,7 +55,7 @@ function EditUser() {
   //POST REQUEST'
   const sendPutRequest = async (data) => {
     await axios
-      .put(`https://localhost:44306/api/users/${id}`, data)
+      .put(`${BASE_URL}/api/users/${id}`, data)
       .then(({ data }) => {
         console.log(data);
         console.log("successfull put request");
@@ -66,7 +67,7 @@ function EditUser() {
 
   const getUser = async () => {
     await axios
-      .get(`https://localhost:44306/api/users/${id}`)
+      .get(`${BASE_URL}/api/users/${id}`)
       .then(({ data }) => {
         console.log("User ", data);
         console.log("successfull get request");
