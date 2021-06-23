@@ -3,7 +3,39 @@
     padding: 20px;
     width: 480px;
     margin: 8px auto;
-    min-height: 800px
+    min-height: 800px;
+}
+
+
+.MuiPopover-paper {
+    margin-top: 1rem;
+    /*border: 1px solid #949494;*/
+}
+
+.MuiPopover-root .MuiPopover-paper {
+    -webkit-box-shadow: 4px 4px 6px 0px rgba(50,50,50,1);
+    -moz-box-shadow: 4px 4px 6px 0px rgba(50,50,50,1);
+    box-shadow: 4px 4px 6px 0px rgba(50,50,50,1);
+}
+
+.MuiList-root {
+    background: #c5dff7;
+}
+
+
+.MuiList-root > .MuiListItem-root.Mui-selected {
+    background-color: rgba(255, 255, 255);
+}
+
+.MuiList-root .MuiListItem-button:hover,
+.MuiList-root > .MuiListItem-root.Mui-selected:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+textarea {
+    padding-top: 0.2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.2rem;
 }
 
 @media screen and (max-width: 480px) {

@@ -167,6 +167,7 @@ function MultiStepForm() {
     const [tables, setTables] = useState('');
 
     const handleChangeTables = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; } // Stops negative values
         setTables({[input]: e.target.value})
         setTablesUndefined(false)
     }
@@ -176,6 +177,7 @@ function MultiStepForm() {
     const [foodRevenue, setFoodRevenue] = useState('');
 
     const handleChangeFoodRevenue = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; }
         setFoodRevenue({[input]: e.target.value})
         setFoodRevenueUndefined(false)
     }
@@ -185,6 +187,7 @@ function MultiStepForm() {
     const [beverageRevenue, setBeverageRevenue] = useState('');
 
     const handleChangeBeverageRevenue = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; } 
         setBeverageRevenue({[input]: e.target.value})
         setBeverageRevenueUndefined(false)
     }
@@ -194,6 +197,7 @@ function MultiStepForm() {
     const [otherRevenue, setOtherRevenue] = useState('');
 
     const handleChangeOtherRevenue = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; }
         setOtherRevenue({[input]: e.target.value})
         setOtherRevenueUndefined(false)
     }
@@ -226,6 +230,7 @@ function MultiStepForm() {
     const [hotelOneGuests, setHotelOneGuests] = useState('');
 
     const handleChangeHotelOneGuests = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; }
         setHotelOneGuests({[input]: e.target.value})
         setHotelOneGuestsUndefined(false)
     }
@@ -235,6 +240,7 @@ function MultiStepForm() {
     const [hotelTwoGuests, setHotelTwoGuests] = useState('');
 
     const handleChangeHotelTwoGuests = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; }
         setHotelTwoGuests({[input]: e.target.value})
         setHotelTwoGuestsUndefined(false)
     }
@@ -244,6 +250,7 @@ function MultiStepForm() {
     const [outsideGuests, setOutsideGuests] = useState('');
 
     const handleChangeOutsideGuests = input => e => {
+        if (e.target.value < 0) { e.target.value = 0; }
         setOutsideGuests({[input]: e.target.value})
         setOutsideGuestsUndefined(false)
     }
@@ -279,6 +286,7 @@ function MultiStepForm() {
     }, []) 
 
     const handleChangeSourceOfBusiness = (e) => {
+        if (e.target.value < 0) { e.target.value = 0; }
         setSourceOfBusiness(e.target.value);
         console.log(e.target.value)
         setSourceOfBusinessUndefined(false)
