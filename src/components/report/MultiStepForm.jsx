@@ -503,9 +503,11 @@ const dataToPost = {
         setActiveStep(prevActiveStep => prevActiveStep + 1)
         if(activeStep >= 3) {
 
-            for (var form of formData.entries()) {
-                console.log("KEY: ", form[0]+ ', ' + "VALUE:", form[1]); 
-            }
+            // Gives me error: Unexpected string concatenation of literals,  no-useless-concat //Stefan
+            //for (var form of formData.entries()) {
+            //    console.log("KEY: ", form[0]+ ', ' + "VALUE:", form[1]); 
+            //}
+
             console.log("JSOND FORMAT: ", jsonObj)
             console.log("REGULAR OBJ: ",dataToPost)
             console.log(`File: ${file}`)
