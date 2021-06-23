@@ -37,11 +37,26 @@ function CreateUser() {
     companies: [],
   });
   //HOOKS FOR ERRORS
-  const [userNameError, setUserNameError] = useState(false);
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [emailNotificationError, setEmailNotificationError] = useState(false);
+  const [userNameError, setUserNameError] = useState({
+    error: false,
+    errorText: "",
+  });
+  const [firstNameError, setFirstNameError] = useState({
+    error: false,
+    errorText: "",
+  });
+  const [lastNameError, setLastNameError] = useState({
+    error: false,
+    errorText: "",
+  });
+  const [emailError, setEmailError] = useState({
+    error: false,
+    errorText: "",
+  });
+  const [emailNotificationError, setEmailNotificationError] = useState({
+    error: false,
+    errorText: "",
+  });
   const [accessLevelError, setAccessLevelError] = useState(false);
   //HOOKS FOR ACCESS LEVEL
   const [basicActive, setBasicActive] = useState(false);
@@ -74,19 +89,19 @@ function CreateUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (createUser.userName === "") {
-      setUserNameError(true);
+      setUserNameError({ ...userNameError, error: true, errorText: "Username is required" });
     }
     if (createUser.firstName === "") {
-      setFirstNameError(true);
+      setFirstNameError({ ...firstNameError, error: true, errorText: "Firstname is required" });
     }
     if (createUser.lastName === "") {
-      setLastNameError(true);
+      setLastNameError({ ...lastNameError, error: true, errorText: "Lastname is required" });
     }
     if (createUser.email === "") {
-      setEmailError(true);
+      setEmailError({ ...emailError, error: true, errorText: "Email is required" });
     }
     if (createUser.notificationEmail === "") {
-      setEmailNotificationError(true);
+      setEmailNotificationError({ ...emailNotificationError, error: true, errorText: "Notification Emial is required" });
     }
     if (basicActive === false && adminActive === false) {
       setAccessLevelError(true);
@@ -107,9 +122,14 @@ function CreateUser() {
             <h2 style={{ marginTop: 20 }}>Create User</h2>
           </Grid>
           <TextField
+
             onChange={(e) => {
               setCreateUser({ ...createUser, userName: e.target.value });
-              setUserNameError(false);
+              setUserNameError({
+                ...userNameError,
+                error: false,
+                errorText: "",
+              });
             }}
             value={createUser.userName}
             label="Username"
@@ -117,12 +137,17 @@ function CreateUser() {
             style={{ marginTop: "20px" }}
             type="text"
             fullWidth
-            error={userNameError}
+            error={userNameError.error}
+            helperText={userNameError.errorText}
           />
           <TextField
             onChange={(e) => {
               setCreateUser({ ...createUser, firstName: e.target.value });
-              setFirstNameError(false);
+              setFirstNameError({
+                ...firstNameError,
+                error: false,
+                errorText: "",
+              });
             }}
             value={createUser.firstName}
             label="First name"
@@ -130,12 +155,17 @@ function CreateUser() {
             style={{ marginTop: "30px" }}
             type="text"
             fullWidth
-            error={firstNameError}
+            error={firstNameError.error}
+            helperText={firstNameError.errorText}
           />
           <TextField
             onChange={(e) => {
               setCreateUser({ ...createUser, lastName: e.target.value });
-              setLastNameError(false);
+              setLastNameError({
+                ...lastNameError,
+                error: false,
+                errorText: "",
+              });
             }}
             value={createUser.lastName}
             label="Last name"
@@ -143,19 +173,25 @@ function CreateUser() {
             style={{ marginTop: "30px" }}
             type="text"
             fullWidth
-            error={lastNameError}
+            error={lastNameError.error}
+            helperText={lastNameError.errorText}
           />
           <TextField
             onChange={(e) => {
               setCreateUser({ ...createUser, email: e.target.value });
-              setEmailError(false);
+              setEmailError({
+                ...emailError,
+                error: false,
+                errorText: "",
+              });
             }}
             value={createUser.email}
             label="Email"
             placeholder="Enter email"
             style={{ marginTop: "30px" }}
             type="email"
-            error={emailError}
+            error={emailError.error}
+            helperText={emailError.errorText}
             fullWidth
           />
           <TextField
@@ -171,7 +207,8 @@ function CreateUser() {
             placeholder="Enter email for notification"
             style={{ marginTop: "30px" }}
             type="email"
-            error={emailNotificationError}
+            error={emailNotificationError.error}
+            helperText={emailNotificationError.errorText}
             fullWidth
           />
           <FormControl

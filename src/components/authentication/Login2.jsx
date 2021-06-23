@@ -4,7 +4,6 @@ import ForgotPassword from "./ForgotPassword";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
-import validation from "./validateInfo";
 const BASE_URL = "http://localhost:5000/api";
 
 async function loginUser(credentials) {
@@ -37,7 +36,7 @@ function Login(props) {
     error: false,
     errorText: "",
   });
-  const [errors, setErrors] = useState({});
+  //const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -51,16 +50,15 @@ function Login(props) {
     e.preventDefault();
 
     if (credentials.username === "") {
-      setUserNameError({ ...userNameError, error: true, errorText: "" });
+      setUserNameError({ ...userNameError, error: true, errorText: "Username is required" });
     }
     if (credentials.password === "") {
-      setPasswordError({ ...passWordError, error: true, errorText: "" });
+      setPasswordError({ ...passWordError, error: true, errorText: "Password is required" });
     }
 
     const resp = await loginUser({ ...credentials });
     props.setUser(resp);
-    let values = "";
-    setErrors(validation(values));
+
   };
 
   return (
@@ -89,9 +87,8 @@ function Login(props) {
               style={{ marginTop: "40px" }}
               fullWidth
               error={userNameError.error}
-              helperText={passWordError.errorText}
+              helperText={userNameError.errorText}
             />
-            {errors.UserName && <p className="error">{errors.UserName}</p>}
             <TextField
               name="password"
               onChange={(e) => {
@@ -110,7 +107,6 @@ function Login(props) {
               error={passWordError.error}
               helperText={passWordError.errorText}
             />
-            {errors.Password && <p className="error">{errors.Password}</p>}
             <Button
               type="submit"
               color="primary"
