@@ -13,6 +13,10 @@ import { UserContext } from '../../App';
 
 function MultiStepForm() {
 
+
+
+
+
     //GETS LOGGED IN USER
     const user = useContext(UserContext);
         //Variable for users outlets
@@ -289,29 +293,6 @@ function MultiStepForm() {
 
 
 
-
-    //Data to be sent to api
-    const dataToPost = {
-        Tables: parseInt(tables.tables),
-        IsPublicHoliday: isPublicHoliday,
-        UserId: loggedInUserId,
-        EventNotes: "HARD CODED",
-        OutletId: restaurant,
-        GSourceOfBusiness: 1,
-        LocalEventsId: 1,
-        Date: "2021-05-06T11:55:37.934Z",
-        GuestsFromHotel: 1,
-        GuestsFromOutsideHotel: 1,
-        GuestSourceOfBusinesses: {
-            guestSourceOfBusinessId: 1,
-            gsobNrOfGuests: 10
-        },
-        OtherIncome: parseInt(otherRevenue.otherrevenue),
-        File: "1",
-        Food: parseInt(foodRevenue.foodrevenue),
-        Beverage: parseInt(beverageRevenue.beveragerevenue)
-        }
-
     //POST REQUEST
     const sendPostRequest = async (data) => {
         try {
@@ -325,6 +306,84 @@ function MultiStepForm() {
             console.log('error with post request');
         }
     };
+
+
+
+//-----------------------------------------------------------------------------------------
+const dataToPost = {
+    notes: 'asdasd',
+    isPublicHoliday: true,
+    tables: 22,
+    userId: 'b0b22e53-3ad2-4a0a-9e58-aa0a70a5a157',
+    eventNotes: 'asdasd',
+    outletId: 1,
+    gSourceOfBusinessNotes: 'asdasd',
+    guestsFromHotelTM: 22,
+    localEventId: 2,
+    guestsFromHotelTP: 22,
+    date: '2021-06-22',
+    guestsFromOutsideHotel: 22,
+    guestSourceOfBusinesses: [
+  {
+    GuestSourceOfBusinessId: 3,
+    GsobNrOfGuests: 33
+  },
+  {
+    GuestSourceOfBusinessId: 4,
+    GsobNrOfGuests: 44
+  }
+  ],
+    otherIncome: 223,
+    file: '',
+    food: 22,
+    beverage: 22,
+    weathers: 1
+ }
+ const jsonObj = JSON.stringify(dataToPost)
+
+
+
+
+
+ const formData = new FormData();
+
+ formData.append('IsPublicHoliday', isPublicHoliday)
+ formData.append('Tables', parseInt(tables.tables))
+ formData.append('UserId', loggedInUserId)
+ formData.append('EventNotes', 'HARD CODED')
+ formData.append('OutletId', restaurant)
+ formData.append('GSourceOfBusinessNotes', 'HARD CODED')
+ formData.append('GSourceOfBusiness', 1)
+ formData.append('LocalEventsId', 1)
+ formData.append('Date', '2021-06-22')
+ formData.append('GuestsFromHotel', 1)
+ formData.append('GuestsFromOutsideHotel', 1)
+ formData.append("GuestSourceOfBusinesses", '[{ "GuestSourceOfBusinessId": 3, "GsobNrOfGuests": 33 }, { "GuestSourceOfBusinessId": 4, "GsobNrOfGuests": 44} ]')
+ formData.append('OtherIncome', parseInt(otherRevenue.otherrevenue))
+//  formData.append('file', file)
+ formData.append('Food', parseInt(foodRevenue.foodrevenue))
+ formData.append('Beverage', parseInt(beverageRevenue.beveragerevenue))
+ formData.append('Weathers', [1])
+
+
+ //---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //FUNCTIONS FOR PREV AND NEXT BUTTONS WITH ERROR HANDLING
     const handleNext = (e) => {
@@ -435,8 +494,14 @@ function MultiStepForm() {
         }
         setActiveStep(prevActiveStep => prevActiveStep + 1)
         if(activeStep >= 3) {
-            console.log(dataToPost)
-            sendPostRequest(dataToPost)
+
+            for (var form of formData.entries()) {
+                console.log("KEY: ", form[0]+ ', ' + "VALUE:", form[1]); 
+            }
+            console.log("JSOND FORMAT: ", jsonObj)
+            console.log("REGULAR OBJ: ",dataToPost)
+            console.log(`File: ${file}`)
+            sendPostRequest(formData)
         }
     }
     const handlePrev = (e) => {
