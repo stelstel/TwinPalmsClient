@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import "./Navbar.css";
@@ -6,12 +6,28 @@ import "./Navbar.css";
 function Navbar(user) {
   console.log("User ", user);
   const [click, setClick] = useState(false);
+  const [button, setButton] = useState(false)
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const handleLogout = async () => {
     await (window.location.href = "/");
   };
+
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  };
+
+  useEffect(() => {
+    showButton();
+  }, []);
+
+  window.addEventListener("resize", showButton);
 
   return (
     <>
@@ -90,12 +106,17 @@ function Navbar(user) {
               >
                 Settings
               </Link>
+              <li className="nav-item">
+              <div
+                className="nav-links-mobile"
+                onClick={() => handleLogout()}
+              >
+                LOGOUT
+              </div>
+            </li>
             </li>
           </ul>
-
-          <Button onClick={() => handleLogout()} buttonStyle="btn--outline">
-            LOGOUT
-          </Button>
+            {button && <Button onClick={() => handleLogout()} buttonStyle="btn--outline">LOGOUT</Button>}
         </div>
       </nav>
     </>
