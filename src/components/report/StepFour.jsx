@@ -8,7 +8,7 @@ import {
 
 
 
-function StepFour() {
+function StepFour(props) {
    
 
     return (
@@ -26,7 +26,8 @@ function StepFour() {
                             aria-label="maximum height"
                             placeholder="Type here..."
                             defaultValue=""
-                            required
+                            onChange={props.handleChangeNotes}
+                            value={props.notes}
                         />
                 </FormControl>
             </Grid>

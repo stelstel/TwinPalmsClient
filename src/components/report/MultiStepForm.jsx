@@ -13,10 +13,6 @@ import { UserContext } from '../../App';
 
 function MultiStepForm() {
 
-
-
-
-
     //GETS LOGGED IN USER
     const user = useContext(UserContext);
         //Variable for users outlets
@@ -133,6 +129,9 @@ function MultiStepForm() {
     const [eventsUndefined, setEventsUndefined] = useState(false)
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState('')
+    useEffect(() => {
+        console.log(events)
+    }, [events])
 
     const handleChangeEvents = e => {
         let dataEvents = events;
@@ -142,12 +141,18 @@ function MultiStepForm() {
         setEventsUndefined(false)
     }
 
+    //EVENT NOTES
+    const [eventNotes, setEventNotes] = useState()
+
+    const handleChangeEventNotes = (e) => {
+        setEventNotes(e.target.value)
+    }
+
     //FETCH EVENTS FROM API AND STORE IT IN EVENTS
     const sendGetRequest = async (url) => {
         try {
             const res = await axios.get(url);
-            console.log(res.data);
-            console.log('successfull get request')
+            console.log('successfull get request for events')
             setEvents(res.data)
         } catch (err) {
             // Handle Error Here
@@ -200,23 +205,13 @@ function MultiStepForm() {
 
     //FILE TRANSFER, CASH REGISTRY
     const [fileUndefined, setFileUndefined] = useState()
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState()
+    const [fileName, setFileName] = useState("");
 
     const handleChangeFile = e => {
-        let files = e.target.files;
-        console.log()
-        setFile(e.target.files[0].name)
+        setFile(e.target.files[0])
+        setFileName(e.target.files[0].name)
         setFileUndefined(false)
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onload= (e) => {
-            console.log(e.target.result)
-            
-            // const url = "url to api";
-            // const formData={file:e.target.result}
-            // return post(url, formData)
-            // .then(response => console.log(response))
-        }
     }
 
     //STEP THREE FORM
@@ -229,6 +224,9 @@ function MultiStepForm() {
         setHotelOneGuests({[input]: e.target.value})
         setHotelOneGuestsUndefined(false)
     }
+    useEffect(() => {
+        console.log(hotelOneGuests.hoteloneguests)
+    }, [hotelOneGuests])
 
     //HOTEL 2
     const [hotelTwoGuestsUndefined, setHotelTwoGuestsUndefined] = useState(false)
@@ -248,10 +246,7 @@ function MultiStepForm() {
         setOutsideGuestsUndefined(false)
     }
 
-
-
-
-//-----------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
 
 
 
@@ -265,8 +260,6 @@ function MultiStepForm() {
     const sendGetRequestSource = async (url) => {
         try {
             const res = await axios.get(url);
-            console.log(res.data);
-            console.log('successfull get request')
             setSource(res.data)
         } catch (err) {
             // Handle Error Here
@@ -284,13 +277,21 @@ function MultiStepForm() {
         setSourceOfBusinessUndefined(false)
     }
 
+    //SOURCE OF BUSINESS NOTES
+    const [sourceNotes, setSourceNotes] = useState()
+    const handleChangeSourceNotes = (e) => {
+        setSourceNotes(e.target.value)
+    }
 
+    //STEP FOUR
 
+    //Notes
+    const [notes, setNotes] = useState()
 
-
-
-//--------------------------------------------------------------------------------------------------------
-
+    const handleChangeNotes = (e) => {
+        setNotes(e.target.value)
+    }
+    
 
 
     //POST REQUEST
@@ -309,68 +310,43 @@ function MultiStepForm() {
 
 
 
-//-----------------------------------------------------------------------------------------
-const dataToPost = {
-    notes: 'asdasd',
-    isPublicHoliday: true,
-    tables: 22,
-    userId: 'b0b22e53-3ad2-4a0a-9e58-aa0a70a5a157',
-    eventNotes: 'asdasd',
-    outletId: 1,
-    gSourceOfBusinessNotes: 'asdasd',
-    guestsFromHotelTM: 22,
-    localEventId: 2,
-    guestsFromHotelTP: 22,
-    date: '2021-06-22',
-    guestsFromOutsideHotel: 22,
-    guestSourceOfBusinesses: [
-  {
-    GuestSourceOfBusinessId: 3,
-    GsobNrOfGuests: 33
-  },
-  {
-    GuestSourceOfBusinessId: 4,
-    GsobNrOfGuests: 44
-  }
-  ],
-    otherIncome: 223,
-    file: '',
-    food: 22,
-    beverage: 22,
-    weathers: 1
- }
- const jsonObj = JSON.stringify(dataToPost)
 
 
+    //-------------------------------------------------------------------------------------------
 
-
-
+//FormData to use in post request
  const formData = new FormData();
 
+ const currentDate = new Date();
+ const date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
+
+ formData.append('Date', date)
  formData.append('IsPublicHoliday', isPublicHoliday)
  formData.append('Tables', parseInt(tables.tables))
  formData.append('UserId', loggedInUserId)
- formData.append('EventNotes', 'HARD CODED')
+ formData.append('EventNotes', eventNotes)
  formData.append('OutletId', restaurant)
- formData.append('GSourceOfBusinessNotes', 'HARD CODED')
- formData.append('GSourceOfBusiness', 1)
- formData.append('LocalEventsId', 1)
- formData.append('Date', '2021-06-22')
- formData.append('GuestsFromHotel', 1)
- formData.append('GuestsFromOutsideHotel', 1)
- formData.append("GuestSourceOfBusinesses", '[{ "GuestSourceOfBusinessId": 3, "GsobNrOfGuests": 33 }, { "GuestSourceOfBusinessId": 4, "GsobNrOfGuests": 44} ]')
+ formData.append('GSourceOfBusinessNotes', sourceNotes)
+ formData.append('GuestsFromOutsideHotel', parseInt(outsideGuests.outsideguests))
  formData.append('OtherIncome', parseInt(otherRevenue.otherrevenue))
-//  formData.append('file', file)
+ formData.append('file', file)
  formData.append('Food', parseInt(foodRevenue.foodrevenue))
  formData.append('Beverage', parseInt(beverageRevenue.beveragerevenue))
+ formData.append('GuestsFromHotelTP', hotelOneGuests.hoteloneguests)
+ formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
+ formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
+ formData.append('Notes', notes)
+ formData.append('LocalEventId', selectedEvent)
+
+ //Add values from weather, finns inte i fb reports
  formData.append('Weathers', [1])
 
-
- //---------------------------------------------------------------------------------------------------
-
-
+ //Add values from form, finns inte i databasen
+ formData.append("GuestSourceOfBusinesses", '[{ "GuestSourceOfBusinessId": 3, "GsobNrOfGuests": 33 }, { "GuestSourceOfBusinessId": 4, "GsobNrOfGuests": 44} ]')
 
 
+
+//----------------------------------------------------------------------------------
 
 
 
@@ -444,7 +420,7 @@ const dataToPost = {
             if(otherRevenue === "") {
                 setOtherRevenueUndefined(true)
             }
-            if(file === "") {
+            if(fileName === "") {
                 setFileUndefined(true)
             }
             //return when clicking next button if not all fields have values
@@ -460,7 +436,7 @@ const dataToPost = {
             else if(!otherRevenue) {
                 return
             }
-            else if(!file) {
+            else if(!fileName) {
                 return
             }
         }
@@ -494,13 +470,7 @@ const dataToPost = {
         }
         setActiveStep(prevActiveStep => prevActiveStep + 1)
         if(activeStep >= 3) {
-
-            for (var form of formData.entries()) {
-                console.log("KEY: ", form[0]+ ', ' + "VALUE:", form[1]); 
-            }
-            console.log("JSOND FORMAT: ", jsonObj)
-            console.log("REGULAR OBJ: ",dataToPost)
-            console.log(`File: ${file}`)
+            //Post formData to database
             sendPostRequest(formData)
         }
     }
@@ -509,15 +479,7 @@ const dataToPost = {
         setActiveStep(prevActiveStep => prevActiveStep - 1)   
     }
 
-    //Styles
-    const useStyles = makeStyles({
-        root: {
-            paddingTop: 2,
-            "& .MuiStepIcon-root.MuiStepIcon-completed": {
-                color: "#1bbd7e"
-            }
-        }
-    })
+
 
     function getStepsContent(stepIndex) {
         switch(stepIndex) {
@@ -557,6 +519,9 @@ const dataToPost = {
                     selectedEvent={selectedEvent}
                     events={events}
                     handleChangeEvents={handleChangeEvents}
+                    //event notes
+                    handleChangeEventNotes={handleChangeEventNotes}
+                    eventNotes={eventNotes}
                 />;
             case 1:
                 return <StepTwo
@@ -578,7 +543,7 @@ const dataToPost = {
                     handleChangeOtherRevenue={handleChangeOtherRevenue}
                     //file
                     fileUndefined={fileUndefined}
-                    file={file}
+                    fileName={fileName}
                     handleChangeFile={handleChangeFile}
                 />;
             case 2: 
@@ -599,17 +564,29 @@ const dataToPost = {
                     sourceOfBusinessUndefined={sourceOfBusinessUndefined}
                     source={source}
                     handleChangeSourceOfBusiness={handleChangeSourceOfBusiness}
-                />
-
-                
+                    //source of business notes
+                    handleChangeSourceNotes={handleChangeSourceNotes}
+                    sourceNotes={sourceNotes}
+                /> 
             case 3: 
                 return <StepFour 
-
+                    handleChangeNotes={handleChangeNotes}
+                    notes={notes}
                 />;
             default:
                 return "Error, something went wrong"
         }
     }
+
+    //Styles
+    const useStyles = makeStyles({
+        root: {
+            paddingTop: 2,
+            "& .MuiStepIcon-root.MuiStepIcon-completed": {
+                color: "#1bbd7e"
+            }
+        }
+    })
 
     const classes = useStyles();
 

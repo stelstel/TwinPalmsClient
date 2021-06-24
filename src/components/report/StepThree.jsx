@@ -65,7 +65,8 @@ function StepThree(props) {
                                 aria-label="maximum height"
                                 placeholder="Additional information about source of business"
                                 defaultValue=""
-                                required
+                                onChange={props.handleChangeSourceNotes}
+                                value={props.sourceNotes}
                         />
                     </FormControl>
                 </Grid>
