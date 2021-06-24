@@ -160,8 +160,7 @@ function StepOne(props) {
                             })
                             .map((item, key) => {
                                 return (
-                                    
-                                    <MenuItem key={key} value={item.event}>{item.event}</MenuItem>
+                                    <MenuItem key={key} value={item.id}>{item.event}</MenuItem>
                                 )
                             })
                             }
@@ -174,6 +173,8 @@ function StepOne(props) {
                             aria-label="maximum height"
                             placeholder="Additional information about local events"
                             defaultValue=""
+                            onChange={props.handleChangeEventNotes}
+                            value={props.eventNotes}
                         />
                     </FormControl>
                 </Grid>
