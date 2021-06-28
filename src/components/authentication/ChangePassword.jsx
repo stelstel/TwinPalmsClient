@@ -4,8 +4,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Login.css";
 
 function ChangePassword(props) {
-  console.log("TESTING")
-  console.log(props)
   const avatarStyle = { backgroundColor: "#1bbd7e", marginTop: "30px" };
 
   let [state, setState] = useState({
@@ -23,7 +21,7 @@ function ChangePassword(props) {
 
   return (
     <Grid className="login-page-container">
-      <Grid style={{ paddingTop: "60px" }}>
+      <Grid style={{ paddingTop: "30px" }}>
         <Paper className="login-paper" elevation={10}>
           <Grid align="center">
             <Avatar style={avatarStyle}>

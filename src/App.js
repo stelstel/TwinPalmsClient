@@ -10,7 +10,7 @@ import Navbar from "./components/navigation/Navbar";
 import Navbar2 from "./components/navigation/Navbar2";
 //import Login from "./components/authentication/Login";
 import MultiStepForm from "./components/report/MultiStepForm";
-import RoomReport from "./components/report/RoomReportForm";
+// import RoomReport from "./components/report/RoomReportForm";
 //import Home from "./components/home/Home";
 import CreateUser from "./components/createuser/CreateUser";
 import Dashboard from "./components/admin/Dashboard";
@@ -108,7 +108,7 @@ function App() {
                 {/* {<Route path="/" component={Home} />} */}
                 <Route path="/login" component={Login} />
                 <Route path="/report" component={MultiStepForm} />
-                <Route path="/room-report" component={RoomReport} />
+                {/* <Route path="/room-report" component={RoomReport} /> */}
                 <Route path="/edit/:id" component={EditUser} />
                 {<Route path="/admin" component={Dashboard} />}
                 <Route path="/createuser" component={CreateUser} />

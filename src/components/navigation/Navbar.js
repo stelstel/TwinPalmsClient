@@ -28,13 +28,13 @@ function Navbar() {
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+          <div className="navbar-logo" onClick={closeMobileMenu}>
             <img
               className="navbar-logo-img"
               src="../images/TPHR.jpg"
               alt="error loading img"
             />
-          </Link>
+          </div>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>

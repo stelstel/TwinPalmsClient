@@ -1,116 +1,116 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
-import { Col } from "react-bootstrap";
-import { API_URL } from "../../DataReports/utils/misc";
-
 import axios from "axios";
 // style
 import "./TableData.css";
 
-export default function TableData() {
+export default function TableData( { datePickerEndpoint, fromDate, toDate, handleClickOutlet }) {
+
   const [fbReport, setFbReport] = useState();
 
-  const sendGetRequest = async () => {
-    const { data } = await axios(API_URL);
-    console.log(data);
-    setFbReport(data);
-  };
+  let outletTotalValues = {
+    totalIncome: 0,
+    totalTables: 0,
+    totalFood: 0,
+    totalBeverage: 0,
+    totalOtherIncome: 0,
+    totalNumberOfGuests: 0,
+    totalAverageSpendPerGuest: 0
+  }
 
   useEffect(() => {
-    sendGetRequest();
-  }, []);
 
-  // Table header method
-  /* const tableHeader = () => {
-    let header = fbReport && Object.keys(fbReport[0]);
-    return (
-      header &&
-      // eslint-disable-next-line array-callback-return
-      header.map((value, key) => {
-        if (value !== 'isPublicHoliday') {
-          return (
-            <th className="column-title" key={key}>
-              {value.toUpperCase()}
-            </th>
-          );
-        }
-      })
-    );
-  }; */
+      const sendGetRequest = async () => {
+
+      console.log("TRYING GET REQUEST", datePickerEndpoint)
+      const { data } = await axios(datePickerEndpoint);
+      setFbReport(data);
+    };
+
+    sendGetRequest();
+  }, [datePickerEndpoint]);
+
+  useEffect(() => {
+    console.log("API RESPONSE: ", fbReport)
+  }, [fbReport])
+
 
   return (
-    <>
-      <Col md={12} sm={12}>
-        <div>
-          <Table
-            striped
-            bordered
-            hover
-            responsive="sm"
-            className=" table-striped jambo_table "
-          >
-            <thead>
-              <th id="head" className="headings">TABELS</th>
-              <th id="head" className="headings">FOOD</th>
-              <th id="head" className="headings">BEVERAGE </th>
-              <th id="head" className="headings"> OTHER INCOME</th>
-              <th id="head" className="headings">DATE </th>
-              <th className="headings">GUESTS FROM HOTEL</th>
-              <th className="headings">GUESTS FROM OUTSIDE HOTEL</th>
-              <th className="headings"></th>
-              <th id="head" className="headings">EVENT NOTES</th>
-              <th id="head" className="headings">BUSINESS NOTES</th>
-              <th id="head" className="headings">OUTLET ID</th>
-              <th id="head" className="headings">USER ID</th>
-              <th id="head" className="headings">GUESTSSOURCE OF BUSINESS EVENTS</th>
-            </thead>
+    <> 
+    {fromDate === toDate 
+    ? 
+    <h4>Yesterdays reports {fromDate}</h4> 
+    :
+    <h4>Showing reports from {fromDate} - {toDate}</h4>
+    }
+    
+      <table className="datareport-table-container">
+        <tr className="datareport-th-container">
+          <th className="datareport-th">Restaurant</th>
+          <th className="datareport-th">Revenue</th>
+          <th className="datareport-th">Tables/Checks</th>
+          <th className="datareport-th">Food</th>
+          <th className="datareport-th">Beverage</th>
+          <th className="datareport-th">Other</th>
+          <th className="datareport-th">Number of guests</th>
+          <th className="datareport-th">Average spend per guest</th>
+          <th className="datareport-th">Report recieved</th>
+      </tr>
+      {fbReport &&
+      fbReport.map((outletReport, key) => {
 
-            <tbody>
-              {fbReport &&
-                fbReport.map((obj, key) => {
-                  console.log(obj);
-                  return (
-                    <tr key={key}>
-                      {Object.entries(obj).map(([key, value]) => {
-                        if (
-                          key === "gsobNrOfGuest" ||
-                          key === "guestSourceOfBusinesses" ||
-                          key === "weathers"
-                        ) {
-                          //Theese are nested arrays with object, we have to map throught theese again or something
-                          console.log(value);
-                        } else {
-                          return <td key={key}>{value}</td>;
-                        }
-                      })}
-                    </tr>
-                  );
-                })}
-            </tbody>
-            <tfoot id="footer">
-              <tr>
-                <th>Total Revenue </th>
-                <td>20000</td>
-              </tr>
-              <tr>
-                <th>Total Income </th>
-                <td></td> <td> </td>
-                <td>10000</td>
-              </tr>
+        const outletTotalIncome = outletReport.tables + outletReport.food + outletReport.beverage + outletReport.otherIncome;
+        const outlettotalNumberOfGuests = outletReport.guestsFromHotelTP + outletReport.guestsFromHotelTM + outletReport.guestsFromOutsideHotel;
+         
+        outletTotalValues.totalIncome += outletTotalIncome
+        outletTotalValues.totalTables += outletReport.tables
+        outletTotalValues.totalFood += outletReport.food
+        outletTotalValues.totalBeverage += outletReport.beverage
+        outletTotalValues.totalOtherIncome += outletReport.otherIncome
+        outletTotalValues.totalNumberOfGuests += outlettotalNumberOfGuests
+        outletTotalValues.totalAverageSpendPerGuest += outlettotalNumberOfGuests / outletTotalIncome
 
-              <tr>
-                <th>Total Guests </th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>500</td>
-              </tr>
-            </tfoot>
-          </Table>
-        </div>
-      </Col>
+      return (
+        <tr className="datareport-td-container" key={key}>
+          <td onClick={handleClickOutlet} className="datareport-td">{
+          outletReport.outletId === 1 ? "Catch Beach Club" :
+          outletReport.outletId === 2 ? "The Lazy Coconut" :
+          outletReport.outletId === 3 ? "Wagyu Steakhouse" :
+          outletReport.outletId === 4 ? "Palm Seaside" :
+          outletReport.outletId === 5 ? "Oriental Spoon" :
+          outletReport.outletId === 6 ? "HQ Beach Lounge" :
+          outletReport.outletId === 7 ? "Shimmer" :
+          outletReport.outletId === 8 ? "Bake Laguna" :
+          outletReport.outletId === 9 ? "Bake BIS" :
+          outletReport.outletId === 10 ? "Bake Turtle Village" :
+          outletReport.outletId === 11 ? "Bake Patong" :
+          outletReport.outletId === 12 ? "Love Noodles" :
+          "Outlet"
+        }
+          </td>
+          <td className="datareport-td">{outletTotalIncome}</td>
+          <td className="datareport-td">{outletReport.tables}</td>
+          <td className="datareport-td">{outletReport.food}</td>
+          <td className="datareport-td">{outletReport.beverage}</td>
+          <td className="datareport-td">{outletReport.otherIncome}</td>
+          <td className="datareport-td">{outlettotalNumberOfGuests}</td>
+          <td className="datareport-td">{Math.round(outletTotalIncome / outlettotalNumberOfGuests)}</td>
+          <td className="datareport-td">{outletReport.date.slice(0, 10)}</td>
+        </tr>
+      )  
+      })}
+      <tr className="datareport-total-td-container">
+        <td className="datareport-total-td">Total</td>
+        <td className="datareport-total-td">{outletTotalValues.totalIncome}</td>
+        <td className="datareport-total-td">{outletTotalValues.totalTables}</td>
+        <td className="datareport-total-td">{outletTotalValues.totalFood}</td>
+        <td className="datareport-total-td">{outletTotalValues.totalBeverage}</td>
+        <td className="datareport-total-td">{outletTotalValues.totalOtherIncome}</td>
+        <td className="datareport-total-td">{outletTotalValues.totalNumberOfGuests}</td>
+        <td className="datareport-total-td">{Math.round(outletTotalValues.totalAverageSpendPerGuest)}</td>
+        <td className="datareport-total-td">{fromDate} - <br></br>{toDate}</td>
+      </tr>
+      </table>
     </>
   );
 }

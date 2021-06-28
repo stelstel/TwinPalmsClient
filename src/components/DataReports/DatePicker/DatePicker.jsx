@@ -1,10 +1,69 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState } from 'react';
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
-import axios from 'axios';
+import TableData from "../Table/TableData";
 import './DatePicker.css';
 
  
 export default function DatePicker( {user} ) {
+
+
+  const [outletForApiEndpoint, setOutletForApiEndpoint] = useState()
+
+  const handleClickOutlet = (e) => {
+    switch(e.target.innerHTML) {
+      case "Catch Beach Club":
+        setOutletForApiEndpoint(1)
+        console.log("Catch Beach Club")
+        break;
+      case "The Lazy Coconut":
+        setOutletForApiEndpoint(2)
+        console.log("The Lazy Coconut")
+        break;
+      case "Wagyu Steakhouse":
+        setOutletForApiEndpoint(3)
+        console.log("Wagyu Steakhouse")
+        break;
+      case "Palm Seaside":
+        setOutletForApiEndpoint(4)
+        console.log("Palm Seaside")
+        break;
+      case "Oriental Spoon":
+        setOutletForApiEndpoint(5)
+        console.log("Oriental Spoon")
+        break;
+      case "HQ Beach Lounge":
+        setOutletForApiEndpoint(6)
+        console.log("HQ Beach Lounge")
+        break;
+      case "Shimmer":
+        setOutletForApiEndpoint(7)
+        console.log("Shimmer")
+        break;
+      case "Bake Laguna":
+        setOutletForApiEndpoint(8)
+        console.log("Bake Laguna")
+        break;
+      case "Bake BIS":
+        setOutletForApiEndpoint(9)
+        console.log("Bake BIS")
+        break;
+      case "Bake Turtle Village":
+        setOutletForApiEndpoint(10)
+        console.log("Bake Turtle Village")
+        break;
+      case "Bake Patong":
+        setOutletForApiEndpoint(11)
+        console.log("Bake Patong")
+        break;
+      case "Love Noodles":
+        setOutletForApiEndpoint(12)
+        console.log("Love Noodles")
+        break;    
+      default:
+        return "Something went wrong"
+    }
+
+  }
 
   let userOutlets = []
 
@@ -43,23 +102,9 @@ export default function DatePicker( {user} ) {
   //React hooks for api endpoint
   const [fromDate, setFromDate] = useState(startValue)
   const [toDate, setToDate] = useState(endValue)
- 
-  //We still need to get the outlet ids from the user that is logged in, different users have access to different outlets.
-  const sendGetRequest = async () => {
- 
-    console.log("Try get request to endpoint:")
-    console.log(`https://localhost:44306/outlets/fbReports?${userOutlets}fromDate=${fromDate}&toDate=${toDate}`)
- 
-    const { data } = await axios(`https://localhost:44306/outlets/fbReports?${userOutlets}fromDate=${fromDate}&toDate=${toDate}`);
-    
-    console.log("sucessfull get request")
-    console.log(data);
-  };
- 
-  //This does a get request after every render
-  useEffect(() => {
-    sendGetRequest()
-  })
+
+
+  const datePickerEndpoint = `https://localhost:44306/outlets/fbReports?${userOutlets}fromDate=${fromDate}&toDate=${toDate}`
  
   let val;
  
@@ -68,6 +113,7 @@ export default function DatePicker( {user} ) {
  
       //Targets the date picker component
       val = document.getElementById("date-range-picker")
+      console.log(val.value)
  
       
       //Function that changes month from text to a numbered string
@@ -103,6 +149,9 @@ export default function DatePicker( {user} ) {
       setToDate(`${toYear}-${toMonth}-${toDay}`)
 
   }
+  // useEffect(() => {
+  //   handleChange()
+  // })
  
   return (
     <>
@@ -112,10 +161,17 @@ export default function DatePicker( {user} ) {
         placeholder="Select a range"
         startDate={startValue}
         endDate={endValue}
-        format="dd-MMM-yyyy"
+        format="dd-MMM-yyyy" 
         onChange={handleChange}
         />
       </div>
+      <TableData 
+        fromDate={fromDate}
+        toDate={toDate}
+        datePickerEndpoint={datePickerEndpoint}
+        handleClickOutlet={handleClickOutlet}
+      />
+
     </>
   );
 }
