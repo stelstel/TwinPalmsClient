@@ -1,41 +1,51 @@
-/********************* TABLE *********************************/
-table.jambo_table {
-  border: 1px solid rgba(240, 237, 237, 0.78);
-   background-color: rgb(241, 243, 239);
-  display: inline-block;
-   overflow: scroll;
-  
-  }
+.datareport-table-container {
+  width: 99.1vw;
+}
 
-table.jambo_table thead {
+.datareport-th-container {
   background: rgba(61, 63, 63, 0.94);
-color: #fafaf6;
- text-align: center;
-  font-size: 14px;
-  }
-  
- #head{
-   padding-bottom: 15px;
-   padding-top: 10px;
-  }
+}
 
-table.jambo_table tbody tr:hover td {
+.datareport-th {
+  color: #fafaf6;
+  font-size: 20px;
+  padding: 15px;
+  min-width: 200px;
+}
+
+.datareport-td-container:nth-child(even) {
+  border: 1px solid rgba(240, 237, 237, 0.78);
   background-color: rgb(241, 243, 239);
+}
+
+.datareport-td-container:nth-child(even):hover {
+  background-color: rgb(206, 206, 206);
   border-top: 1px solid rgba(10, 10, 10, 0.11);
   border-bottom: 1px solid rgba(30, 32, 32, 0.11);
  }
-#footer th{
-  color: #251e06;
-  font-weight: bolder;
-  font-size: 20px;
-  }
-/******************* MEDIA QUERIES *********************************/
-@media (min-width: 340px) and (max-width: 1366px) {
-  table.jambo_table {
-    font-size: 30px;
-    background-color: rgb(241, 243, 239);
-    
-  }
+.datareport-td-container:nth-child(odd) {
+  border: 1px solid rgba(243, 243, 243, 0.78);
+  background-color: rgb(226, 226, 226);
+}
 
-  }
- 
+.datareport-td-container:nth-child(odd):hover {
+  background-color: rgb(206, 206, 206);
+  border-top: 1px solid rgba(10, 10, 10, 0.11);
+  border-bottom: 1px solid rgba(30, 32, 32, 0.11);
+ }
+
+.datareport-td {
+  color: black;
+  font-size: 20px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.datareport-total-td-container {
+  background-color: #494949;
+}
+.datareport-total-td {
+  color: white;
+  font-size: 20px;
+  padding: 15px;
+}
