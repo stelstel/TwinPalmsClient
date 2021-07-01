@@ -1,5 +1,6 @@
 .datareport-table-container {
-  width: 99.1vw;
+  width: 100vw;
+  margin-bottom: 30px;
 }
 
 .datareport-th-container {
@@ -8,44 +9,67 @@
 
 .datareport-th {
   color: #fafaf6;
-  font-size: 20px;
-  padding: 15px;
-  min-width: 200px;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 15px 5px;
+  width: 25vw;
+  border: 1px solid rgba(189, 189, 189, 0.78);
 }
 
-.datareport-td-container:nth-child(even) {
-  border: 1px solid rgba(240, 237, 237, 0.78);
-  background-color: rgb(241, 243, 239);
+.datareport-td {
+  color: black;
+  font-size: 16px;
+  padding: 15px 5px;
+  cursor: pointer;
+  border: 1px solid rgba(189, 189, 189, 0.78);
 }
 
-.datareport-td-container:nth-child(even):hover {
-  background-color: rgb(206, 206, 206);
-  border-top: 1px solid rgba(10, 10, 10, 0.11);
-  border-bottom: 1px solid rgba(30, 32, 32, 0.11);
- }
 .datareport-td-container:nth-child(odd) {
   border: 1px solid rgba(243, 243, 243, 0.78);
   background-color: rgb(226, 226, 226);
 }
 
-.datareport-td-container:nth-child(odd):hover {
+.datareport-td-container:nth-child(even) {
+  background-color: rgb(243, 243, 243);
+}
+
+.datareport-td-container:hover {
   background-color: rgb(206, 206, 206);
   border-top: 1px solid rgba(10, 10, 10, 0.11);
   border-bottom: 1px solid rgba(30, 32, 32, 0.11);
  }
 
-.datareport-td {
-  color: black;
-  font-size: 20px;
-  padding: 15px;
-  cursor: pointer;
-}
+ .datareport-td-error {
+   color: red;
+   font-size: 14px;
+ }
 
 .datareport-total-td-container {
   background-color: #494949;
 }
 .datareport-total-td {
   color: white;
-  font-size: 20px;
-  padding: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 15px 5px;
+  border: 1px solid rgba(189, 189, 189, 0.78);
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
+
+
+
+
