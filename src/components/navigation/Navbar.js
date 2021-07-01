@@ -39,43 +39,6 @@ function Navbar() {
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            {/* <li className="nav-item">
-              <Link to="/home" className="nav-links" onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/report"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Daily report
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/datareports"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Data reports
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/admin" className="nav-links" onClick={closeMobileMenu}>
-                Admin
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/createuser"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Create user
-              </Link>
-            </li> */}
             <li className="nav-item">
               <Link
                 to="/login"

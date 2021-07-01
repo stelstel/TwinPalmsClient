@@ -36,7 +36,7 @@ const LineChart = () => {
               label: "Revenue",
               data: [9000, 11000, 8000, 12000, 15000, 17000, 14000, 12000, 9000, 7000, 14000, 18000],
               chartData,
-              backgroundColor: ["red"],
+              backgroundColor: ["green"],
               borderColor: ["green"],
               borderWidth: 2,
             },
