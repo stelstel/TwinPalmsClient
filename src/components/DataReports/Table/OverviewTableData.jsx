@@ -127,7 +127,9 @@ export default function TableData( { user }) {
 
   return (
     <> 
-
+        <div className="table-title">
+          <h1>DATA REPORTS</h1>
+        </div>
         <table className="datareport-table-container">
           <tbody>
             <tr className="datareport-th-container">

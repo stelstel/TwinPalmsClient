@@ -1,6 +1,19 @@
+.table-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.table-title > h1 {
+  color: #3a3a3a;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 30px;
+}
+
 .datareport-table-container {
-  width: 100vw;
-  margin-bottom: 30px;
+  width: 100%;
 }
 
 .datareport-th-container {
@@ -42,6 +55,8 @@
  .datareport-td-error {
    color: red;
    font-size: 14px;
+   border: 1px solid rgba(189, 189, 189, 0.78);
+   padding: 15px 5px;
  }
 
 .datareport-total-td-container {
