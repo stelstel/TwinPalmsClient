@@ -1,16 +1,6 @@
 
 
-.table-title {
-    display: flex;
-    justify-content: center;
-}
 
-.table-title > h1 {
-    color: #3a3a3a;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 10px;
-}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {}
