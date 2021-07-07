@@ -1,10 +1,10 @@
-import React, {useState } from 'react';
+import React from 'react';
 import { DateRangePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 import './DatePicker.css';
 
  
-export default function DatePicker( {user} ) {
+export default function DatePicker( { user, handleChange } ) {
 
   let userOutlets = []
 
@@ -40,53 +40,7 @@ export default function DatePicker( {user} ) {
   const startValue = yesterday.toISOString().slice(0, 10)
   const endValue =  yesterday.toISOString().slice(0, 10)
  
-  //React hooks for api endpoint
-  const [fromDate, setFromDate] = useState(startValue)
-  const [toDate, setToDate] = useState(endValue)
-
-  let val;
  
-  const handleChange = () => {
-    
- 
-      //Targets the date picker component
-      val = document.getElementById("date-range-picker")
-      console.log(val.value)
- 
-      
-      //Function that changes month from text to a numbered string
-      const monthNameToNum = (monthName) => {
- 
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let month = months.indexOf(monthName) + 1;
- 
-        if(month <= 9) {
-          return month ? "0" + month : 0;
-        }
-        else {
-          return month.toString()
-        }
-      }
- 
-      //Sets fromDate to be uset in api call
-      const fromDay = val.value.slice(0, 2)
-      let fromMonth = val.value.slice(3, 6)
-      const fromYear = val.value.slice(7, 11)
- 
-      fromMonth = monthNameToNum(fromMonth)
-     
-      setFromDate(`${fromYear}-${fromMonth}-${fromDay}`)
- 
-      //Sets toDate to be uset in api call
-      const toDay = val.value.slice(14, 16)
-      let toMonth = val.value.slice(17, 20)
-      const toYear = val.value.slice(21)
- 
-      toMonth = monthNameToNum(toMonth) 
- 
-      setToDate(`${toYear}-${toMonth}-${toDay}`)
-
-  }
   // useEffect(() => {
   //   handleChange()
   // })

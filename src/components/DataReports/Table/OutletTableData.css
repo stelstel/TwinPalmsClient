@@ -1,8 +1,25 @@
-.outlet-table-data-title-container {
+.outlet-table-title {
     display: flex;
     justify-content: center;
-    padding-bottom: 30px;
+    align-items: center;
+    padding: 30px;
+  }
+.outlet-table-title > h1 {
+    color: #3a3a3a;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 30px 0px 30px;
 }
+.outlet-table-title > button {
+    border: 1px solid #494949;
+    color: white;
+    background-color: #494949;
+    border-radius: 2px;
+    width: 80px;
+    height: 40px;
+}
+    
 
 .outlet-table-data-header {
     background: rgba(61, 63, 63, 0.94);
@@ -39,9 +56,24 @@
     background-color: rgb(243, 243, 243);
 }
 
-.outlet-table-data-btn-container {
-    display: flex;
-    justify-content: center;
-    padding: 30px;
-    background-color: #fff;
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .outlet-table-title > h1 {
+        font-size: 30px;
+    }
 }
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
+
+
