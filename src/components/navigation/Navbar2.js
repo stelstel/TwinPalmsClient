@@ -96,14 +96,14 @@ function Navbar(user) {
               >
                 Settings
               </Link>
-              <li className="nav-item">
+            </li>
+            <li className="nav-item">
               <div
                 className="nav-links-mobile"
                 onClick={() => handleLogout()}
               >
                 LOGOUT
               </div>
-            </li>
             </li>
           </ul>
             {button && <Button onClick={() => handleLogout()} buttonStyle="btn--outline">LOGOUT</Button>}

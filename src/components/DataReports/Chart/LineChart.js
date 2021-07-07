@@ -10,16 +10,13 @@ var date = new Date();
 
 // add a day
 date.setDate(date.getDate() + 1);
-console.log(date)
 
 const LineChart = () => {
   const [chartData, setChartData] = useState([]);
 
   const getChartData = async () => {
     const { data } = await axios(API_URL);
-    console.log(data);
     setChartData(data);
-    console.log(chartData); // empty array
   };
   useEffect(() => {
     getChartData();
