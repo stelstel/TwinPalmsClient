@@ -54,8 +54,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
         data.forEach((item) => {
  
-            localEvents.push(item.localEventId)
-            console.log(item)
+            
             restaurantData.tables += item.tables
             restaurantData.food += item.food
             restaurantData.beverage += item.beverage
@@ -74,11 +73,11 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
             restaurantData.gSourceOfBusinessNotes = item.gSourceOfBusinessNotes //Gets 1 comment
 
             // restaurantData.localEventId += localEvents
-            restaurantData.localEventId.push(item.localEventId)
+            restaurantData.localEventId.push({id: item.localEventId, localEventName: ""})
+            localEvents.push({id: item.localEventId, localEventName: ""})
             restaurantData.eventNotes = item.eventNotes // Gets 1 comment
 
             restaurantData.active = true
-            console.log(restaurantData)
 
         })
             setOutletData(restaurantData)
@@ -132,6 +131,35 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUserOutletsIndex])
+
+        //GET REQUEST FOR FBREPORTS FROM DATEPICKER VALUES
+
+        let restArr = []
+        useEffect(() => {
+
+            const sendGetRequest = async () => {
+
+                const { data } = await axios('https://localhost:44306/api/LocalEvent');
+
+                
+                console.log(data)
+
+                localEvents.forEach((x) => {
+                    console.log("X", x.id)
+                    data.forEach((item) => {
+
+                        if(x.id === item.id) {
+
+                            restArr.push({id: item.id, name: item.event, numberOfReports: 0})
+                            
+                        }
+                    })
+                })
+                
+
+            } 
+            sendGetRequest();   
+        });
 
       
 
