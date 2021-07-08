@@ -90,9 +90,19 @@ function MultiStepForm() {
     const [weatherUndefined, setWeatherUndefined] = useState(false)
 
     const handleChangeWeather = e => {
+
+        let weatherId = parseInt(e.target.value)
+
         let dataWeather = weather;
-        dataWeather.push(e.target.value)
+        if(!dataWeather.includes(weatherId)) {
+            dataWeather.push(weatherId)
+        }
+        else if(dataWeather.includes(weatherId)) {
+            dataWeather = dataWeather.filter(word => word !== weatherId)
+        }
+        console.log(dataWeather)
         setWeather(dataWeather)
+        console.log(weather)
     }
     const [isSunnyChecked, setIsSunnyChecked] = useState(false)
     const isWeatherSunny = () => {
@@ -339,7 +349,10 @@ function MultiStepForm() {
  formData.append('LocalEventId', selectedEvent)
 
  //Add values from weather, finns inte i fb reports
- formData.append('Weathers', [1])
+ weather.forEach((weather) => {
+     formData.append("Weathers", [weather])
+ })
+//  formData.append('Weathers', [1])
 
  //Add values from form, finns inte i databasen
  formData.append("GuestSourceOfBusinesses", '[{ "GuestSourceOfBusinessId": 3, "GsobNrOfGuests": 33 }, { "GuestSourceOfBusinessId": 4, "GsobNrOfGuests": 44} ]')

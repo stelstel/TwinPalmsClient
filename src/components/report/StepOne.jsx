@@ -75,7 +75,7 @@ function StepOne(props) {
                                 <Grid>
                                     <Grid style={{display: 'flex', alignItems: 'center'}}>
                                         <Checkbox
-                                                value='Sunny/Clear'
+                                                value={1}
                                                 onChange={(e)=>props.handleChangeWeather(e)}
                                                 color="primary"
                                                 onClick={props.isWeatherSunny}
@@ -86,7 +86,7 @@ function StepOne(props) {
                                     </Grid>
                                     <Grid style={{display: 'flex', alignItems: 'center'}}>
                                         <Checkbox
-                                            value='Partially Cloudy'
+                                            value={2}
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
                                             onClick={props.isWeatherPartiallyCloudy}
@@ -96,7 +96,7 @@ function StepOne(props) {
                                     </Grid>
                                     <Grid style={{display: 'flex', alignItems: 'center'}}>
                                         <Checkbox
-                                            value='Overcast'
+                                            value={3}
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
                                             onClick={props.isWeatherOvercast}
@@ -108,7 +108,7 @@ function StepOne(props) {
                                 <Grid>
                                     <Grid style={{display: 'flex', alignItems: 'center'}}>
                                         <Checkbox
-                                            value='Rain'
+                                            value={4}
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
                                             onClick={props.isWeatherRain}
@@ -118,7 +118,7 @@ function StepOne(props) {
                                     </Grid>
                                     <Grid style={{display: 'flex', alignItems: 'center'}}>
                                         <Checkbox
-                                            value='Showers'
+                                            value={5}
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
                                             onClick={props.isWeatherShowers}
@@ -128,7 +128,7 @@ function StepOne(props) {
                                     </Grid>
                                     <Grid style={{display: 'flex', alignItems: 'center'}}>
                                         <Checkbox
-                                            value='Stormy'
+                                            value={6}
                                             onChange={(e)=>props.handleChangeWeather(e)}
                                             color="primary"
                                             onClick={props.isWeatherStormy}
