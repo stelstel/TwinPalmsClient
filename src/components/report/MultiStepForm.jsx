@@ -263,7 +263,7 @@ function MultiStepForm() {
 
     //SOURCE OF OUTSIDE GUESTS
     const [sourceOfBusinessUndefined, setSourceOfBusinessUndefined] = useState(false)
-    const [sourceOfBusiness, setSourceOfBusiness] = useState('');
+    const [sourceOfBusiness, setSourceOfBusiness] = useState([]);
     //holds api response from source of business
     const [source, setSource] = useState([]);
 
@@ -281,9 +281,41 @@ function MultiStepForm() {
         sendGetRequestSource(url)
     }, []) 
 
-    const handleChangeSourceOfBusiness = (e) => {
-        setSourceOfBusiness(e.target.value);
+    const testing = () => {
+        setSourceOfBusiness([...sourceOfBusiness]);
+    }
+
+    let arr = []
+    const handleChangeSourceOfBusiness = (e, eventId) => {
+
+        if(e.target.value.length === 1 ) {
+            console.log("length over 1")
+            arr.push({eventId: eventId, eventName: e.target.value})
+        }
+        else if(e.target.value.length >= 1) {
+            // console.log("POP OFF")
+            // arr.pop()
+            arr.forEach((item) => {
+                if(item.eventId === eventId) {
+                    console.log("returning")
+                }
+                else {
+                    console.log("Adding a push")
+                    arr.push({eventId: eventId, eventName: e.target.value})
+                }
+            })
+            // arr.push({eventId: eventId, eventName: e.target.value})
+        }
+        // else if(e.target.value.length === 0) {
+        //     console.log("length === 0")
+        //     console.log(eventId)
+        //     arr.filter(word => word.eventId !== eventId)
+        // }
+
+        console.log("ARR", arr)
+        
         console.log(e.target.value)
+        console.log("Event ID", eventId)
         setSourceOfBusinessUndefined(false)
     }
 

@@ -33,8 +33,11 @@
   color: black;
   font-size: 16px;
   padding: 15px 5px;
-  cursor: pointer;
   border: 1px solid rgba(189, 189, 189, 0.78);
+}
+
+.datareportd-td-outlet {
+  cursor: pointer;
 }
 
 .datareport-td-container:nth-child(odd) {

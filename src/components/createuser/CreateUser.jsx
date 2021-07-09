@@ -101,7 +101,7 @@ function CreateUser() {
       setEmailError({ ...emailError, error: true, errorText: "Email is required" });
     }
     if (createUser.notificationEmail === "") {
-      setEmailNotificationError({ ...emailNotificationError, error: true, errorText: "Notification Emial is required" });
+      setEmailNotificationError({ ...emailNotificationError, error: true, errorText: "Notification Email is required" });
     }
     if (basicActive === false && adminActive === false) {
       setAccessLevelError(true);

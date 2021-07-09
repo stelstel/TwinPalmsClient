@@ -16,6 +16,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
     const [activeOutletName, setActiveOutletName] = useState("")
     const [activeRestaurant, setActiveRestaurant] = useState(activeOutlet)
+    console.log(activeOutlet)
 
     let [outletData, setOutletData] = useState({})
 
@@ -49,6 +50,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
     //FETCH EVENTS FROM API AND STORE IT IN EVENTS
     const sendGetRequest = async () => {
         try {
+            console.log(activeRestaurant)
             console.log("Trying get request from: ", `https://localhost:44306/outlets/fbReports?outletIds=${activeRestaurant}&fromDate=${fromDate}&toDate=${toDate}`)
             const { data } = await axios.get(`https://localhost:44306/outlets/fbReports?outletIds=${activeRestaurant}&fromDate=${fromDate}&toDate=${toDate}`);
 
@@ -113,6 +115,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
 
       const handleNext = () => {
+          console.log(loggedInUserOutlets)
         if(loggedInUserOutletsIndex < loggedInUserOutlets.length - 1) {
             setLoggedInUserOutletsIndex(prev => prev + 1)
         }
@@ -132,34 +135,30 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUserOutletsIndex])
 
-        //GET REQUEST FOR FBREPORTS FROM DATEPICKER VALUES
-
-        let restArr = []
+        
+        //Change REPORTED LOCAL EVENT IDS TO LOCAL EVENTS NAME
+        let convertEventIdToEventName = []
         useEffect(() => {
 
             const sendGetRequest = async () => {
-
+                //GET REQUEST FOR ALL LOCAL EVENTS
                 const { data } = await axios('https://localhost:44306/api/LocalEvent');
-
-                
-                console.log(data)
-
+                //MATCHES REPORTED EVENT IDs AND PUSHES EVENT IDs NAME TO convertEventIdToEventName
                 localEvents.forEach((x) => {
-                    console.log("X", x.id)
+
                     data.forEach((item) => {
 
                         if(x.id === item.id) {
 
-                            restArr.push({id: item.id, name: item.event, numberOfReports: 0})
-                            
+                            convertEventIdToEventName.push({id: item.id, name: item.event, numberOfReports: 0})  
                         }
                     })
                 })
-                
-
             } 
-            sendGetRequest();   
-        });
+            sendGetRequest(); 
+            console.log(convertEventIdToEventName)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [convertEventIdToEventName]);
 
       
 
@@ -258,14 +257,14 @@ weather, */}
                         loader={<div>Loading Chart</div>}
                         data={[
                             ['Guests', 'Guests'],
-                            ['Hotel wbsite', 100],
-                            ['Hungry hub', 379],
-                            ['Facebook referal', 269],
+                            ['Hotel website', 100],
+                            ['Hungry Hub', 379],
+                            ['Facebook referral', 269],
                             ['Google search', 209],
-                            ['Instagram referal', 152],
-                            ['Hotel referal', 152],
-                            ['Other hotel referal', 152],
-                            ['Agent referal', 152],
+                            ['Instagram referral', 152],
+                            ['Hotel referral', 152],
+                            ['Other hotel referral', 152],
+                            ['Agent referral', 152],
                             ['Walk in', 152],
                             ['Other', 152]
                         ]}
