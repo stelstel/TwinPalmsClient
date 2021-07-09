@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import { API_URL } from '../utils/misc';
+import {API_URL_OUTLETS_REVENUE} from "../utils/misc"
 import axios from 'axios';
 
 //Get request from date picker minus months
@@ -12,16 +12,21 @@ var date = new Date();
 date.setDate(date.getDate() + 1);
 
 const LineChart = () => {
-  const [chartData, setChartData] = useState([]);
-
-  const getChartData = async () => {
-    const { data } = await axios(API_URL);
-    setChartData(data);
-  };
   useEffect(() => {
-    getChartData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    const sendGetRequest = async () => {
+    console.log("GET", API_URL_OUTLETS_REVENUE)
+    const { data } = await axios(API_URL_OUTLETS_REVENUE);
+    console.log("DATA", data)
+    
+
+    };
+  
+
+    sendGetRequest();
+}, []);
+
+
 
   return (
     <div>
@@ -31,8 +36,7 @@ const LineChart = () => {
           datasets: [
             {
               label: "Revenue",
-              data: [9000, 11000, 8000, 12000, 15000, 17000, 14000, 12000, 9000, 7000, 14000, 18000],
-              chartData,
+              data: [9000, 11000, 8000, 12000, 15000, 17000, 14000, 12000, 9000, 7000, 14000, 18000],          
               backgroundColor: ["green"],
               borderColor: ["green"],
               borderWidth: 2,

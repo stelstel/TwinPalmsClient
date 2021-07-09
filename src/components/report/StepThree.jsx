@@ -48,9 +48,10 @@ function StepThree(props) {
                         <InputLabel error={props.sourceOfBusinessUndefined} style={{marginTop: 45, marginBottom: 10}}>Specify where the guests from outside came from</InputLabel>
                         <Grid style={{display: 'flex', flexWrap: 'wrap'}}>
                             {props.source.map((item, key) => {
+                                console.log(item)
                                 return (
                                     <Grid style={{display: 'flex', alignItems: 'center', width: '140px'}} key={key}>
-                                        <input onChange={props.handleChangeSourceOfBusiness} placeholder={0} style={{width: '46px', height: '28px', padding: '2px', fontFamily: 'Roboto'}} type="number" />
+                                        <input onChange={(e) => props.handleChangeSourceOfBusiness(e, item.id)} placeholder={0} style={{width: '46px', height: '28px', padding: '2px', fontFamily: 'Roboto'}} type="number" />
                                         <span style={{margin: '5px 10px', width: '105px', fontSize: '16px', fontFamily: 'Roboto', lineHeight: '16px', color: '#0000008A'}}>{item.sourceOfBusiness}</span>    
                                     </Grid>
                                 )
