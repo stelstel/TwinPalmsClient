@@ -96,6 +96,8 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
             ytDs: undefined
         },
     })
+
+    const [allOutletsMonthlyRev, setAllOutletsMonthlyRev] = useState()
     
     
     //GET REQUEST FOR FBREPORTS FROM DATEPICKER VALUES
@@ -119,6 +121,12 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
             11: {restaurantId: 11, restaurant: "Bake Patong", yesterdaysRev: data.yesterdaysRevs[11], mtDs: data.mtDs[11], ytDs: data.ytDs[11]},
             12: {restaurantId: 12, restaurant: "Love Noodles", yesterdaysRev: data.yesterdaysRevs[12], mtDs: data.mtDs[12], ytDs: data.ytDs[12]},
         })
+        setAllOutletsMonthlyRev(data.yearlyRev.monthlyRevs)
+        // console.log("DATAAAAAAAAAA", data.yearlyRev.monthlyRevs)
+        // console.log("DATA", data.yearlyRev.monthlyRevs[0])
+        // setAllOutletsMonthlyRev({
+        //     1: {restaurantId: data.yearlyRev.monthlyRevs[0].outletId}
+        // })
         };
       
         sendGetRequest();
@@ -137,7 +145,7 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
         Object.entries(revenue).map((item, key) => {
     
             if(!loggedInUserOutlets.includes(parseInt(item[0]))){
-                console.log("User dont have accces to outletId", item[0])
+                // console.log("User dont have accces to outletId", item[0])
                 return
             }
 
@@ -156,7 +164,13 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
         setYdaTotalRev(ydaTotalRevenue)
         setMtdTotalRev(mtdTotalRevenue)
         setYtdTotalRev(ytdTotalRevenue)
-    }, [revenue, loggedInUserOutlets]);
+
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [revenue]);
+
+
+
 
     
 
@@ -178,7 +192,7 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
             Object.entries(revenue).map((item, key) => {
     
                 if(!loggedInUserOutlets.includes(parseInt(item[0]))){
-                    console.log("User dont have accces to outletId", item[0])
+                    // console.log("User dont have accces to outletId", item[0])
                     return
                 }
                 else {
@@ -231,7 +245,7 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
             </tr>
         </tbody>
       </table>
-      <Chart />
+      <Chart allOutletsMonthlyRev={allOutletsMonthlyRev} loggedInUserOutlets={loggedInUserOutlets} />
       </>
   );
 }

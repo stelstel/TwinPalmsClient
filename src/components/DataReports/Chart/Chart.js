@@ -1,11 +1,11 @@
 import React from 'react';
 import LineChart from './LineChart';
 
-const Chart = () => {
+const Chart = ( { allOutletsMonthlyRev, loggedInUserOutlets } ) => {
 
   return (
     <div>
-      <LineChart/>
+      <LineChart allOutletsMonthlyRev={allOutletsMonthlyRev} loggedInUserOutlets={loggedInUserOutlets} />
     </div>
   );
 };
