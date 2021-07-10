@@ -3,14 +3,14 @@
 .date-picker {
   margin: auto;
   display: block;
-  width: 500px;
-  padding: 30px;
+  width: 600px;
+  padding-top: 30px;
 }
 
 /******************* MEDIA QUERIES *********************************/
 @media (min-width: 340px) and (max-width: 1366px) {
  .date-picker  {
-     width: 230px;
+     width: 280px;
   
   }
   

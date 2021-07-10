@@ -110,8 +110,8 @@ export default function DataReports( ) {
 
         <div id="Maindiv">
           {
-          activeTable.overviewTable ? <OverviewTableData user={user} loggedInUserOutlets={loggedInUserOutlets} getOutlet={getOutlet} onClickOutlet={onClickOutlet} /> :
-          activeTable.outletTable ? <OutletTableData loggedInUserOutlets={loggedInUserOutlets} activeOutlet={activeOutlet} fromDate={fromDate} toDate={toDate} handleChange={handleChange} /> : 
+          activeTable.overviewTable ? <OverviewTableData user={user} loggedInUserOutlets={loggedInUserOutlets} getOutlet={getOutlet} /> :
+          activeTable.outletTable ? <OutletTableData onClickOutlet={onClickOutlet} loggedInUserOutlets={loggedInUserOutlets} activeOutlet={activeOutlet} fromDate={fromDate} toDate={toDate} handleChange={handleChange} /> : 
           console.log("error rendering tables")
           }  
         </div>

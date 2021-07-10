@@ -6,7 +6,7 @@ import Chart from "../Chart/Chart";
 // style
 import "./TableData.css";
 
-export default function TableData( { user, getOutlet, onClickOutlet, loggedInUserOutlets }) {
+export default function TableData( { user, getOutlet, loggedInUserOutlets }) {
 
 
     //REACT HOOKS
@@ -142,7 +142,7 @@ export default function TableData( { user, getOutlet, onClickOutlet, loggedInUse
         let mtdTotalRevenue = 0;
         let ytdTotalRevenue = 0;
         
-        Object.entries(revenue).map((item, key) => {
+        Object.entries(revenue).map((item) => {
     
             if(!loggedInUserOutlets.includes(parseInt(item[0]))){
                 // console.log("User dont have accces to outletId", item[0])

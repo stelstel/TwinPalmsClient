@@ -139,11 +139,6 @@ function Users() {
                   <Link to={`/edit/${val.id}`}>
                     <i className="fas fa-edit"></i>
                   </Link>
-
-                  <i
-                    onClick={() => alert("Delete user?")}
-                    className="fas fa-trash-alt"
-                  ></i>
                 </div>
               </div>
             );

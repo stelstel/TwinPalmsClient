@@ -254,6 +254,7 @@ function MultiStepForm() {
     const handleChangeOutsideGuests = input => e => {
         setOutsideGuests({[input]: e.target.value})
         setOutsideGuestsUndefined(false)
+        setSourceErrorMessage("")
     }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -263,7 +264,8 @@ function MultiStepForm() {
 
     //SOURCE OF OUTSIDE GUESTS
     const [sourceOfBusinessUndefined, setSourceOfBusinessUndefined] = useState(false)
-    const [sourceOfBusiness, setSourceOfBusiness] = useState([]);
+    const [sourceErrorMessage, setSourceErrorMessage] = useState("")
+
     //holds api response from source of business
     const [source, setSource] = useState([]);
 
@@ -281,49 +283,127 @@ function MultiStepForm() {
         sendGetRequestSource(url)
     }, []) 
 
-    const testing = () => {
-        setSourceOfBusiness([...sourceOfBusiness]);
-    }
 
-    let arr = []
+
+    const [hotelWebsite, setHotelWebsite] = useState({GuestSourceOfBusinessId: 1, GsobNrOfGuests: 0})
+    const [hungryHub, setHungryHub] = useState({GuestSourceOfBusinessId: 2, GsobNrOfGuests: 0})
+    const [facebookReferral, setFacebookReferral] = useState({GuestSourceOfBusinessId: 3, GsobNrOfGuests: 0})
+    const [googleSearch, setGoogleSearch] = useState({GuestSourceOfBusinessId: 4, GsobNrOfGuests: 0})
+    const [instagramReferral, setInstagramReferral] = useState({GuestSourceOfBusinessId: 5, GsobNrOfGuests: 0})
+    const [hotelReferral, setHotelReferral] = useState({GuestSourceOfBusinessId: 6, GsobNrOfGuests: 0})
+    const [otherHotelReferral, setOtherHotelReferral] = useState({GuestSourceOfBusinessId: 7, GsobNrOfGuests: 0})
+    const [agentReferral, setAgentReferral] = useState({GuestSourceOfBusinessId: 8, GsobNrOfGuests: 0})
+    const [walkIn, setWalkIn] = useState({GuestSourceOfBusinessId: 9, GsobNrOfGuests: 0})
+    const [other, setOther] = useState({GuestSourceOfBusinessId: 10, GsobNrOfGuests: 0})
+    const [sourceArr, setSourceArr] = useState([])
+
     const handleChangeSourceOfBusiness = (e, eventId) => {
 
-        if(e.target.value.length === 1 ) {
-            console.log("length over 1")
-            arr.push({eventId: eventId, eventName: e.target.value})
-        }
-        else if(e.target.value.length >= 1) {
-            // console.log("POP OFF")
-            // arr.pop()
-            arr.forEach((item) => {
-                if(item.eventId === eventId) {
-                    console.log("returning")
-                }
-                else {
-                    console.log("Adding a push")
-                    arr.push({eventId: eventId, eventName: e.target.value})
-                }
-            })
-            // arr.push({eventId: eventId, eventName: e.target.value})
-        }
-        // else if(e.target.value.length === 0) {
-        //     console.log("length === 0")
-        //     console.log(eventId)
-        //     arr.filter(word => word.eventId !== eventId)
-        // }
+        setSourceErrorMessage("")
 
-        console.log("ARR", arr)
-        
-        console.log(e.target.value)
-        console.log("Event ID", eventId)
+        if(eventId === 1) {
+            if(e.target.value === "") {
+                setHotelWebsite({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setHotelWebsite({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }
+        }
+        else if(eventId === 2) {
+            if(e.target.value === "") {
+                setHungryHub({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setHungryHub({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }   
+        }
+        else if(eventId === 3) {
+            if(e.target.value === "") {
+                setFacebookReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setFacebookReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }  
+        }
+        else if(eventId === 4) {
+            if(e.target.value === "") {
+                setGoogleSearch({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setGoogleSearch({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }      
+        }
+        else if(eventId === 5) {
+            if(e.target.value === "") {
+                setInstagramReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setInstagramReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            } 
+        }
+        else if(eventId === 6) {
+            if(e.target.value === "") {
+                setHotelReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setHotelReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }   
+        }
+        else if(eventId === 7) {
+            if(e.target.value === "") {
+                setOtherHotelReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setOtherHotelReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            } 
+        }
+        else if(eventId === 8) {
+            if(e.target.value === "") {
+                setAgentReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setAgentReferral({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            } 
+        }
+        else if(eventId === 9) {
+            if(e.target.value === "") {
+                setWalkIn({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setWalkIn({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }     
+        }
+        else if(eventId === 10) {
+            if(e.target.value === "") {
+                setOther({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: 0})
+            }
+            else {
+                setOther({GuestSourceOfBusinessId: eventId, GsobNrOfGuests: parseInt(e.target.value)})
+            }    
+        }   
+
         setSourceOfBusinessUndefined(false)
     }
+
+
+    useEffect(() => {
+        setSourceArr([
+            hotelWebsite, hungryHub, facebookReferral, googleSearch, 
+            instagramReferral, hotelReferral, otherHotelReferral,
+            agentReferral, walkIn, other
+        ])
+    }, [hotelWebsite, hungryHub, facebookReferral, googleSearch, instagramReferral, hotelReferral, otherHotelReferral, agentReferral, walkIn, other])
+
+    //GETS THE TOTAL NUMBER OF GUESTS FILLED IN FOR SOURCE OF BUSINESS
+    let sourceTotal = 0;
+    sourceArr.forEach((item) => sourceTotal += item.GsobNrOfGuests)
 
     //SOURCE OF BUSINESS NOTES
     const [sourceNotes, setSourceNotes] = useState()
     const handleChangeSourceNotes = (e) => {
         setSourceNotes(e.target.value)
     }
+
 
     //STEP FOUR
 
@@ -351,60 +431,39 @@ function MultiStepForm() {
     };
 
 
+    //FormData to use in post request
+    const formData = new FormData();
+
+    const currentDate = new Date();
+    const date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
+
+    formData.append('Date', date)
+    formData.append('IsPublicHoliday', isPublicHoliday)
+    formData.append('Tables', parseInt(tables.tables))
+    formData.append('UserId', loggedInUserId)
+    formData.append('EventNotes', eventNotes)
+    formData.append('OutletId', restaurant)
+    formData.append('GSourceOfBusinessNotes', sourceNotes)
+    formData.append('GuestsFromOutsideHotel', parseInt(outsideGuests.outsideguests))
+    formData.append('OtherIncome', parseInt(otherRevenue.otherrevenue))
+    formData.append('file', file)
+    formData.append('Food', parseInt(foodRevenue.foodrevenue))
+    formData.append('Beverage', parseInt(beverageRevenue.beveragerevenue))
+    formData.append('GuestsFromHotelTP', hotelOneGuests.hoteloneguests)
+    formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
+    formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
+    formData.append('Notes', notes)
+    formData.append('LocalEventId', selectedEvent)
+
+    //Add values from weather, finns inte i fb reports
+    weather.forEach((weather) => {
+        formData.append("Weathers", [weather])
+    })
+    //  formData.append('Weathers', [1])
 
 
-
-    //-------------------------------------------------------------------------------------------
-
-//FormData to use in post request
- const formData = new FormData();
-
- const currentDate = new Date();
- const date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
-
- formData.append('Date', date)
- formData.append('IsPublicHoliday', isPublicHoliday)
- formData.append('Tables', parseInt(tables.tables))
- formData.append('UserId', loggedInUserId)
- formData.append('EventNotes', eventNotes)
- formData.append('OutletId', restaurant)
- formData.append('GSourceOfBusinessNotes', sourceNotes)
- formData.append('GuestsFromOutsideHotel', parseInt(outsideGuests.outsideguests))
- formData.append('OtherIncome', parseInt(otherRevenue.otherrevenue))
- formData.append('file', file)
- formData.append('Food', parseInt(foodRevenue.foodrevenue))
- formData.append('Beverage', parseInt(beverageRevenue.beveragerevenue))
- formData.append('GuestsFromHotelTP', hotelOneGuests.hoteloneguests)
- formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
- formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
- formData.append('Notes', notes)
- formData.append('LocalEventId', selectedEvent)
-
- //Add values from weather, finns inte i fb reports
- weather.forEach((weather) => {
-     formData.append("Weathers", [weather])
- })
-//  formData.append('Weathers', [1])
-
- //Add values from form, finns inte i databasen
- formData.append("GuestSourceOfBusinesses", '[{ "GuestSourceOfBusinessId": 3, "GsobNrOfGuests": 33 }, { "GuestSourceOfBusinessId": 4, "GsobNrOfGuests": 44} ]')
-
-
-
-//----------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //Add values from form, finns inte i databasen
+    formData.append("GuestSourceOfBusinesses", `${JSON.stringify(sourceArr.filter(item => item.GsobNrOfGuests !== undefined && item.GsobNrOfGuests !== ""))}`)
 
     //FUNCTIONS FOR PREV AND NEXT BUTTONS WITH ERROR HANDLING
     const handleNext = (e) => {
@@ -496,9 +555,13 @@ function MultiStepForm() {
             if(outsideGuests === "") {
                 setOutsideGuestsUndefined(true)
             }
-            if(sourceOfBusiness === "") {
-                setSourceOfBusinessUndefined(true)
+            //---------------------------------------------------------------------------------
+            if(parseInt(outsideGuests.outsideguests) !== sourceTotal) {
+                setOutsideGuestsUndefined(true)
+                setSourceErrorMessage("Source of business must match outside guests")
+                return
             }
+
             //return when clicking next button if not all fields have values
             if(!hotelOneGuests) {
                 return
@@ -507,9 +570,6 @@ function MultiStepForm() {
                 return
             }
             else if(!outsideGuests) {
-                return
-            }
-            else if(!sourceOfBusiness) {
                 return
             }
         }
@@ -607,6 +667,7 @@ function MultiStepForm() {
                     handleChangeOutsideGuests={handleChangeOutsideGuests}
                     //source of business
                     sourceOfBusinessUndefined={sourceOfBusinessUndefined}
+                    sourceErrorMessage={sourceErrorMessage}
                     source={source}
                     handleChangeSourceOfBusiness={handleChangeSourceOfBusiness}
                     //source of business notes
