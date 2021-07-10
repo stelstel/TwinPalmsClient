@@ -6,7 +6,7 @@ import { Chart } from "react-google-charts";
 import axios from "axios";
 import "./OutletTableData.css";
 
-function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets } ) {
+function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets, onClickOutlet } ) {
 
     console.log(loggedInUserOutlets.length)
     
@@ -39,6 +39,8 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
         gSourceOfBusinessNotes: "",
         localEventId: [],
         eventNotes: "",  
+        notes: "",
+        imagepath: undefined,
         active: false
 
     }
@@ -56,12 +58,17 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
         data.forEach((item) => {
  
-            
             restaurantData.tables += item.tables
             restaurantData.food += item.food
             restaurantData.beverage += item.beverage
             restaurantData.otherIncome += item.otherIncome
             restaurantData.totalIncome += (item.food + item.beverage + item.otherIncome)
+            if(restaurantData.notes === "") {
+                restaurantData.notes = item.notes //Gets 1 comment
+            }
+            else {
+                restaurantData.notes= false
+            }
 
             restaurantData.guestsFromHotelTP += item.guestsFromHotelTP
             restaurantData.guestsFromHotelTM += item.guestsFromHotelTM
@@ -72,13 +79,31 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
             restaurantData.guestSourceOfBusinesses += item.guestSourceOfBusinesses //unused
             restaurantData.gsobNrOfGuest += item.gsobNrOfGuest //unused
-            restaurantData.gSourceOfBusinessNotes = item.gSourceOfBusinessNotes //Gets 1 comment
+            if(restaurantData.gSourceOfBusinessNotes === "") {
+                restaurantData.gSourceOfBusinessNotes = item.gSourceOfBusinessNotes //Gets 1 comment
+            }
+            else {
+                restaurantData.gSourceOfBusinessNotes = false
+            }
+            
 
             // restaurantData.localEventId += localEvents
             restaurantData.localEventId.push({id: item.localEventId, localEventName: ""})
             localEvents.push({id: item.localEventId, localEventName: ""})
-            restaurantData.eventNotes = item.eventNotes // Gets 1 comment
+            if(restaurantData.eventNotes === "") {
+                restaurantData.eventNotes = item.eventNotes // Gets 1 comment
+            }
+            else {
+                restaurantData.eventNotes = false
+            }
 
+            if(restaurantData.imagepath === undefined && item.imagepath !== "fakeImagePath") {
+                restaurantData.imagepath = `http://localhost:5000/${item.imagepath}`
+            }
+            else {
+                restaurantData.imagepath = false
+            }
+         
             restaurantData.active = true
 
         })
@@ -156,7 +181,6 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
                 })
             } 
             sendGetRequest(); 
-            console.log(convertEventIdToEventName)
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [convertEventIdToEventName]);
 
@@ -169,14 +193,15 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 {/* public holiday,
 weather, */}
 
-
-            {/* <div> */}
             <div className="outlet-table-title">
-                <button onClick={handlePrev}>Prev</button><h1>{activeOutletName}</h1><button onClick={handleNext}>Next</button>
+               <button onClick={handlePrev}>Prev</button><h1>{activeOutletName}</h1><button onClick={handleNext}>Next</button>
             </div>
             <h4 className="statistic-date">
                 <DatePicker user={user} handleChange={handleChange} />
             </h4>
+            <div style={{borderLeft: "1px solid white"}}>
+                <button className="outlet-table-overview-btn" onClick={onClickOutlet}>Back to overview</button>
+            </div>
             <table className="datareport-table-container" >
                 <tbody>
                     <tr className="datareport-th-container" >
@@ -186,20 +211,45 @@ weather, */}
                         <th className="datareport-th">Avg <span>&#3647;</span> /Guest</th>
                     </tr>
                     <tr className="datareport-td-container">
-                        <td className="datareport-td">{outletData.totalIncome ? Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(outletData.totalIncome) : "Not reported"}</td>
-                        <td className="datareport-td">{outletData.totalGuests ? outletData.totalGuests : "Not Reported"}</td>
-                        <td className="datareport-td">{outletData.tables ? outletData.tables : "Not reported"}</td>
-                        <td className="datareport-td">{outletData.avgSpendPerGuest ? Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(outletData.avgSpendPerGuest) : "Not reported"}</td>
+                    
+                        {
+                        outletData.totalIncome 
+                        ? <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(outletData.totalIncome)}</td>
+                        : <td className="datareport-td-error">Not reported</td>
+                        }
+                        {
+                        outletData.totalGuests 
+                        ? <td className="datareport-td">{outletData.totalGuests}</td>
+                        : <td className="datareport-td-error">Not reported</td>
+                        }
+                        {
+                        outletData.tables
+                        ? <td className="datareport-td">{outletData.tables}</td>
+                        : <td className="datareport-td-error">Not reported</td>
+                        }
+                        {
+                        outletData.avgSpendPerGuest
+                        ? <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(outletData.avgSpendPerGuest)}</td>
+                        : <td className="datareport-td-error">Not reported</td>
+                        }
                     </tr>
                 </tbody>
             </table>
             {outletData.active ?
             <div>
+            {outletData.notes &&
             <div className="outlet-table-data-comments">
-                        <div style={{fontSize: "40px"}}><i className="fas fa-comments"></i><h4>Comments</h4></div>
-                        <div className="outlet-table--data-comment-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vero sed corrupti et molestias nostrum officiis eveniet autem cupiditate sint!
-                        </div>
+                    <div style={{fontSize: "40px"}}>
+                        <i className="fas fa-comments"></i>
+                        <h4>Comments</h4>
+                    </div>
+                    <div className="outlet-table--data-comment-text">
+                        {outletData.notes
+                        ? outletData.notes
+                        : "No comments made"}
+                    </div>
             </div>
+            }
 
             <div className="pie-chart-container">
                 <h4 className="outlet-table-data-header">Revenue</h4>
@@ -218,17 +268,18 @@ weather, */}
                     }}
                     rootProps={{ 'data-testid': '1' }}
                 />
-
+                {outletData.imagepath && 
                     <div className="outlet-table-data-comments">
                         <div style={{fontSize: "40px"}}>
                         <i className="fas fa-image"></i>
                         <h4>Cash registry picture</h4>
-                                <Button>Show</Button>
+                                {/* <Button>Show</Button> */}
+                                <a href={outletData.imagepath} target="_blank" rel="noreferrer"><Button>Show cash registry</Button></a>
                         </div>
                     </div>
+                }
                 </div>
-
-                {/* </div> */}
+                
                 <div className="pie-chart-container">
                     <h4 className="outlet-table-data-header">Source of business</h4>
                     <Chart
@@ -277,19 +328,40 @@ weather, */}
                     // For tests
                     rootProps={{ 'data-testid': '1' }}
                     />
+                {
+                outletData.gSourceOfBusinessNotes &&
                 <div className="outlet-table-data-comments">
-                        <div style={{fontSize: "40px"}}><i className="fas fa-comments"></i><h4>Source of business</h4></div>
-                        <div className="outlet-table--data-comment-text">{outletData.gSourceOfBusinessNotes ? outletData.gSourceOfBusinessNotes : "No comments made"}</div>
+                    <div style={{fontSize: "40px"}}>
+                        <i className="fas fa-comments"></i>
+                        <h4>Source of business</h4>
+                    </div>
+                    <div className="outlet-table--data-comment-text">
+                        {
+                        outletData.gSourceOfBusinessNotes 
+                        ? outletData.gSourceOfBusinessNotes 
+                        : "No comments made"}
+                    </div>
                 </div>
+                }
+                
             </div>
 
             <div className="pie-chart-container">
                 <h4 className="outlet-table-data-header">Events</h4>
                 <div>Events</div>
+                {outletData.eventNotes  &&
                 <div className="outlet-table-data-comments">
-                        <div style={{fontSize: "40px"}}><i className="fas fa-comments"></i><h4>Events</h4></div>
-                        <div className="outlet-table--data-comment-text">{outletData.eventNotes ? outletData.eventNotes : "No comments made"}</div>
+                        <div style={{fontSize: "40px"}}>
+                            <i className="fas fa-comments"></i>
+                            <h4>Events</h4>
+                        </div>
+                        <div className="outlet-table--data-comment-text">
+                            {outletData.eventNotes 
+                            ? outletData.eventNotes 
+                            : "No comments made"}
+                        </div>
                 </div>
+                }
             </div>
             </div>
             : <h1 style={{borderBottom: "1px solid #fff", fontSize: "25px", fontWeight: "500", height: "100%", width: "100vw", padding: "60px", backgroundColor: "#494949", color: "white", margin: "0px", textAlign: "center"}}>Nothing to report</h1>

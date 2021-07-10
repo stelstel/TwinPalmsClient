@@ -1,6 +1,12 @@
-.dashboard-object-container {
+
+.dashboard-container {
     background-color: #494949;
+    display: flex;
+    justify-content: center;
+}
+.dashboard-object-container {
     padding-top: 30vh;
+    width: 1000px;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -9,6 +15,7 @@
 @media screen and (max-width: 960px) {
     .dashboard-object-container {
         flex-direction: column;
+        width: 100vw;
         padding: 20px;
     }
     
