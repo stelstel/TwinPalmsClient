@@ -454,17 +454,12 @@ function MultiStepForm() {
     formData.append('GuestsFromHotelTM', hotelTwoGuests.hoteltwoguests)
     formData.append('Notes', notes)
     formData.append('LocalEventId', selectedEvent)
-
-    //Add values from weather, finns inte i fb reports
     weather.forEach((weather) => {
         formData.append("Weathers", [weather])
     })
-    //  formData.append('Weathers', [1])
-
-
-    //Add values from form, finns inte i databasen
     formData.append("GuestSourceOfBusinesses", `${JSON.stringify(sourceArr.filter(item => item.GsobNrOfGuests !== undefined && item.GsobNrOfGuests !== ""))}`)
-
+    console.log(JSON.stringify(sourceArr.filter(item => item.GsobNrOfGuests !== undefined && item.GsobNrOfGuests !== "")))
+    
     //FUNCTIONS FOR PREV AND NEXT BUTTONS WITH ERROR HANDLING
     const handleNext = (e) => {
         e.preventDefault();

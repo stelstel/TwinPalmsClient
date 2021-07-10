@@ -9,14 +9,14 @@ import "./OutletTableData.css";
 function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets, onClickOutlet } ) {
 
     console.log(loggedInUserOutlets.length)
-    
+    console.log(activeOutlet)
     //Date, weather, public holiday
 
     const user = useContext(UserContext);
 
     const [activeOutletName, setActiveOutletName] = useState("")
     const [activeRestaurant, setActiveRestaurant] = useState(activeOutlet)
-    console.log(activeOutlet)
+    
 
     let [outletData, setOutletData] = useState({})
 
@@ -36,11 +36,23 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
         totalGuests: 0,
         guestSourceOfBusinesses: [], //unused
         gsobNrOfGuest: [], //unused
+        hotelWebsite: 0,
+        hungryHub: 0,
+        facebookReferral: 0,
+        googleSearch: 0,
+        instagramReferral: 0,
+        hotelReferral: 0,
+        otherHotelReferral: 0,
+        agentReferral: 0,
+        walkIn: 0,
+        other: 0,
         gSourceOfBusinessNotes: "",
         localEventId: [],
         eventNotes: "",  
         notes: "",
         imagepath: undefined,
+
+
         active: false
 
     }
@@ -56,35 +68,54 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
             console.log("Trying get request from: ", `https://localhost:44306/outlets/fbReports?outletIds=${activeRestaurant}&fromDate=${fromDate}&toDate=${toDate}`)
             const { data } = await axios.get(`https://localhost:44306/outlets/fbReports?outletIds=${activeRestaurant}&fromDate=${fromDate}&toDate=${toDate}`);
 
-        data.forEach((item) => {
- 
-            restaurantData.tables += item.tables
-            restaurantData.food += item.food
-            restaurantData.beverage += item.beverage
-            restaurantData.otherIncome += item.otherIncome
-            restaurantData.totalIncome += (item.food + item.beverage + item.otherIncome)
-            if(restaurantData.notes === "") {
-                restaurantData.notes = item.notes //Gets 1 comment
-            }
-            else {
-                restaurantData.notes= false
-            }
+            data.forEach((item) => {
+                
+                //Checking if item length is 10 to filter out seeded data
+                if(item.gsobNrOfGuest.length === 10) {
 
-            restaurantData.guestsFromHotelTP += item.guestsFromHotelTP
-            restaurantData.guestsFromHotelTM += item.guestsFromHotelTM
-            restaurantData.guestsFromOutsideHotel += item.guestsFromOutsideHotel
-            restaurantData.totalGuests += (item.guestsFromHotelTP + item.guestsFromHotelTM + item.guestsFromOutsideHotel)
-            restaurantData.avgSpendPerGuest = (restaurantData.totalIncome / restaurantData.totalGuests)
+                    restaurantData.hotelWebsite += parseInt(item.gsobNrOfGuest[0])
+                    restaurantData.hungryHub += parseInt(item.gsobNrOfGuest[1])
+                    restaurantData.facebookReferral += parseInt(item.gsobNrOfGuest[2])
+                    restaurantData.googleSearch += parseInt(item.gsobNrOfGuest[3])
+                    restaurantData.instagramReferral += parseInt(item.gsobNrOfGuest[4])
+                    restaurantData.hotelReferral += parseInt(item.gsobNrOfGuest[5])
+                    restaurantData.otherHotelReferral += parseInt(item.gsobNrOfGuest[6])
+                    restaurantData.agentReferral += parseInt(item.gsobNrOfGuest[7])
+                    restaurantData.walkIn += parseInt(item.gsobNrOfGuest[8])
+                    restaurantData.other += parseInt(item.gsobNrOfGuest[9])
+                }
+                   
+            })
+
+            data.forEach((item) => {
+    
+                restaurantData.tables += item.tables
+                restaurantData.food += item.food
+                restaurantData.beverage += item.beverage
+                restaurantData.otherIncome += item.otherIncome
+                restaurantData.totalIncome += (item.food + item.beverage + item.otherIncome)
+                if(restaurantData.notes === "") {
+                    restaurantData.notes = item.notes //Gets 1 comment
+                }
+                else {
+                    restaurantData.notes= false
+                }
+
+                restaurantData.guestsFromHotelTP += item.guestsFromHotelTP
+                restaurantData.guestsFromHotelTM += item.guestsFromHotelTM
+                restaurantData.guestsFromOutsideHotel += item.guestsFromOutsideHotel
+                restaurantData.totalGuests += (item.guestsFromHotelTP + item.guestsFromHotelTM + item.guestsFromOutsideHotel)
+                restaurantData.avgSpendPerGuest = (restaurantData.totalIncome / restaurantData.totalGuests)
 
 
-            restaurantData.guestSourceOfBusinesses += item.guestSourceOfBusinesses //unused
-            restaurantData.gsobNrOfGuest += item.gsobNrOfGuest //unused
-            if(restaurantData.gSourceOfBusinessNotes === "") {
-                restaurantData.gSourceOfBusinessNotes = item.gSourceOfBusinessNotes //Gets 1 comment
-            }
-            else {
-                restaurantData.gSourceOfBusinessNotes = false
-            }
+                restaurantData.guestSourceOfBusinesses += item.guestSourceOfBusinesses //unused
+                restaurantData.gsobNrOfGuest += item.gsobNrOfGuest //unused
+                if(restaurantData.gSourceOfBusinessNotes === "") {
+                    restaurantData.gSourceOfBusinessNotes = item.gSourceOfBusinessNotes //Gets 1 comment
+                }
+                else {
+                    restaurantData.gSourceOfBusinessNotes = false
+                }
             
 
             // restaurantData.localEventId += localEvents
@@ -308,16 +339,16 @@ weather, */}
                         loader={<div>Loading Chart</div>}
                         data={[
                             ['Guests', 'Guests'],
-                            ['Hotel website', 100],
-                            ['Hungry Hub', 379],
-                            ['Facebook referral', 269],
-                            ['Google search', 209],
-                            ['Instagram referral', 152],
-                            ['Hotel referral', 152],
-                            ['Other hotel referral', 152],
-                            ['Agent referral', 152],
-                            ['Walk in', 152],
-                            ['Other', 152]
+                            ['Hotel website', outletData.hotelWebsite],
+                            ['Hungry Hub', outletData.hungryHub],
+                            ['Facebook referral', outletData.facebookReferral],
+                            ['Google search', outletData.googleSearch],
+                            ['Instagram referral', outletData.instagramReferral],
+                            ['Hotel referral', outletData.hotelReferral],
+                            ['Other hotel referral', outletData.otherHotelReferral],
+                            ['Agent referral', outletData.agentReferral],
+                            ['Walk in', outletData.walkIn],
+                            ['Other', outletData.other]
                         ]}
                     options={{
                         chartArea: { width: '50%' },
