@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import ListOutlets from "./ListOutlets";
 import ListHotels from "./ListHotels";
 import ListCompanies from "./ListCompanies";
-//import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Grid,
@@ -16,10 +15,10 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  //Select,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import "./CreateUser.css";
+import { UserContext } from "../../App";
 
 const BASE_URL = "http://localhost:5000/api";
 const notify = (message) => toast(message);
@@ -37,6 +36,7 @@ const initialState = {
 };
 
 function CreateUser() {
+  const user = useContext(UserContext);
   //REACT HOOKS
   const [createUser, setCreateUser] = useState(initialState);
   //HOOKS FOR ERRORS
@@ -83,15 +83,20 @@ function CreateUser() {
         console.log("User added", data);
         document.getElementById("createUserForm").reset();
         setCreateUser(initialState);
+        setBasicActive(false);
+        setAdminActive(false);
       })
       .catch((err) => {
-        if (err.response.status === 500) {
-          console.log("response 500");
+        console.log("token", user.token);
+        if (err.response.status === 503) {
+          console.log("response 503");
           alert(
             "User was created but email could not be sent\n" + err.response.data
           );
           document.getElementById("createUserForm").reset();
           setCreateUser(initialState);
+          setBasicActive(false);
+          setAdminActive(false);
         } else {
           let errors = Object.values(err.response.data);
           let message = "User was not created due to errors\n";

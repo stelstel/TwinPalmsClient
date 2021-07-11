@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState } from "react";
+import axios from "axios";
 import ForgotPassword from "./ForgotPassword";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -7,14 +8,9 @@ import "./Login.css";
 const BASE_URL = "http://localhost:5000/api";
 
 async function loginUser(credentials) {
-  return fetch(`${BASE_URL}/authentication/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  })
-    .then((data) => data.json())
+  return axios
+    .post(`${BASE_URL}/authentication/login`, credentials)
+    .then(({ data }) => data)
     .catch((err) => console.log("ERROR", err));
 }
 
@@ -50,15 +46,23 @@ function Login(props) {
     e.preventDefault();
 
     if (credentials.username === "") {
-      setUserNameError({ ...userNameError, error: true, errorText: "Username is required" });
+      setUserNameError({
+        ...userNameError,
+        error: true,
+        errorText: "Username is required",
+      });
     }
     if (credentials.password === "") {
-      setPasswordError({ ...passWordError, error: true, errorText: "Password is required" });
+      setPasswordError({
+        ...passWordError,
+        error: true,
+        errorText: "Password is required",
+      });
     }
 
     const resp = await loginUser({ ...credentials });
     props.setUser(resp);
-
+    //axios.defaults.headers.common["Authorization"] = `Bearer ${resp.token}`;
   };
 
   return (

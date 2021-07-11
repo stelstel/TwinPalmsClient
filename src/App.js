@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Switch,
@@ -41,7 +42,7 @@ function getUser(user) {
   //const user = {};
   if (user.token !== null && user.token !== "undefined") {
     const userToken = parseJwt(user.token);
-
+    axios.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
     user.roles =
       userToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
     user.userName =
