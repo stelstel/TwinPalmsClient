@@ -8,14 +8,15 @@ import "./OutletTableData.css";
 
 function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets, onClickOutlet } ) {
 
-    console.log(loggedInUserOutlets.length)
-    console.log(activeOutlet)
-    //Date, weather, public holiday
+    //Variables for get get request
+    const allOutlets = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    const [allOutletInex, setAllOutletIndex] = useState(activeOutlet - 1)
 
+    //Date, weather, public holiday
+    
     const user = useContext(UserContext);
 
     const [activeOutletName, setActiveOutletName] = useState("")
-    const [activeRestaurant, setActiveRestaurant] = useState(activeOutlet)
     
 
     let [outletData, setOutletData] = useState({})
@@ -51,8 +52,6 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
         eventNotes: "",  
         notes: "",
         imagepath: undefined,
-
-
         active: false
 
     }
@@ -62,11 +61,10 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
 
     //FETCH EVENTS FROM API AND STORE IT IN EVENTS
-    const sendGetRequest = async () => {
+    const sendGetRequest = async (outlet) => {
         try {
-            console.log(activeRestaurant)
-            console.log("Trying get request from: ", `https://localhost:44306/outlets/fbReports?outletIds=${activeRestaurant}&fromDate=${fromDate}&toDate=${toDate}`)
-            const { data } = await axios.get(`https://localhost:44306/outlets/fbReports?outletIds=${activeRestaurant}&fromDate=${fromDate}&toDate=${toDate}`);
+            console.log("Trying get request from: ", `https://localhost:44306/outlets/fbReports?outletIds=${outlet}&fromDate=${fromDate}&toDate=${toDate}`)
+            const { data } = await axios.get(`https://localhost:44306/outlets/fbReports?outletIds=${outlet}&fromDate=${fromDate}&toDate=${toDate}`);
 
             data.forEach((item) => {
                 
@@ -120,7 +118,9 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
             // restaurantData.localEventId += localEvents
             restaurantData.localEventId.push({id: item.localEventId, localEventName: ""})
+
             localEvents.push({id: item.localEventId, localEventName: ""})
+            
             if(restaurantData.eventNotes === "") {
                 restaurantData.eventNotes = item.eventNotes // Gets 1 comment
             }
@@ -145,9 +145,9 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
             setOutletData("")
         }
     };
-        sendGetRequest();
+        sendGetRequest(allOutlets[allOutletInex]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fromDate, toDate, activeRestaurant]);
+    }, [fromDate, toDate, allOutlets[allOutletInex]]);
 
     const getOutlets = async () => {
         const { data } = await axios('https://localhost:44306/api/Outlets');
@@ -155,7 +155,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
         let restaurantName;
 
         data.forEach((item) => {
-            if(item.id === activeRestaurant) {
+            if(item.id === allOutlets[allOutletInex]) {
                 return restaurantName = item.name
             }
         })
@@ -164,56 +164,82 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
       useEffect(() => {
         getOutlets();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [activeRestaurant]);
+      }, [allOutletInex]);
 
       //FILTERS ON AVAILABLE OUTLETS WHEN CLICKING PREV & NEXT BUTTONS
-      const [loggedInUserOutletsIndex, setLoggedInUserOutletsIndex] = useState(activeOutlet - 1)
+      console.log(loggedInUserOutlets)
 
 
       const handleNext = () => {
-          console.log(loggedInUserOutlets)
-        if(loggedInUserOutletsIndex < loggedInUserOutlets.length - 1) {
-            setLoggedInUserOutletsIndex(prev => prev + 1)
-        }
+            //Runs logic if user has access to both companies
+            if(loggedInUserOutlets.length === 12 && loggedInUserOutlets[0] === 1 && loggedInUserOutlets[11] === 12) {
+                if(allOutletInex < 11) {
+                    setAllOutletIndex(prev => prev + 1)
+                }
+            }
+            //Runs logic if user has access to comapny 1
+            if(loggedInUserOutlets.length === 6 && loggedInUserOutlets[0] === 1 && loggedInUserOutlets[5] === 6) {
+                if(allOutletInex < 5) {
+                    setAllOutletIndex(prev => prev + 1)
+              }
+            }
+            //Runs logic if user has access to company 2
+            if(loggedInUserOutlets.length === 6 && loggedInUserOutlets[0] === 7 && loggedInUserOutlets[5] === 12) {
+                if(allOutletInex < 11) {
+                    setAllOutletIndex(prev => prev + 1)
+                }
+            }
     }
-
       const handlePrev = () => {
-      
-        if(loggedInUserOutletsIndex > 0) {   
-            setLoggedInUserOutletsIndex(prev => prev - 1)
+
+        //Runs logic if user has access to both companies
+        if(loggedInUserOutlets.length === 12 && loggedInUserOutlets[0] === 1 && loggedInUserOutlets[11] === 12) {
+            if(!allOutletInex < 1) {
+                setAllOutletIndex(prev => prev - 1)
+        }
+        }
+        //Runs logic if user has access to comapny 1
+        if(loggedInUserOutlets.length === 6 && loggedInUserOutlets[0] === 1 && loggedInUserOutlets[5] === 6) {
+            if(!allOutletInex < 1) {
+                setAllOutletIndex(prev => prev - 1)
+          }
+        }
+        //Runs logic if user has access to company 2
+        if(loggedInUserOutlets.length === 6 && loggedInUserOutlets[0] === 7 && loggedInUserOutlets[5] === 12) {
+            if(allOutletInex > 6) {
+                setAllOutletIndex(prev => prev - 1)
+        }
         }
     }       
 
-    useEffect(() => {
-
-        setActiveRestaurant(loggedInUserOutlets[loggedInUserOutletsIndex])
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loggedInUserOutletsIndex])
 
         
         //Change REPORTED LOCAL EVENT IDS TO LOCAL EVENTS NAME
-        let convertEventIdToEventName = []
+        // const [reportedEvents, setReportedEvents] = useState()
+        // let convertEventIdToEventName = []
+        
         useEffect(() => {
 
-            const sendGetRequest = async () => {
-                //GET REQUEST FOR ALL LOCAL EVENTS
-                const { data } = await axios('https://localhost:44306/api/LocalEvent');
-                //MATCHES REPORTED EVENT IDs AND PUSHES EVENT IDs NAME TO convertEventIdToEventName
-                localEvents.forEach((x) => {
+        //     const sendGetRequest = async () => {
+        //         //GET REQUEST FOR ALL LOCAL EVENTS
+        //         const { data } = await axios('https://localhost:44306/api/LocalEvent');
+        //         //MATCHES REPORTED EVENT IDs AND PUSHES EVENT IDs NAME TO convertEventIdToEventName
+        //         restaurantData.localEventId.forEach((x) => {
 
-                    data.forEach((item) => {
+        //             data.forEach((item) => {
+                       
+        //                 if(x.id === item.id) {
 
-                        if(x.id === item.id) {
-
-                            convertEventIdToEventName.push({id: item.id, name: item.event, numberOfReports: 0})  
-                        }
-                    })
-                })
-            } 
-            sendGetRequest(); 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [convertEventIdToEventName]);
+        //                     convertEventIdToEventName.push({id: item.id, name: item.event})  
+        //                 }
+        //             })
+        //         })
+        //     } 
+        //     sendGetRequest(); 
+        //     setReportedEvents(convertEventIdToEventName)
+        // // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [outletData.localEventId]);
+        
 
       
 
@@ -379,7 +405,7 @@ weather, */}
 
             <div className="pie-chart-container">
                 <h4 className="outlet-table-data-header">Events</h4>
-                <div>Events</div>
+
                 {outletData.eventNotes  &&
                 <div className="outlet-table-data-comments">
                         <div style={{fontSize: "40px"}}>
