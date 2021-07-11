@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ListOutlets from "../createuser/ListOutlets";
 import ListHotels from "../createuser/ListHotels";
 import ListCompanies from "../createuser/ListCompanies";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import {
   Grid,
@@ -17,6 +17,7 @@ import "../createuser/CreateUser.css";
 
 function EditUser() {
   const { id } = useParams();
+  const history = useHistory();
   const BASE_URL = "http://localhost:5000";
 
   //REACT HOOKS
@@ -39,24 +40,12 @@ function EditUser() {
   const [emailError, setEmailError] = useState(false);
   //const [accessLevelError, setAccessLevelError] = useState(false);
 
-  //HOOKS FOR SCROLL LISTS
-
-  /* const handleClickBasic = () => {
-    setUser({ ...user, role: "Basic" });
-
-    setAccessLevelError(false);
-  };
-  const handleClickAdmin = () => {
-    setUser({ ...user, role: "Admin" });
-    setAccessLevelError(false);
-  };
-  */
-
   //POST REQUEST'
   const sendPutRequest = async (data) => {
     await axios
       .put(`${BASE_URL}/api/users/${id}`, data)
       .then(({ data }) => {
+        history.goBack();
         console.log(data);
         console.log("successfull put request");
       })
@@ -214,9 +203,16 @@ function EditUser() {
               color="primary"
               variant="contained"
               style={{ marginTop: "30px" }}
-              fullWidth
             >
               Update User
+            </Button>
+            <Button
+              onClick={() => history.goBack()}
+              color="secondary"
+              variant="contained"
+              style={{ marginTop: "30px" }}
+            >
+              Cancel
             </Button>
           </Link>
         </Paper>
