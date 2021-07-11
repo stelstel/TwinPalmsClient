@@ -9,7 +9,6 @@ const notify = (message) => toast(message);
 function Events() {
   //REACT HOOKS
 
-  //const [event, setEvent] = useState();
   const [events, setEvents] = useState();
 
   //GET REQUEST
@@ -24,15 +23,13 @@ function Events() {
     }
   };
   //POST REQUEST, NEW EVENT
-  const sendPostRequest = async (data, event) => {
+  const sendPostRequest = async (data) => {
     try {
-      //console.log(e.target);
-
       const res = await axios.post(`${BASE_URL}/LocalEvent`, data);
       console.log(res.data);
-      event = "";
       setEvents([...events, res.data]);
       console.log("successfull post request");
+      document.getElementById("event-input").value = "";
     } catch (err) {
       console.error(err);
       console.log("error with post request");
@@ -78,11 +75,11 @@ function Events() {
 
   const handlePost = (e) => {
     console.log(e.target);
-    let event =
+    /*  let event =
       e.target.parentElement.parentElement.firstChild.lastChild.firstChild
-        .value;
+        .value; */
     const data = {
-      event: event,
+      event: document.getElementById("event-input").value,
       active: true,
     };
     console.log({ data });
