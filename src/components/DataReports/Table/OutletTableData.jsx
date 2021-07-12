@@ -8,6 +8,10 @@ import "./OutletTableData.css";
 
 function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets, onClickOutlet } ) {
 
+    /*public holiday,
+      weather, */
+
+
     //Variables for get get request
     const allOutlets = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     const [allOutletInex, setAllOutletIndex] = useState(activeOutlet - 1)
@@ -19,7 +23,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
     const [activeOutletName, setActiveOutletName] = useState("")
     
 
-    let [outletData, setOutletData] = useState({})
+    let [outletData, setOutletData] = useState({localEventId: []})
 
     let localEvents = []
 
@@ -65,8 +69,9 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
         try {
             console.log("Trying get request from: ", `https://localhost:44306/outlets/fbReports?outletIds=${outlet}&fromDate=${fromDate}&toDate=${toDate}`)
             const { data } = await axios.get(`https://localhost:44306/outlets/fbReports?outletIds=${outlet}&fromDate=${fromDate}&toDate=${toDate}`);
-
+            console.log(data)
             data.forEach((item) => {
+                
                 
                 //Checking if item length is 10 to filter out seeded data
                 if(item.gsobNrOfGuest.length === 10) {
@@ -117,7 +122,7 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
             
 
             // restaurantData.localEventId += localEvents
-            restaurantData.localEventId.push({id: item.localEventId, localEventName: ""})
+            restaurantData.localEventId.push(item.localEventId)
 
             localEvents.push({id: item.localEventId, localEventName: ""})
             
@@ -167,9 +172,6 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
       }, [allOutletInex]);
 
       //FILTERS ON AVAILABLE OUTLETS WHEN CLICKING PREV & NEXT BUTTONS
-      console.log(loggedInUserOutlets)
-
-
       const handleNext = () => {
             //Runs logic if user has access to both companies
             if(loggedInUserOutlets.length === 12 && loggedInUserOutlets[0] === 1 && loggedInUserOutlets[11] === 12) {
@@ -214,51 +216,53 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
 
 
         
-        //Change REPORTED LOCAL EVENT IDS TO LOCAL EVENTS NAME
-        // const [reportedEvents, setReportedEvents] = useState()
-        // let convertEventIdToEventName = []
+        //GET LOCALEVENTS FROM DATABASE AND SETS NUMBER OF REPORTS FOR EACH EVENT FROM CURRENT
+        //OUTLETFBREPORTS REQUEST
         
-        useEffect(() => {
+        const [reportedEvents, setReportedEvents] = useState()
+        let arr = []
+        useEffect(() => {      
+            
+            const sendGetRequest = async () => {
 
-        //     const sendGetRequest = async () => {
-        //         //GET REQUEST FOR ALL LOCAL EVENTS
-        //         const { data } = await axios('https://localhost:44306/api/LocalEvent');
-        //         //MATCHES REPORTED EVENT IDs AND PUSHES EVENT IDs NAME TO convertEventIdToEventName
-        //         restaurantData.localEventId.forEach((x) => {
 
-        //             data.forEach((item) => {
-                       
-        //                 if(x.id === item.id) {
+                //GET REQUEST FOR ALL LOCAL EVENTS
+                const { data } = await axios('https://localhost:44306/api/LocalEvent');
 
-        //                     convertEventIdToEventName.push({id: item.id, name: item.event})  
-        //                 }
-        //             })
-        //         })
-        //     } 
-        //     sendGetRequest(); 
-        //     setReportedEvents(convertEventIdToEventName)
-        // // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [outletData.localEventId]);
-        
+                data.forEach((event) => {
+                    
+                    arr.push({id: event.id, event: event.event, reports: 0})
+                })
+                if(outletData.localEventId !== undefined) {
+
+                outletData.localEventId.forEach((id) => {
+                    if(id !== null) {
+                        arr[id - 1].reports = arr[id - 1].reports + 1
+                    }   
+                })
+                }
+                setReportedEvents(arr)
+            } 
+            sendGetRequest(); 
+            
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [outletData]);
+
 
       
 
     return (
         <>
         <main style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-
-{/* public holiday,
-weather, */}
-
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <button className="outlet-table-overview-btn" onClick={onClickOutlet}>Back to overview</button>
+            </div>
             <div className="outlet-table-title">
                <button onClick={handlePrev}>Prev</button><h1>{activeOutletName}</h1><button onClick={handleNext}>Next</button>
             </div>
             <h4 className="statistic-date">
                 <DatePicker user={user} handleChange={handleChange} />
             </h4>
-            <div style={{borderLeft: "1px solid white"}}>
-                <button className="outlet-table-overview-btn" onClick={onClickOutlet}>Back to overview</button>
-            </div>
             <table className="datareport-table-container" >
                 <tbody>
                     <tr className="datareport-th-container" >
@@ -301,7 +305,7 @@ weather, */}
                         <h4>Comments</h4>
                     </div>
                     <div className="outlet-table--data-comment-text">
-                        {outletData.notes
+                        {outletData.notes && outletData.notes !== "undefined"
                         ? outletData.notes
                         : "No comments made"}
                     </div>
@@ -394,7 +398,7 @@ weather, */}
                     </div>
                     <div className="outlet-table--data-comment-text">
                         {
-                        outletData.gSourceOfBusinessNotes 
+                        outletData.gSourceOfBusinessNotes && outletData.gSourceOfBusinessNotes !== "undefined"
                         ? outletData.gSourceOfBusinessNotes 
                         : "No comments made"}
                     </div>
@@ -405,7 +409,18 @@ weather, */}
 
             <div className="pie-chart-container">
                 <h4 className="outlet-table-data-header">Events</h4>
-
+                <div className="reported-events-container">
+                    {
+                    reportedEvents ? 
+                    reportedEvents.map((item, key) => {
+                        if(item.reports !== 0) {
+                            return <div key={key}>{item.event} x {item.reports}</div>
+                        }
+                        return null
+                    })
+                    : <div>No reported events</div>
+                    }
+                </div>
                 {outletData.eventNotes  &&
                 <div className="outlet-table-data-comments">
                         <div style={{fontSize: "40px"}}>
@@ -413,7 +428,7 @@ weather, */}
                             <h4>Events</h4>
                         </div>
                         <div className="outlet-table--data-comment-text">
-                            {outletData.eventNotes 
+                            {outletData.eventNotes && outletData.eventNotes !== "undefined"
                             ? outletData.eventNotes 
                             : "No comments made"}
                         </div>
