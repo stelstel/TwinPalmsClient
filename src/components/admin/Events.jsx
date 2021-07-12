@@ -4,7 +4,7 @@ import { Button, TextField, Paper, Grid } from "@material-ui/core";
 import axios from "axios";
 import "./Events.css";
 const BASE_URL = "http://localhost:5000/api";
-const notify = (message) => toast(message);
+const notify = (message) => toast.success(message);
 
 function Events() {
   //REACT HOOKS
