@@ -4,6 +4,7 @@ import ListHotels from "../createuser/ListHotels";
 import ListCompanies from "../createuser/ListCompanies";
 import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import {
   Grid,
   Paper,
@@ -45,11 +46,14 @@ function EditUser() {
     await axios
       .put(`${BASE_URL}/api/users/${id}`, data)
       .then(({ data }) => {
-        history.goBack();
         console.log(data);
-        console.log("successfull put request");
+        toast.success("Successfully updated!");
       })
-      .catch((err) => console.error(err));
+      .then(setTimeout(() => history.goBack(), 2000))
+      .catch((err) => {
+        toast.error("Update failed!");
+        console.error(err);
+      });
   };
 
   //FETCH LIST OF OUTLETS FROM API
@@ -104,120 +108,125 @@ function EditUser() {
   };
 
   return (
-    <Grid className="createuser-page-container">
-      <Grid style={{ paddingTop: "30px" }}>
-        <Paper className="createuser-paper" elevation={10}>
-          <Grid align="center">
-            <Avatar style={{ backgroundColor: "#1bbd7e", marginTop: "30px" }}>
-              <AccountCircleIcon />
-            </Avatar>
-            <h2 style={{ marginTop: 20 }}>Update User</h2>
-          </Grid>
-          <TextField
-            onChange={(e) => {
-              setUser({ ...user, userName: e.target.value });
-              setUserNameError(false);
-            }}
-            value={user.userName}
-            label="Username"
-            placeholder="Enter username"
-            style={{ marginTop: "20px" }}
-            type="text"
-            fullWidth
-            error={userNameError}
-            required
-          />
-          <TextField
-            onChange={(e) => {
-              setUser({ ...user, firstName: e.target.value });
-              setFirstNameError(false);
-            }}
-            value={user.firstName}
-            label="First name"
-            placeholder="Enter first name"
-            style={{ marginTop: "30px" }}
-            type="text"
-            fullWidth
-            error={firstNameError}
-            required
-          />
-          <TextField
-            onChange={(e) => {
-              setUser({ ...user, lastName: e.target.value });
-              setLastNameError(false);
-            }}
-            value={user.lastName}
-            label="Last name"
-            placeholder="Enter last name"
-            style={{ marginTop: "30px" }}
-            type="text"
-            fullWidth
-            error={lastNameError}
-            required
-          />
-          <TextField
-            onChange={(e) => {
-              setUser({ ...user, email: e.target.value });
-              setEmailError(false);
-            }}
-            value={user.email}
-            label="Email"
-            placeholder="Enter email"
-            style={{ marginTop: "30px" }}
-            type="email"
-            error={emailError}
-            fullWidth
-            required
-          />
-
-          {user.role === "Basic" && (
-            <>
-              <FormLabel style={{ marginTop: "30px" }}> Outlets</FormLabel>
-              <ListOutlets
-                setOutlets={(outlets) => setUser({ ...user, outlets: outlets })}
-                userOutlets={user.outlets}
-              />
-              <FormLabel style={{ marginTop: "30px" }}>Hotels</FormLabel>
-              <ListHotels
-                setHotels={(hotels) => setUser({ ...user, hotels: hotels })}
-                userHotels={user.hotels}
-              />
-            </>
-          )}
-          {user.role === "Admin" && (
-            <>
-              <FormLabel style={{ marginTop: "30px" }}>Companies</FormLabel>
-              <ListCompanies
-                setCompanies={(companies) =>
-                  setUser({ ...user, companies: companies })
-                }
-                userCompanies={user.companies}
-              />
-            </>
-          )}
-
-          <Link to="./report" style={{ textDecoration: "none" }}>
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              color="primary"
-              variant="contained"
+    <>
+      <Toaster />
+      <Grid className="createuser-page-container">
+        <Grid style={{ paddingTop: "30px" }}>
+          <Paper className="createuser-paper" elevation={10}>
+            <Grid align="center">
+              <Avatar style={{ backgroundColor: "#1bbd7e", marginTop: "30px" }}>
+                <AccountCircleIcon />
+              </Avatar>
+              <h2 style={{ marginTop: 20 }}>Update User</h2>
+            </Grid>
+            <TextField
+              onChange={(e) => {
+                setUser({ ...user, userName: e.target.value });
+                setUserNameError(false);
+              }}
+              value={user.userName}
+              label="Username"
+              placeholder="Enter username"
+              style={{ marginTop: "20px" }}
+              type="text"
+              fullWidth
+              error={userNameError}
+              required
+            />
+            <TextField
+              onChange={(e) => {
+                setUser({ ...user, firstName: e.target.value });
+                setFirstNameError(false);
+              }}
+              value={user.firstName}
+              label="First name"
+              placeholder="Enter first name"
               style={{ marginTop: "30px" }}
-            >
-              Update User
-            </Button>
-            <Button
-              onClick={() => history.goBack()}
-              color="secondary"
-              variant="contained"
+              type="text"
+              fullWidth
+              error={firstNameError}
+              required
+            />
+            <TextField
+              onChange={(e) => {
+                setUser({ ...user, lastName: e.target.value });
+                setLastNameError(false);
+              }}
+              value={user.lastName}
+              label="Last name"
+              placeholder="Enter last name"
               style={{ marginTop: "30px" }}
-            >
-              Cancel
-            </Button>
-          </Link>
-        </Paper>
+              type="text"
+              fullWidth
+              error={lastNameError}
+              required
+            />
+            <TextField
+              onChange={(e) => {
+                setUser({ ...user, email: e.target.value });
+                setEmailError(false);
+              }}
+              value={user.email}
+              label="Email"
+              placeholder="Enter email"
+              style={{ marginTop: "30px" }}
+              type="email"
+              error={emailError}
+              fullWidth
+              required
+            />
+
+            {user.role === "Basic" && (
+              <>
+                <FormLabel style={{ marginTop: "30px" }}> Outlets</FormLabel>
+                <ListOutlets
+                  setOutlets={(outlets) =>
+                    setUser({ ...user, outlets: outlets })
+                  }
+                  userOutlets={user.outlets}
+                />
+                <FormLabel style={{ marginTop: "30px" }}>Hotels</FormLabel>
+                <ListHotels
+                  setHotels={(hotels) => setUser({ ...user, hotels: hotels })}
+                  userHotels={user.hotels}
+                />
+              </>
+            )}
+            {user.role === "Admin" && (
+              <>
+                <FormLabel style={{ marginTop: "30px" }}>Companies</FormLabel>
+                <ListCompanies
+                  setCompanies={(companies) =>
+                    setUser({ ...user, companies: companies })
+                  }
+                  userCompanies={user.companies}
+                />
+              </>
+            )}
+
+            <Link to="./report" style={{ textDecoration: "none" }}>
+              <Button
+                onClick={handleSubmit}
+                type="submit"
+                color="primary"
+                variant="contained"
+                style={{ marginTop: "30px" }}
+              >
+                Update User
+              </Button>
+              <Button
+                onClick={() => history.goBack()}
+                color="secondary"
+                variant="contained"
+                style={{ marginTop: "30px" }}
+              >
+                Cancel
+              </Button>
+            </Link>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
 

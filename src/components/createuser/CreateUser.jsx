@@ -21,7 +21,6 @@ import "./CreateUser.css";
 import { UserContext } from "../../App";
 
 const BASE_URL = "http://localhost:5000/api";
-const notify = (message) => toast(message);
 const initialState = {
   firstName: "",
   lastName: "",
@@ -79,7 +78,7 @@ function CreateUser() {
     await axios
       .post(`${BASE_URL}/Authentication`, data)
       .then(({ data }) => {
-        notify("User successfully added");
+        toast.success("User successfully created!");
         console.log("User added", data);
         document.getElementById("createUserForm").reset();
         setCreateUser(initialState);
@@ -93,10 +92,15 @@ function CreateUser() {
           alert(
             "User was created but email could not be sent\n" + err.response.data
           );
+          toast.success("User successfully created!");
           document.getElementById("createUserForm").reset();
           setCreateUser(initialState);
           setBasicActive(false);
           setAdminActive(false);
+        } else if (err.response.status === 401) {
+          alert(
+            "The server could not authorize you!\nTry to logout and then login."
+          );
         } else {
           let errors = Object.values(err.response.data);
           let message = "User was not created due to errors\n";
