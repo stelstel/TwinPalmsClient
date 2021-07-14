@@ -57,7 +57,7 @@ function StepTwo(props) {
                         fullWidth 
                     />
                     <Grid>
-                        <InputLabel error={props.fileUndefined} style={{marginTop: '60px'}}>Add a picture on your cash registry</InputLabel>
+                        <InputLabel error={props.fileUndefined} style={{marginTop: '60px'}}>Add a picture of your POS end of day report"</InputLabel>
                         <input style={{display: 'none'}} type="file" name="file" id="file" onChange={(e)=> props.handleChangeFile(e)} />
                         <label style={{marginTop: '20px', padding: '5px 0px', width: '95px', height: '36px', textAlign: 'center', border: '1px solid #494949', borderRadius: '4px', cursor: 'pointer'}} htmlFor="file">Select file</label>
                         <label style={{marginLeft: '10px', color: '#494949'}}>{props.fileName ? props.fileName : 'No file chosen'}</label>

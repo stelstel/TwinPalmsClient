@@ -106,7 +106,7 @@ function Login(props) {
               label="Password"
               placeholder="Enter Password"
               style={{ marginTop: "40px" }}
-              type="text"
+              type="password"
               fullWidth
               error={passWordError.error}
               helperText={passWordError.errorText}

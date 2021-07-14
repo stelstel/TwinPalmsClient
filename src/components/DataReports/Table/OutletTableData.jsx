@@ -6,10 +6,23 @@ import { Chart } from "react-google-charts";
 import axios from "axios";
 import "./OutletTableData.css";
 
-function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets, onClickOutlet } ) {
+function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, loggedInUserOutlets, onClickOutlet, startValue } ) {
 
-    /*public holiday,
-      weather, */
+console.log(startValue)
+console.log(fromDate)
+
+      //Variables for current day
+      var d = new Date();
+      var weekday = new Array(7);
+      weekday[0] = "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      
+      var day = weekday[d.getDay()];
 
 
     //Variables for get get request
@@ -34,6 +47,8 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
         beverage: 0,
         otherIncome: 0,
         totalIncome: 0,
+        weather: [""],
+        publicHoliday: false,
         avgSpendPerGuest : 0,
         guestsFromHotelTP: 0,
         guestsFromHotelTM: 0,
@@ -89,14 +104,19 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
                 }
                    
             })
-
             data.forEach((item) => {
-    
+
                 restaurantData.tables += item.tables
                 restaurantData.food += item.food
                 restaurantData.beverage += item.beverage
                 restaurantData.otherIncome += item.otherIncome
                 restaurantData.totalIncome += (item.food + item.beverage + item.otherIncome)
+                if(item.weathers) {
+                    item.weathers.forEach((item) => {
+                        restaurantData.weather.push(item.typeOfWeather)
+                    })
+                }
+                restaurantData.publicHoliday = item.isPublicHoliday
                 if(restaurantData.notes === "") {
                     restaurantData.notes = item.notes //Gets 1 comment
                 }
@@ -260,13 +280,24 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
             <div className="outlet-table-title">
                <button onClick={handlePrev}>Prev</button><h1>{activeOutletName}</h1><button onClick={handleNext}>Next</button>
             </div>
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <span>
+                        {fromDate === toDate && fromDate === startValue && day}
+                        {fromDate === toDate && fromDate === startValue && outletData.weather && outletData.weather.length > 1 ? ` with ${outletData.weather[1].toLowerCase()} weather.` : ""} 
+                    </span>
+                    <span>
+                        {fromDate === toDate && fromDate === startValue && outletData.publicHoliday && `It´s a public holiday today.`}
+                    </span>
+                </div>
+            </div>
             <h4 className="statistic-date">
                 <DatePicker user={user} handleChange={handleChange} />
             </h4>
             <table className="datareport-table-container" >
                 <tbody>
                     <tr className="datareport-th-container" >
-                        <th className="datareport-th">Reveneu</th>
+                        <th className="datareport-th">Revenue</th>
                         <th className="datareport-th">Guests</th>
                         <th className="datareport-th">Tables & Checks</th>
                         <th className="datareport-th">Avg <span>&#3647;</span> /Guest</th>
@@ -311,6 +342,44 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
                     </div>
             </div>
             }
+
+            <div className="pie-chart-container">
+                <h4 className="outlet-table-data-header">Events</h4>
+                    <ol className="outlet-events-list" style={{padding: "0px", margin: "20px"}}>
+                    {
+                    reportedEvents 
+                    ? reportedEvents.map((item, key) => {
+                        if(item.reports !== 0) {
+                        return <div key={key} style={{display: "flex", justifyContent: "center"}}>
+                            <div style={{display: "flex", justifyContent: "space-between", maxWidth: "700px", width: "90vw", backgroundColor: "#e3e4e0", padding: "10px 20px", border: "1px solid #494949", borderRadius: "4px", margin: "1px"}}>
+                                <li > 
+                                    {item.event} 
+                                </li>
+                                {/* <span className="badge bg-primary rounded-pill">{item.reports}</span> */}
+                                <span style={{border: "1px solid #3463fd", borderRadius: "50%", width: "30px", textAlign: "center", backgroundColor: "#3463fd", color: "white"}}>{item.reports}</span>
+                            </div>
+                            </div>
+                        }
+                        return null
+                    })
+                    : <div>No reported events</div>
+                    } 
+                    </ol>
+                {outletData.eventNotes  &&
+                <div className="outlet-table-data-comments">
+                        <div style={{fontSize: "40px"}}>
+                            <i className="fas fa-comments"></i>
+                            <h4>Events</h4>
+                        </div>
+                        <div className="outlet-table--data-comment-text">
+                            {outletData.eventNotes && outletData.eventNotes !== "undefined"
+                            ? outletData.eventNotes 
+                            : "No comments made"}
+                        </div>
+                </div>
+                }
+            </div>
+           
 
             <div className="pie-chart-container">
                 <h4 className="outlet-table-data-header">Revenue</h4>
@@ -369,19 +438,19 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
                         loader={<div>Loading Chart</div>}
                         data={[
                             ['Guests', 'Guests'],
-                            ['Hotel website', outletData.hotelWebsite],
-                            ['Hungry Hub', outletData.hungryHub],
-                            ['Facebook referral', outletData.facebookReferral],
-                            ['Google search', outletData.googleSearch],
-                            ['Instagram referral', outletData.instagramReferral],
-                            ['Hotel referral', outletData.hotelReferral],
-                            ['Other hotel referral', outletData.otherHotelReferral],
-                            ['Agent referral', outletData.agentReferral],
-                            ['Walk in', outletData.walkIn],
-                            ['Other', outletData.other]
+                            [`Hotel website ${outletData.hotelWebsite}`, outletData.hotelWebsite],
+                            [`Hungry Hub ${outletData.hungryHub}`, outletData.hungryHub],
+                            [`Facebook referral ${outletData.facebookReferral}`, outletData.facebookReferral],
+                            [`Google search ${outletData.googleSearch}`, outletData.googleSearch],
+                            [`Instagram referral ${outletData.instagramReferral}`, outletData.instagramReferral],
+                            [`Hotel referral ${outletData.hotelReferral}`, outletData.hotelReferral],
+                            [`Other hotel referral ${outletData.otherHotelReferral}`, outletData.otherHotelReferral],
+                            [`Agent referral ${outletData.agentReferral}`, outletData.agentReferral],
+                            [`Walk in ${outletData.walkIn}`, outletData.walkIn],
+                            [`Other ${outletData.other}`, outletData.other]
                         ]}
                     options={{
-                        chartArea: { width: '50%' },
+                        chartArea: { width: '25%' },
                         hAxis: {
                         minValue: 0,
                         },
@@ -407,34 +476,6 @@ function OutletTableData ( { activeOutlet, fromDate, toDate, handleChange, logge
                 
             </div>
 
-            <div className="pie-chart-container">
-                <h4 className="outlet-table-data-header">Events</h4>
-                <div className="reported-events-container">
-                    {
-                    reportedEvents ? 
-                    reportedEvents.map((item, key) => {
-                        if(item.reports !== 0) {
-                            return <div key={key}>{item.event} x {item.reports}</div>
-                        }
-                        return null
-                    })
-                    : <div>No reported events</div>
-                    }
-                </div>
-                {outletData.eventNotes  &&
-                <div className="outlet-table-data-comments">
-                        <div style={{fontSize: "40px"}}>
-                            <i className="fas fa-comments"></i>
-                            <h4>Events</h4>
-                        </div>
-                        <div className="outlet-table--data-comment-text">
-                            {outletData.eventNotes && outletData.eventNotes !== "undefined"
-                            ? outletData.eventNotes 
-                            : "No comments made"}
-                        </div>
-                </div>
-                }
-            </div>
             </div>
             : <h1 style={{borderBottom: "1px solid #fff", fontSize: "25px", fontWeight: "500", height: "100%", width: "100vw", padding: "60px", backgroundColor: "#494949", color: "white", margin: "0px", textAlign: "center"}}>Nothing to report</h1>
             }

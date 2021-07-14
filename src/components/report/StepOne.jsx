@@ -171,7 +171,7 @@ function StepOne(props) {
                             rowsMin={3}
                             rowsMax={3}
                             aria-label="maximum height"
-                            placeholder="Additional information about local events"
+                            placeholder="Additional general information"
                             defaultValue=""
                             onChange={props.handleChangeEventNotes}
                             value={props.eventNotes}

@@ -4,6 +4,7 @@
     flex-direction: column;
     padding: 5rem;
     min-height: 100vh;
+    overflow: hidden;
 }
 .users-userlist-container {
     display: flex;
@@ -134,8 +135,8 @@
     }
     .users-user {
         position: relative;
-        left: 40px;
-        width: 90vw;
+        left: 20px;
+        width: 80vw;
     }
     .role {
         visibility: hidden;
