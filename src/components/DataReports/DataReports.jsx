@@ -50,13 +50,13 @@ export default function DataReports( ) {
       const [toDate, setToDate] = useState(endValue)
   
     let val;
+
    
     const handleChange = () => {
       
       
         //Targets the date picker component
         val = document.getElementById("date-range-picker")
-        console.log(val.value)
    
         
         //Function that changes month from text to a numbered string
@@ -79,6 +79,8 @@ export default function DataReports( ) {
         const fromYear = val.value.slice(7, 11)
    
         fromMonth = monthNameToNum(fromMonth)
+
+        
        
         setFromDate(`${fromYear}-${fromMonth}-${fromDay}`)
    
@@ -111,7 +113,7 @@ export default function DataReports( ) {
         <div id="Maindiv">
           {
           activeTable.overviewTable ? <OverviewTableData user={user} loggedInUserOutlets={loggedInUserOutlets} getOutlet={getOutlet} /> :
-          activeTable.outletTable ? <OutletTableData onClickOutlet={onClickOutlet} loggedInUserOutlets={loggedInUserOutlets} activeOutlet={activeOutlet} fromDate={fromDate} toDate={toDate} handleChange={handleChange} /> : 
+          activeTable.outletTable ? <OutletTableData onClickOutlet={onClickOutlet} loggedInUserOutlets={loggedInUserOutlets} activeOutlet={activeOutlet} fromDate={fromDate} toDate={toDate} handleChange={handleChange} startValue={startValue} /> : 
           console.log("error rendering tables")
           }  
         </div>

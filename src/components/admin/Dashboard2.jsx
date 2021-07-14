@@ -1,5 +1,5 @@
 import React from "react";
-import UserHome from "../home/UserHome";
+import Home from "../home/Home";
 import DataReport from "../DataReports/DataReports";
 import Dashboard from "./Dashboard";
 
@@ -12,7 +12,7 @@ export default function Dashboard2(user) {
       ) : user.roles.includes("Admin") ? (
         <DataReport />
       ) : (
-        <UserHome />
+        <Home />
       )}
     </>
   );

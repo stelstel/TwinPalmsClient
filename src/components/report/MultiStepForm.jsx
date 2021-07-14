@@ -15,6 +15,7 @@ function MultiStepForm() {
 
     //GETS LOGGED IN USER
     const user = useContext(UserContext);
+    console.log(user)
         //Variable for users outlets
         let loggedInUserId;
         //Loop through logged in user data
@@ -140,7 +141,6 @@ function MultiStepForm() {
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState('')
     useEffect(() => {
-        console.log(events)
     }, [events])
 
     const handleChangeEvents = e => {
@@ -235,7 +235,7 @@ function MultiStepForm() {
         setHotelOneGuestsUndefined(false)
     }
     useEffect(() => {
-        console.log(hotelOneGuests.hoteloneguests)
+  
     }, [hotelOneGuests])
 
     //HOTEL 2
@@ -435,7 +435,8 @@ function MultiStepForm() {
     const formData = new FormData();
 
     const currentDate = new Date();
-    const date = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate();
+    
+    const date = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate() + 'T' + currentDate.getHours() + ':' + (currentDate.getMinutes()) + ':' + currentDate.getSeconds();  
 
     formData.append('Date', date)
     formData.append('IsPublicHoliday', isPublicHoliday)
@@ -458,7 +459,6 @@ function MultiStepForm() {
         formData.append("Weathers", [weather])
     })
     formData.append("GuestSourceOfBusinesses", `${JSON.stringify(sourceArr.filter(item => item.GsobNrOfGuests !== undefined && item.GsobNrOfGuests !== ""))}`)
-    console.log(JSON.stringify(sourceArr.filter(item => item.GsobNrOfGuests !== undefined && item.GsobNrOfGuests !== "")))
     
     //FUNCTIONS FOR PREV AND NEXT BUTTONS WITH ERROR HANDLING
     const handleNext = (e) => {

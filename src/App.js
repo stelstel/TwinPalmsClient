@@ -81,7 +81,7 @@ function App() {
   return (
     <>
       <Router>
-        {!user.token ? (
+        {!user.token ?(
           <>
             <Navbar />
             <Login setUser={setUser} />

@@ -45,14 +45,16 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if(state.username === "") {
+    if(userNameError === "") {
       setUserNameError({ ...userNameError, error: true, errorText: "Error Message"})
     }
-    if(state.password === "") {
+    if(passWordError === "") {
       setPasswordError({ ...passWordError, error: true, errorText: "Error Message"})
       return
     }
-    const handleLogin = async (e) => {
+
+  }
+  const handleLogin = async (e) => {
     e.preventDefault();
     await axios
       .post("http://localhost/api/authentication/login", credentials)
@@ -70,8 +72,6 @@ function Login() {
         console.error("Error: ", err);
       });
   };
-
-  }
   
 
   return (

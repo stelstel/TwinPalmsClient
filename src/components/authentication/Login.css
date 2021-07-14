@@ -1,7 +1,8 @@
 .login-page-container {
     background-color: #494949;
     height: 860px;
-    
+    display: flex;
+    justify-content: space-around;
 }
 .login-paper {
     padding: 30px;

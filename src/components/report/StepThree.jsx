@@ -37,7 +37,7 @@ function StepThree(props) {
                     <TextField  
                         style={{marginTop: '25px'}}
                         placeholder="Guests from outside" 
-                        label="Number of guests outside?" 
+                        label="Number of guests from outside?" 
                         type="number"
                         onChange={props.handleChangeOutsideGuests('outsideguests')}
                         defaultValue={props.outsideGuests.outsideguests}  

@@ -22,7 +22,6 @@ function Users() {
   const sendGetRequest = async (url) => {
     try {
       const res = await axios.get(url);
-      console.log(res.data);
       console.log("successfull get request");
       setUsers(res.data);
     } catch (err) {

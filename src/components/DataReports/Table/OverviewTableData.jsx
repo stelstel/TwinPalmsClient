@@ -168,9 +168,10 @@ export default function TableData( { user, getOutlet, loggedInUserOutlets }) {
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [revenue]);
-
-
-
+    const val = "1000"
+    console.log(val.length)
+    console.log(val.slice(1, 3))
+    console.log(Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(val).slice(1, val.length + 2))
 
     
 
@@ -190,7 +191,7 @@ export default function TableData( { user, getOutlet, loggedInUserOutlets }) {
             </tr>
             {revenue &&
             Object.entries(revenue).map((item, key) => {
-    
+               
                 if(!loggedInUserOutlets.includes(parseInt(item[0]))){
                     // console.log("User dont have accces to outletId", item[0])
                     return
@@ -198,20 +199,20 @@ export default function TableData( { user, getOutlet, loggedInUserOutlets }) {
                 else {
                     return (
                     <tr key={key} className="datareport-td-container">
-                        <td onClick={() => getOutlet(item[1].restaurantId)} className="datareport-td datareportd-td-outlet">{item[1].restaurant}</td>
+                        <td onClick={() => getOutlet(item[1].restaurantId)} className="datareportd-td-outlet">{item[1].restaurant}</td>
                         {
                         item[1].yesterdaysRev ? 
-                        <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].yesterdaysRev)}</td> : 
+                        <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].yesterdaysRev).slice(0, Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].yesterdaysRev).length - 3)}</td> : 
                         <td className="datareport-td-error">Not reported</td>
                         }
                         {
                         item[1].mtDs ? 
-                        <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].mtDs)}</td> : 
+                        <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].mtDs).slice(0, Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].mtDs).length - 3)}</td> : 
                         <td className="datareport-td-error"></td>
                         }
                         {
                         item[1].ytDs ? 
-                        <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].ytDs)}</td> : 
+                        <td className="datareport-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].ytDs).slice(0, Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(item[1].ytDs).length - 3)}</td> : 
                         <td className="datareport-td-error"></td>
                         }
                     </tr>
@@ -224,21 +225,21 @@ export default function TableData( { user, getOutlet, loggedInUserOutlets }) {
                 {
                     ydaTotalRev 
                     ? 
-                    <th className="datareport-total-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ydaTotalRev)}</th>
+                    <th className="datareport-total-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ydaTotalRev).slice(0, Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ydaTotalRev).length - 3)}</th>
                     :
                     <td className="datareport-td-error"></td>
                 }
                 {
                     mtdTotalRev
                     ? 
-                    <th className="datareport-total-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(mtdTotalRev)}</th>
+                    <th className="datareport-total-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(mtdTotalRev).slice(0, Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(mtdTotalRev).length - 3)}</th>
                     :
                     <td className="datareport-td-error"></td>
                 }
                 {
                     ytdTotalRev
                     ? 
-                    <th className="datareport-total-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ytdTotalRev)}</th>
+                    <th className="datareport-total-td">{Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ytdTotalRev).slice(0, Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ytdTotalRev).length - 3)}</th>
                     :
                     <td className="datareport-td-error"></td>
                 }
